@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jinnal">
+<meta name="theme-color" content="#0d0f14">
+<link rel="manifest" href="./manifest.json">
+<title>Jinnal · Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --bg:#0d0f14; --s1:#13161d; --s2:#1a1e28;
+  --bd:rgba(255,255,255,0.07);
+  --txt:#d4cfc7; --muted:#58534e; --moon:#e8dcc8;
+  --r:16px;
+  --pp:#c9a96e; --ps:rgba(201,169,110,0.13); --pg:rgba(201,169,110,0.28);
+  --pt:#c9a96e;
+  --st:env(safe-area-inset-top,44px);
+  --sb:env(safe-area-inset-bottom,20px);
+}
+body.mens { --pp:#7a7ac9;--ps:rgba(122,122,201,0.13);--pg:rgba(122,122,201,0.3);--pt:#a0a0e8;--bg:#0d0e18;--s1:#12141e; }
+body.foll { --pp:#c9a0a0;--ps:rgba(201,160,160,0.13);--pg:rgba(201,160,160,0.3);--pt:#e8c0c0; }
+body.ovul { --pp:#c9a96e;--ps:rgba(201,169,110,0.15);--pg:rgba(201,169,110,0.35);--pt:#e8c87a; }
+body.lute { --pp:#c9836e;--ps:rgba(201,131,110,0.13);--pg:rgba(201,131,110,0.3);--pt:#e8a888; }
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:14px;transition:background .8s}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 15% 18%,rgba(255,255,255,.45) 0%,transparent 100%),
+    radial-gradient(1px 1px at 78% 7%,rgba(255,255,255,.35) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 60% 20%,var(--pg) 0%,transparent 100%),
+    radial-gradient(1px 1px at 40% 60%,rgba(255,255,255,.2) 0%,transparent 100%),
+    radial-gradient(1px 1px at 8% 72%,rgba(255,255,255,.2) 0%,transparent 100%),
+    radial-gradient(1px 1px at 88% 85%,rgba(255,255,255,.15) 0%,transparent 100%),
+    radial-gradient(1px 1px at 25% 90%,rgba(255,255,255,.18) 0%,transparent 100%),
+    radial-gradient(1px 1px at 52% 45%,rgba(255,255,255,.12) 0%,transparent 100%);
+}
+
+.wrap{position:relative;z-index:1;max-width:430px;margin:0 auto;padding-bottom:calc(72px + var(--sb))}
+
+/* ─── PAGES ─── */
+.page{display:none}
+.page.active{display:block;animation:fu .3s ease}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── NAV ─── */
+.nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  background:rgba(13,15,20,.92);backdrop-filter:blur(24px);
+  border-top:1px solid var(--bd);
+  display:flex;z-index:99;
+  padding-bottom:var(--sb);
+}
+.ni{flex:1;padding:10px 0 10px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none}
+.ni-icon{font-size:22px;display:block;transition:filter .2s}
+.ni-lbl{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.05em;transition:color .2s}
+.ni.on .ni-lbl{color:var(--pt)}
+.ni.on .ni-icon{filter:drop-shadow(0 0 4px var(--pg))}
+
+/* ─── SECTION LABEL ─── */
+.slbl{font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.slbl::after{content:'';flex:1;height:1px;background:var(--bd)}
+.sec{margin:0 16px 14px}
+
+/* ─── CARD ─── */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+
+/* ─── HOME ─── */
+.home-top{
+  padding-top:calc(var(--st) + 12px);
+  padding:calc(var(--st) + 12px) 20px 0;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.home-date{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.alert-pill{
+  font-size:10px;color:var(--pt);background:var(--ps);
+  padding:3px 10px;border-radius:20px;border:1px solid var(--pg);
+  letter-spacing:.05em;display:none;
+}
+.alert-pill.show{display:block}
+
+/* MANDALA */
+.mandala{display:flex;flex-direction:column;align-items:center;padding:16px 20px 14px}
+.mandala-ring{position:relative;width:190px;height:190px}
+.msvg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--s2);stroke-width:7}
+.ring-fill{
+  fill:none;stroke:var(--pp);stroke-width:7;stroke-linecap:round;
+  stroke-dasharray:534;stroke-dashoffset:534;
+  filter:drop-shadow(0 0 6px var(--pg));
+  transition:stroke-dashoffset .9s cubic-bezier(.34,1.56,.64,1),stroke .8s;
+}
+.moon-well{
+  position:absolute;inset:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:radial-gradient(circle at 35% 35%,#22201a,#15130e,#0d0d0d);
+  box-shadow:inset 0 0 24px rgba(0,0,0,.9),0 0 32px var(--pg);
+  overflow:hidden;
+}
+.moon-emoji{font-size:54px;line-height:1;display:block;filter:drop-shadow(0 0 8px rgba(232,220,200,.3))}
+.moon-score{
+  font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--muted);
+  margin-top:4px;letter-spacing:.05em;
+}
+.mandala-info{margin-top:8px;text-align:center}
+.m-phase{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--pt);font-weight:300;letter-spacing:.04em}
+.m-sub{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:16px;justify-content:center}
+.m-sub span{position:relative}
+.m-sub span+span::before{content:'·';position:absolute;left:-10px;color:var(--bd)}
+
+/* ORACLE */
+.oracle{
+  margin:0 16px 14px;
+  background:var(--ps);border:1px solid var(--pg);border-radius:14px;
+  padding:14px 18px;text-align:center;
+  min-height:50px;display:flex;align-items:center;justify-content:center;
+}
+.oracle-txt{
+  font-family:'Cormorant Garamond',serif;font-size:15px;
+  color:var(--moon);font-weight:300;font-style:italic;line-height:1.55;
+}
+
+/* STRESS */
+.stress-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sbtn{
+  background:var(--s1);border:1.5px solid var(--bd);border-radius:12px;
+  padding:12px 6px;text-align:center;cursor:pointer;
+  -webkit-user-select:none;user-select:none;transition:all .18s;
+}
+.sbtn:active{transform:scale(.95)}
+.sbtn.calm.on{background:rgba(122,171,138,.15);border-color:rgba(122,171,138,.45)}
+.sbtn.stretched.on{background:var(--ps);border-color:var(--pg)}
+.sbtn.overload.on{background:rgba(201,122,122,.15);border-color:rgba(201,122,122,.45)}
+.sbtn-ico{font-size:22px;display:block;margin-bottom:4px}
+.sbtn-lbl{font-size:11px;color:var(--muted)}
+.sbtn.on .sbtn-lbl{color:var(--txt)}
+
+/* WATER */
+.water-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.water-title{font-size:11px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+.water-count{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--pt);font-weight:300}
+.glasses{display:flex;gap:5px;align-items:center}
+.gl{
+  width:30px;height:38px;border:1.5px solid var(--bd);border-radius:4px 4px 7px 7px;
+  cursor:pointer;position:relative;overflow:hidden;background:var(--s1);
+  -webkit-user-select:none;user-select:none;transition:border-color .2s;
+}
+.gl.on{border-color:rgba(122,155,201,.5)}
+.gl-fill{
+  position:absolute;bottom:0;left:0;right:0;height:0;
+  background:linear-gradient(180deg,rgba(122,155,201,.55),rgba(80,120,180,.8));
+  transition:height .3s cubic-bezier(.34,1.56,.64,1);border-radius:0 0 5px 5px;
+}
+.gl.on .gl-fill{height:82%}
+.water-reset{background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;padding:4px;font-family:'DM Sans',sans-serif}
+
+/* NOTE */
+.note-field{
+  width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:12px;
+  color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:13px 16px;outline:none;resize:none;line-height:1.5;
+  transition:border-color .2s;
+}
+.note-field:focus{border-color:var(--pg)}
+.note-field::placeholder{color:var(--muted)}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.stat{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:10px;text-align:center}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--pt);font-weight:300;line-height:1}
+.stat-l{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* SAVE BTN */
+.savebtn{
+  display:block;width:calc(100% - 32px);margin:4px 16px 16px;
+  padding:14px;background:linear-gradient(135deg,var(--pp),color-mix(in srgb,var(--pp) 65%,#000));
+  color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  letter-spacing:.05em;border:none;border-radius:12px;cursor:pointer;
+  box-shadow:0 4px 20px var(--ps);transition:transform .1s,opacity .1s;
+}
+.savebtn:active{transform:scale(.98);opacity:.9}
+
+/* ─── RITUALS ─── */
+.pg-hdr{
+  padding:calc(var(--st) + 14px) 20px 16px;
+  display:flex;align-items:baseline;gap:10px;
+}
+.pg-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--moon);font-weight:300}
+.pg-sub{font-size:12px;color:var(--muted)}
+
+.prog-wrap{
+  background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+  padding:16px;display:flex;align-items:center;gap:16px;margin-bottom:12px;
+}
+.psvg{flex-shrink:0;transform:rotate(-90deg)}
+.p-bg{fill:none;stroke:var(--s2);stroke-width:5}
+.p-fill{
+  fill:none;stroke:var(--pp);stroke-width:5;stroke-linecap:round;
+  stroke-dasharray:201;stroke-dashoffset:201;
+  transform-origin:center;transition:stroke-dashoffset .6s cubic-bezier(.34,1.56,.64,1);
+}
+.prog-info{flex:1}
+.prog-n{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--pt);font-weight:300;line-height:1}
+.prog-l{font-size:12px;color:var(--muted);margin-top:4px}
+
+.rit{
+  display:flex;align-items:center;padding:13px 16px;
+  border-bottom:1px solid var(--bd);cursor:pointer;
+  -webkit-user-select:none;user-select:none;transition:background .12s;
+}
+.rit:last-child{border-bottom:none}
+.rit:active{background:var(--s2)}
+.rit.done{opacity:.55}
+.rit.done .rit-name{text-decoration:line-through}
+.rit-chk{
+  width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);
+  margin-right:12px;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:11px;color:transparent;transition:all .2s;
+}
+.rit.done .rit-chk{background:var(--pp);border-color:var(--pp);color:var(--bg)}
+.rit-ico{font-size:16px;margin-right:10px}
+.rit-info{flex:1}
+.rit-name{font-size:13px}
+.rit-planet{font-size:10px;color:var(--muted);margin-top:2px}
+.rit-time{font-size:11px;color:var(--muted);flex-shrink:0}
+
+/* ─── BODY ─── */
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bcrd{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.bcrd-t{font-size:11px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.bopts{display:flex;flex-direction:column;gap:6px}
+.bopt{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;
+  border-radius:8px;background:var(--s2);cursor:pointer;
+  -webkit-user-select:none;user-select:none;transition:all .15s;font-size:12px;
+}
+.bopt.on{background:var(--ps);color:var(--pt)}
+.bopt-dot{width:7px;height:7px;border-radius:50%;background:var(--bd);flex-shrink:0;transition:background .2s}
+.bopt.on .bopt-dot{background:var(--pp)}
+
+.slp-crd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:16px}
+.slp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.slp-row:last-of-type{margin-bottom:0}
+.slp-lbl{font-size:12px;color:var(--muted)}
+.slp-inp{
+  background:var(--s2);border:1px solid var(--bd);border-radius:8px;
+  color:var(--moon);font-family:'DM Sans',sans-serif;font-size:15px;
+  padding:6px 10px;width:108px;text-align:center;outline:none;
+}
+.slp-inp:focus{border-color:var(--pg)}
+.slp-res{background:var(--ps);border-radius:10px;padding:10px;text-align:center;margin-top:14px}
+.slp-hrs{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--pt);font-weight:300;line-height:1}
+.slp-st{font-size:11px;color:var(--muted);margin-top:4px}
+
+.mov{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd);cursor:pointer;-webkit-user-select:none;user-select:none}
+.mov:last-child{border-bottom:none}
+.mov-ico{font-size:20px}
+.mov-info{flex:1}
+.mov-name{font-size:13px}
+.mov-why{font-size:10px;color:var(--muted);margin-top:2px}
+.tog{width:40px;height:24px;border-radius:12px;background:var(--s2);border:1px solid var(--bd);position:relative;transition:all .2s;flex-shrink:0}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:all .2s}
+.mov.on .tog{background:var(--pp);border-color:var(--pp)}
+.mov.on .tog::after{left:19px;background:var(--bg)}
+
+/* ─── CYCLE ─── */
+.cyc-hero{
+  margin:0 16px 14px;background:var(--ps);border:1px solid var(--pg);
+  border-radius:var(--r);padding:20px;text-align:center;
+}
+.cyc-day{font-family:'Cormorant Garamond',serif;font-size:60px;color:var(--pt);font-weight:300;line-height:1}
+.cyc-day-lbl{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.cyc-phase-ico{font-size:36px;display:block;margin:10px 0 4px}
+.cyc-phase-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--moon);font-weight:300}
+
+.cyc-input-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--s1);border:1px solid var(--bd);border-radius:12px;
+  padding:14px 16px;margin-bottom:10px;
+}
+.cyc-lbl{font-size:13px}
+.cyc-date{
+  background:var(--s2);border:1px solid var(--bd);border-radius:8px;
+  color:var(--moon);font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:6px 10px;outline:none;
+}
+.cyc-date:focus{border-color:var(--pg)}
+
+.impl-crd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-bottom:10px}
+.impl-t{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--moon);font-weight:400;margin-bottom:10px}
+.impl-row{display:flex;gap:10px;margin-bottom:8px}
+.impl-row:last-child{margin-bottom:0}
+.impl-ico{font-size:13px;flex-shrink:0;margin-top:2px}
+.impl-txt{font-size:12px;color:var(--txt);line-height:1.55}
+.impl-txt strong{color:var(--pt);font-weight:500}
+
+.sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sym{
+  background:var(--s1);border:1.5px solid var(--bd);border-radius:10px;
+  padding:12px 10px;text-align:center;cursor:pointer;
+  -webkit-user-select:none;user-select:none;transition:all .15s;font-size:12px;
+}
+.sym.on{background:var(--ps);border-color:var(--pg);color:var(--pt)}
+.sym-ico{font-size:20px;display:block;margin-bottom:4px}
+
+/* ─── INSIGHTS ─── */
+.i-strip{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.i-strip::-webkit-scrollbar{display:none}
+.hday{flex-shrink:0;text-align:center;width:36px}
+.hday-l{font-size:10px;color:var(--muted);margin-bottom:4px}
+.hdot{
+  width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);
+  margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);
+}
+.hdot.great{background:rgba(122,171,138,.2);border-color:rgba(122,171,138,.5);color:#7aab8a}
+.hdot.good{background:var(--ps);border-color:var(--pg);color:var(--pt)}
+.hdot.okay{background:rgba(201,131,110,.15);border-color:rgba(201,131,110,.4);color:#c9836e}
+
+.log-entry{
+  background:var(--s1);border:1px solid var(--bd);border-radius:12px;
+  padding:14px 16px;margin-bottom:8px;
+}
+.log-entry-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.log-date{font-size:13px;color:var(--moon)}
+.log-score{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--pt);font-weight:300}
+.log-score small{font-size:11px;color:var(--muted)}
+.log-note{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:6px}
+.log-tags{display:flex;gap:6px;flex-wrap:wrap}
+.log-tag{font-size:10px;background:var(--s2);padding:2px 8px;border-radius:8px;color:var(--muted)}
+
+/* Transit / Rx cards */
+.event-card{
+  background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
+}
+.event-row{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd)}
+.event-row:last-child{border-bottom:none}
+.event-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.event-dot.gold{background:var(--pp);box-shadow:0 0 6px var(--pg)}
+.event-dot.red{background:#c97a7a;box-shadow:0 0 6px rgba(201,122,122,.4)}
+.event-dot.blue{background:#7a9bc9;box-shadow:0 0 6px rgba(122,155,201,.4)}
+.event-dot.green{background:#7aab8a;box-shadow:0 0 6px rgba(122,171,138,.4)}
+.event-info{flex:1}
+.event-title{font-size:13px;color:var(--moon);margin-bottom:2px}
+.event-detail{font-size:11px;color:var(--muted);line-height:1.5}
+.event-badge{font-size:10px;padding:3px 8px;border-radius:10px;letter-spacing:.05em;flex-shrink:0}
+.badge-warn{background:rgba(201,122,122,.15);color:#c97a7a}
+.badge-good{background:rgba(122,171,138,.15);color:#7aab8a}
+.badge-key{background:var(--ps);color:var(--pt)}
+
+/* Dasha card */
+.dasha-crd{
+  background:linear-gradient(135deg,var(--ps),rgba(0,0,0,.0));
+  border:1px solid var(--pg);border-radius:var(--r);padding:16px;
+}
+.dasha-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--pt);font-weight:300;margin-bottom:4px}
+.dasha-period{font-size:11px;color:var(--muted);letter-spacing:.08em;margin-bottom:10px}
+.dasha-body{font-size:12px;color:var(--txt);line-height:1.65}
+.dasha-next{margin-top:12px;padding-top:12px;border-top:1px solid var(--bd)}
+.dasha-next-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.dasha-next-val{font-size:13px;color:var(--txt)}
+
+/* ─── SETTINGS ─── */
+.notif-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.notif-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bd)}
+.notif-row:last-child{border-bottom:none}
+.notif-ico{font-size:20px;flex-shrink:0;width:28px;text-align:center}
+.notif-info{flex:1}
+.notif-name{font-size:13px}
+.notif-detail{font-size:11px;color:var(--muted);margin-top:2px}
+.notif-tog{width:44px;height:26px;border-radius:13px;background:var(--s2);border:1px solid var(--bd);position:relative;transition:all .2s;cursor:pointer;flex-shrink:0}
+.notif-tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:all .2s}
+.notif-tog.on{background:var(--pp);border-color:var(--pp)}
+.notif-tog.on::after{left:21px;background:var(--bg)}
+
+.perm-btn{
+  width:100%;padding:14px;background:var(--ps);border:1px solid var(--pg);
+  border-radius:12px;color:var(--pt);font-family:'DM Sans',sans-serif;
+  font-size:14px;font-weight:500;cursor:pointer;letter-spacing:.05em;
+  transition:all .2s;margin-bottom:10px;
+}
+.perm-btn:hover{background:var(--pg)}
+.perm-status{font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px}
+
+.test-btn{
+  width:100%;padding:12px;background:var(--s1);border:1px solid var(--bd);
+  border-radius:12px;color:var(--txt);font-family:'DM Sans',sans-serif;
+  font-size:13px;cursor:pointer;transition:all .2s;margin-bottom:8px;
+}
+.test-btn:active{transform:scale(.98)}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:calc(80px + var(--sb));left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--pp);color:var(--bg);padding:10px 20px;
+  border-radius:20px;font-size:13px;font-weight:500;
+  opacity:0;transition:all .3s;z-index:200;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RX BANNER */
+.rx-banner{
+  margin:0 16px 14px;background:rgba(201,122,122,.12);
+  border:1px solid rgba(201,122,122,.3);border-radius:12px;
+  padding:12px 16px;display:none;
+}
+.rx-banner.show{display:flex;align-items:center;gap:10px}
+.rx-banner-ico{font-size:20px}
+.rx-banner-txt{font-size:12px;line-height:1.5}
+.rx-banner-txt strong{color:#e8a0a0}
+
+/* Streak */
+.streak-row{display:flex;gap:5px;justify-content:center;margin-top:10px}
+.pip{width:8px;height:8px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);transition:all .3s}
+.pip.lit{background:var(--pp);border-color:var(--pp);box-shadow:0 0 5px var(--pg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════════ HOME ═══════════ -->
+<div class="page active" id="pg-home">
+  <div class="home-top">
+    <div class="home-date" id="home-date"></div>
+    <div class="alert-pill" id="alert-pill"></div>
+  </div>
+
+  <!-- Moon Mandala -->
+  <div class="mandala">
+    <div class="mandala-ring">
+      <svg class="msvg" viewBox="0 0 190 190">
+        <circle class="ring-bg" cx="95" cy="95" r="85"/>
+        <circle class="ring-fill" id="mring" cx="95" cy="95" r="85"/>
+      </svg>
+      <div class="moon-well">
+        <span class="moon-emoji" id="moon-emoji">🌙</span>
+        <div class="moon-score" id="moon-score">0 / 10</div>
+      </div>
+    </div>
+    <div class="mandala-info">
+      <div class="m-phase" id="m-phase">Loading…</div>
+      <div class="m-sub">
+        <span id="m-moon"></span>
+        <span id="m-cycle-day"></span>
+        <span id="m-cycle-phase"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mercury Rx Banner -->
+  <div class="rx-banner" id="rx-banner">
+    <span class="rx-banner-ico">☿</span>
+    <div class="rx-banner-txt" id="rx-txt"></div>
+  </div>
+
+  <!-- Oracle -->
+  <div class="oracle">
+    <div class="oracle-txt" id="oracle"></div>
+  </div>
+
+  <!-- Stress -->
+  <div class="sec">
+    <div class="slbl">How you feel right now</div>
+    <div class="stress-row">
+      <div class="sbtn calm" id="s-calm" onclick="setStress('calm')">
+        <span class="sbtn-ico">🟢</span>
+        <div class="sbtn-lbl">Calm</div>
+      </div>
+      <div class="sbtn stretched" id="s-stretched" onclick="setStress('stretched')">
+        <span class="sbtn-ico">🟡</span>
+        <div class="sbtn-lbl">Stretched</div>
+      </div>
+      <div class="sbtn overload" id="s-overload" onclick="setStress('overloaded')">
+        <span class="sbtn-ico">🔴</span>
+        <div class="sbtn-lbl">Overloaded</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Water -->
+  <div class="sec">
+    <div class="water-hdr">
+      <div class="water-title">Water</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="water-count"><span id="w-count">0</span> / 8 glasses</div>
+        <button class="water-reset" onclick="resetWater()">reset</button>
+      </div>
+    </div>
+    <div class="glasses" id="glasses"></div>
+  </div>
+
+  <!-- One-line note -->
+  <div class="sec">
+    <textarea class="note-field" id="home-note" rows="2" placeholder="One thing about today…"></textarea>
+  </div>
+
+  <!-- Quick stats -->
+  <div class="sec">
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n" id="stat-rit">0/10</div><div class="stat-l">Rituals</div></div>
+      <div class="stat"><div class="stat-n" id="stat-slp">—</div><div class="stat-l">Sleep hrs</div></div>
+      <div class="stat"><div class="stat-n" id="stat-cyc">—</div><div class="stat-l">Cycle day</div></div>
+    </div>
+  </div>
+
+  <!-- Streak -->
+  <div class="sec" style="margin-top:-4px">
+    <div class="streak-row" id="streak"></div>
+  </div>
+
+  <button class="savebtn" onclick="saveHome()">Save Today</button>
+</div>
+
+<!-- ═══════════ RITUALS ═══════════ -->
+<div class="page" id="pg-rituals">
+  <div class="pg-hdr">
+    <div class="pg-title">Daily Rituals</div>
+    <div class="pg-sub" id="rit-sub">0 of 10 done</div>
+  </div>
+
+  <div class="sec">
+    <div class="prog-wrap">
+      <svg class="psvg" width="60" height="60" viewBox="0 0 60 60">
+        <circle class="p-bg" cx="30" cy="30" r="26"/>
+        <circle class="p-fill" id="prog-fill" cx="30" cy="30" r="26"/>
+      </svg>
+      <div class="prog-info">
+        <div class="prog-n"><span id="prog-done">0</span><span style="font-size:18px;color:var(--muted)">/10</span></div>
+        <div class="prog-l" id="prog-msg">Complete your rituals</div>
+      </div>
+    </div>
+
+    <div class="card" id="rit-list">
+      <!-- generated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ BODY ═══════════ -->
+<div class="page" id="pg-body">
+  <div class="pg-hdr">
+    <div class="pg-title">Body Log</div>
+    <div class="pg-sub" id="body-date"></div>
+  </div>
+
+  <!-- Sleep -->
+  <div class="sec">
+    <div class="slbl">Sleep</div>
+    <div class="slp-crd">
+      <div class="slp-row">
+        <span class="slp-lbl">Bedtime</span>
+        <input type="time" class="slp-inp" id="slp-bed" value="22:45">
+      </div>
+      <div class="slp-row">
+        <span class="slp-lbl">Wake time</span>
+        <input type="time" class="slp-inp" id="slp-wake" value="07:00">
+      </div>
+      <div class="slp-res">
+        <div class="slp-hrs" id="slp-hrs">8h 15m</div>
+        <div class="slp-st" id="slp-st">✨ Optimal for Cancer Lagna</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Energy -->
+  <div class="sec">
+    <div class="slbl">Energy</div>
+    <div class="body-grid">
+      <div class="bcrd">
+        <div class="bcrd-t">☀️ Morning</div>
+        <div class="bopts" id="e-morning">
+          <div class="bopt" data-g="e-morning" data-v="low" onclick="selOpt(this)"><span class="bopt-dot"></span>Low</div>
+          <div class="bopt" data-g="e-morning" data-v="okay" onclick="selOpt(this)"><span class="bopt-dot"></span>Okay</div>
+          <div class="bopt" data-g="e-morning" data-v="good" onclick="selOpt(this)"><span class="bopt-dot"></span>Good</div>
+        </div>
+      </div>
+      <div class="bcrd">
+        <div class="bcrd-t">🌙 Evening</div>
+        <div class="bopts" id="e-evening">
+          <div class="bopt" data-g="e-evening" data-v="low" onclick="selOpt(this)"><span class="bopt-dot"></span>Low</div>
+          <div class="bopt" data-g="e-evening" data-v="okay" onclick="selOpt(this)"><span class="bopt-dot"></span>Okay</div>
+          <div class="bopt" data-g="e-evening" data-v="good" onclick="selOpt(this)"><span class="bopt-dot"></span>Good</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back & Gut -->
+  <div class="sec">
+    <div class="slbl">Signals</div>
+    <div class="body-grid">
+      <div class="bcrd">
+        <div class="bcrd-t">🦴 Back / Hips</div>
+        <div class="bopts" id="back">
+          <div class="bopt" data-g="back" data-v="fine" onclick="selOpt(this)"><span class="bopt-dot"></span>Fine ✅</div>
+          <div class="bopt" data-g="back" data-v="tension" onclick="selOpt(this)"><span class="bopt-dot"></span>Tension ⚠️</div>
+          <div class="bopt" data-g="back" data-v="pain" onclick="selOpt(this)"><span class="bopt-dot"></span>Pain 🔴</div>
+        </div>
+      </div>
+      <div class="bcrd">
+        <div class="bcrd-t">🌊 Gut</div>
+        <div class="bopts" id="gut">
+          <div class="bopt" data-g="gut" data-v="good" onclick="selOpt(this)"><span class="bopt-dot"></span>Good ✅</div>
+          <div class="bopt" data-g="gut" data-v="off" onclick="selOpt(this)"><span class="bopt-dot"></span>Off ⚠️</div>
+          <div class="bopt" data-g="gut" data-v="bad" onclick="selOpt(this)"><span class="bopt-dot"></span>Bad 🔴</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Movement -->
+  <div class="sec">
+    <div class="slbl">Movement</div>
+    <div class="card">
+      <div class="mov" data-id="strength" onclick="togMov(this)">
+        <span class="mov-ico">🏋️‍♀️</span>
+        <div class="mov-info"><div class="mov-name">Strength Training</div><div class="mov-why">Mars Yoga Karaka — best for your chart</div></div>
+        <div class="tog"></div>
+      </div>
+      <div class="mov" data-id="swim" onclick="togMov(this)">
+        <span class="mov-ico">🏊‍♀️</span>
+        <div class="mov-info"><div class="mov-name">Swimming</div><div class="mov-why">Cancer Lagna — constitutional medicine</div></div>
+        <div class="tog"></div>
+      </div>
+      <div class="mov" data-id="walk" onclick="togMov(this)">
+        <span class="mov-ico">🌳</span>
+        <div class="mov-info"><div class="mov-name">Walk in Nature</div><div class="mov-why">Ketu 4th — grounding antidote</div></div>
+        <div class="tog"></div>
+      </div>
+      <div class="mov" data-id="stretch" onclick="togMov(this)">
+        <span class="mov-ico">🧘‍♀️</span>
+        <div class="mov-info"><div class="mov-name">Hip / Back Stretches</div><div class="mov-why">Saturn Sagittarius 6th — non-negotiable</div></div>
+        <div class="tog"></div>
+      </div>
+      <div class="mov" data-id="other" onclick="togMov(this)">
+        <span class="mov-ico">✨</span>
+        <div class="mov-info"><div class="mov-name">Other Movement</div><div class="mov-why">Dance, cycle, anything counts</div></div>
+        <div class="tog"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="savebtn" onclick="saveBody()">Save Body Log</button>
+</div>
+
+<!-- ═══════════ CYCLE ═══════════ -->
+<div class="page" id="pg-cycle">
+  <div class="pg-hdr">
+    <div class="pg-title">Cycle</div>
+    <div class="pg-sub">Chart-phase linked</div>
+  </div>
+
+  <div class="cyc-hero">
+    <div class="cyc-day" id="cyc-day">—</div>
+    <div class="cyc-day-lbl">Cycle Day</div>
+    <span class="cyc-phase-ico" id="cyc-ico">🌙</span>
+    <div class="cyc-phase-name" id="cyc-name">Enter last period date</div>
+  </div>
+
+  <div class="sec">
+    <div class="cyc-input-row">
+      <span class="cyc-lbl">Last period started</span>
+      <input type="date" class="cyc-date" id="cyc-start" onchange="updateCycle()">
+    </div>
+  </div>
+
+  <!-- Chart implications - injected by JS -->
+  <div class="sec" id="cyc-impl"></div>
+
+  <!-- Symptoms -->
+  <div class="sec">
+    <div class="slbl">Today's Symptoms</div>
+    <div class="sym-grid">
+      <div class="sym" data-id="cramps" onclick="togSym(this)"><span class="sym-ico">😣</span>Cramps</div>
+      <div class="sym" data-id="bloat" onclick="togSym(this)"><span class="sym-ico">💨</span>Bloating</div>
+      <div class="sym" data-id="fatigue" onclick="togSym(this)"><span class="sym-ico">😴</span>Fatigue</div>
+      <div class="sym" data-id="mood" onclick="togSym(this)"><span class="sym-ico">🌊</span>Mood shifts</div>
+      <div class="sym" data-id="clarity" onclick="togSym(this)"><span class="sym-ico">💎</span>Mental clarity</div>
+      <div class="sym" data-id="energy-up" onclick="togSym(this)"><span class="sym-ico">⚡</span>Energy up</div>
+    </div>
+  </div>
+
+  <button class="savebtn" onclick="saveCycle()">Save Cycle Log</button>
+</div>
+
+<!-- ═══════════ INSIGHTS ═══════════ -->
+<div class="page" id="pg-insights">
+  <div class="pg-hdr">
+    <div class="pg-title">Insights</div>
+    <div class="pg-sub">History + Astro alerts</div>
+  </div>
+
+  <!-- 14-day strip -->
+  <div class="sec">
+    <div class="slbl">14-Day Wellness</div>
+    <div class="card" style="padding:16px">
+      <div class="i-strip" id="i-strip"></div>
+    </div>
+  </div>
+
+  <!-- Astrological events -->
+  <div class="sec">
+    <div class="slbl">Upcoming Astro Events</div>
+    <div class="event-card" id="astro-events"></div>
+  </div>
+
+  <!-- Dasha -->
+  <div class="sec">
+    <div class="slbl">Current Dasha</div>
+    <div class="dasha-crd">
+      <div class="dasha-title">Moon – Saturn Antardasha</div>
+      <div class="dasha-period">2025–2027 · You are here</div>
+      <div class="dasha-body">Build structured foundations. No impulsive financial bets. Health signals must not be ignored — Saturn antardasha brings slow-building issues to the surface. What you build now is permanent. This period directly supports the BulletRaja system work and investment planning you're doing.</div>
+      <div class="dasha-next">
+        <div class="dasha-next-lbl">Next period</div>
+        <div class="dasha-next-val">Moon – Mercury · 2027–2028</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Heightened nervous sensitivity · Systems peak · Gut awareness</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent logs -->
+  <div class="sec">
+    <div class="slbl">Recent Logs</div>
+    <div id="log-list">
+      <div style="text-align:center;padding:32px;color:var(--muted);font-size:13px">No logs yet — start today 🌙</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SETTINGS ═══════════ -->
+<div class="page" id="pg-settings">
+  <div class="pg-hdr">
+    <div class="pg-title">Settings</div>
+    <div class="pg-sub">Notifications · Preferences</div>
+  </div>
+
+  <!-- Notification permission -->
+  <div class="sec">
+    <div class="slbl">Notifications</div>
+    <button class="perm-btn" id="perm-btn" onclick="requestPermission()">Enable Notifications</button>
+    <div class="perm-status" id="perm-status">Tap to allow — then add to Home Screen for full PWA</div>
+
+    <div class="notif-card">
+      <div class="notif-row">
+        <div class="notif-ico">🌅</div>
+        <div class="notif-info">
+          <div class="notif-name">Morning Oracle</div>
+          <div class="notif-detail">7:30 AM · Moon phase, cycle context, Dasha insight</div>
+        </div>
+        <div class="notif-tog on" id="tog-morning" onclick="togNotif('morning')"></div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-ico">☀️</div>
+        <div class="notif-info">
+          <div class="notif-name">Afternoon Check</div>
+          <div class="notif-detail">3:00 PM · Water, back, energy — 30 seconds</div>
+        </div>
+        <div class="notif-tog on" id="tog-afternoon" onclick="togNotif('afternoon')"></div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-ico">🌙</div>
+        <div class="notif-info">
+          <div class="notif-name">Sleep Nudge</div>
+          <div class="notif-detail">10:15 PM · Screen off reminder</div>
+        </div>
+        <div class="notif-tog on" id="tog-sleep" onclick="togNotif('sleep')"></div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-ico">☿</div>
+        <div class="notif-info">
+          <div class="notif-name">Mercury Retrograde Alert</div>
+          <div class="notif-detail">Day before Rx starts — contracts & comms warning</div>
+        </div>
+        <div class="notif-tog on" id="tog-rx" onclick="togNotif('rx')"></div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-ico">♃</div>
+        <div class="notif-info">
+          <div class="notif-name">Jupiter Transit Alert</div>
+          <div class="notif-detail">7 days before Jupiter enters Cancer (June 2026)</div>
+        </div>
+        <div class="notif-tog on" id="tog-jup" onclick="togNotif('jup')"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test -->
+  <div class="sec">
+    <div class="slbl">Test</div>
+    <button class="test-btn" onclick="testNotif()">🔔 Send Test Notification Now</button>
+    <button class="test-btn" onclick="clearData()">🗑️ Clear All Saved Data</button>
+  </div>
+
+  <!-- About -->
+  <div class="sec">
+    <div class="slbl">Your Chart</div>
+    <div class="card" style="padding:16px">
+      <div style="font-size:13px;color:var(--txt);line-height:1.8">
+        <div><strong style="color:var(--pt)">Lagna</strong> · Cancer (Karka) · Punarvasu Nakshatra</div>
+        <div><strong style="color:var(--pt)">Moon</strong> · Leo 2nd house · Magha Nakshatra</div>
+        <div><strong style="color:var(--pt)">Yoga Karaka</strong> · Mars (rules 5th & 10th)</div>
+        <div><strong style="color:var(--pt)">Mahadasha</strong> · Moon · 2020–2030</div>
+        <div><strong style="color:var(--pt)">Antardasha</strong> · Saturn · 2025–2027</div>
+        <div><strong style="color:var(--pt)">Key transit</strong> · Jupiter exalted Cancer · June 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- Nav -->
+<div class="nav">
+  <div class="ni on" onclick="showPage('home',this)"><span class="ni-icon">🌙</span><div class="ni-lbl">Home</div></div>
+  <div class="ni" onclick="showPage('rituals',this)"><span class="ni-icon">✓</span><div class="ni-lbl">Rituals</div></div>
+  <div class="ni" onclick="showPage('body',this)"><span class="ni-icon">🌿</span><div class="ni-lbl">Body</div></div>
+  <div class="ni" onclick="showPage('cycle',this)"><span class="ni-icon">🩸</span><div class="ni-lbl">Cycle</div></div>
+  <div class="ni" onclick="showPage('insights',this)"><span class="ni-icon">★</span><div class="ni-lbl">Insights</div></div>
+  <div class="ni" onclick="showPage('settings',this)"><span class="ni-icon">⚙</span><div class="ni-lbl">Settings</div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONSTANTS ───
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const LUNAR_CYCLE = 29.53058867;
+const KNOWN_NEW_MOON = new Date('2025-01-29T00:00:00Z');
+
+// Mercury Rx periods [start, end]
+const MERC_RX = [
+  ['2025-01-26','2025-02-20'],
+  ['2025-05-29','2025-06-22'],
+  ['2025-09-26','2025-10-20'], // Virgo — most impactful
+  ['2026-01-16','2026-02-07'],
+  ['2026-05-15','2026-06-08'],
+  ['2026-09-13','2026-10-06'], // Virgo again
+  ['2027-01-03','2027-01-25'],
+  ['2027-05-01','2027-05-25'],
+  ['2027-08-29','2027-09-21'],
+];
+// Jupiter enters Cancer (exalted) ≈ Jun 2 2026
+const JUPITER_CANCER = new Date('2026-06-02');
+
+// Rituals data
+const RITUALS = [
+  {id:'water',    ico:'💧', name:'Water before phone',          planet:'Cancer Lagna — constitutional start', time:'On waking'},
+  {id:'stillness',ico:'🕯️', name:'10 min stillness / trataka', planet:'Ketu 4th — inner anchor practice',    time:'Morning'},
+  {id:'breakfast',ico:'🍳', name:'Protein breakfast by 9 AM',   planet:'Virgo gut — blood sugar stability',   time:'8–9 AM'},
+  {id:'lunch',    ico:'☀️', name:'Biggest meal at midday',      planet:'Digestive fire peaks at solar noon',  time:'12–1 PM'},
+  {id:'probiotic',ico:'🥛', name:'Probiotic / curd',            planet:'Mercury Retrograde Virgo gut',        time:'With meal'},
+  {id:'movement', ico:'🏃‍♀️',name:'Movement / exercise',         planet:'Mars Yoga Karaka — needs a channel', time:'Afternoon'},
+  {id:'dinner',   ico:'🌿', name:'Light dinner before 8 PM',    planet:'Saturn 6th — liver & gut reset',     time:'Before 8 PM'},
+  {id:'transition',ico:'🌅',name:'Work → home transition ritual',planet:'Ketu 4th — bridge between worlds',  time:'Evening'},
+  {id:'screen',   ico:'📵', name:'Screen off 45 min before bed',planet:'Rahu 10th — loop breaker',           time:'10:15 PM'},
+  {id:'sleep',    ico:'🌙', name:'Sleep before 11 PM',          planet:'Moon-ruled body — non-negotiable',   time:'Bedtime'},
+];
+
+// Oracle pool — contextual by phase
+const ORACLES = {
+  menstrual: [
+    "Rest is your work today. Even the moon goes dark before it returns.",
+    "Ketu's quietude is asking — listen. Not every day needs to be productive.",
+    "Your Magha Moon knows rest is ancestral wisdom, not weakness.",
+    "The womb knows how to release. Trust the cycle, not the calendar.",
+  ],
+  follicular: [
+    "Rising energy meets rising light. Your Rahu 10th is ready to build.",
+    "Punarvasu Lagna — the light returns. New initiatives are favoured today.",
+    "Your Cancer intuition is sharp in the follicular phase. Trust the first instinct.",
+    "Mars Yoga Karaka activates here — bold moves, well-researched, well-timed.",
+  ],
+  ovulation: [
+    "Your sharpest three days. Venus-Moon in Leo says: be visible today.",
+    "This is your peak communication window — negotiate, present, decide.",
+    "Ovulation clarity is real, not coincidence. Major decisions belong here.",
+    "The full expression of your chart's intelligence — use this window deliberately.",
+  ],
+  luteal: [
+    "Mercury Retrograde mind thrives in the luteal phase — detail work, systems, review.",
+    "This phase built the BulletRaja OS. Inward is productive, not retreat.",
+    "Saturn antardasha and luteal phase align — steady, structural, building.",
+    "Review what you've initiated. The luteal phase is for refining, not launching.",
+  ],
+  rx: [
+    "Mercury Retrograde is active. Your natal Rx in Virgo makes you clearer while others lose clarity — but triple-check every contract and communication.",
+    "☿ Rx period: Your mind actually sharpens. But verbal agreements will be misread. Write everything down.",
+  ],
+  dasha: [
+    "Moon-Saturn antardasha: discipline is the weapon. What you build now lasts.",
+    "Saturn's sub-period rewards patience and punishes shortcuts. Build the foundation.",
+    "The permanence of Saturn + the personal nature of Moon = your most important building phase.",
+  ],
+  moonphase: {
+    new: "Amavasya energy — your Magha Moon's ancestral moment. Rest and honour lineage.",
+    waxing: "Waxing moon — energy building. Good window for initiating new positions.",
+    full: "Purnima — Cancer Lagna is most emotionally activated now. Creative work peaks.",
+    waning: "Waning moon — review and release. Complete, don't initiate.",
+  }
+};
+
+// Cycle phase implications
+const PHASE_DATA = {
+  menstrual: {
+    emoji:'🌑', name:'Menstrual', cls:'mens',
+    impls:[
+      {ico:'⚡', txt:'<strong>Energy:</strong> Low — this is correct, not failure. Conserve deliberately.'},
+      {ico:'🧠', txt:'<strong>Decision making:</strong> Not the time for major financial or business moves. Review only.'},
+      {ico:'🌙', txt:'<strong>Chart context:</strong> Moon-Ketu conjunction energy is highest. Rest activates Magha\'s ancestral intelligence.'},
+      {ico:'💊', txt:'<strong>Body:</strong> Gut most sensitive to stress-eating. Warm, cooked, anti-inflammatory only.'},
+      {ico:'🪔', txt:'<strong>Practice:</strong> Best day for ancestral ritual (Pitru Tarpan / lamp lighting). Magha Moon responds here.'},
+    ]
+  },
+  follicular: {
+    emoji:'🌒', name:'Follicular', cls:'foll',
+    impls:[
+      {ico:'⚡', txt:'<strong>Energy:</strong> Rising — use it on initiatives, not busywork.'},
+      {ico:'🧠', txt:'<strong>Decision making:</strong> Excellent window. Rahu 10th ambition aligns with rising oestrogen.'},
+      {ico:'📈', txt:'<strong>Investments:</strong> Good window to initiate new positions or research. Clarity is real.'},
+      {ico:'💼', txt:'<strong>BulletRaja:</strong> Best phase for bold operational decisions, new system features, staff conversations.'},
+      {ico:'🏋️‍♀️', txt:'<strong>Movement:</strong> Energy supports strength training — best phase for it.'},
+    ]
+  },
+  ovulation: {
+    emoji:'🌕', name:'Ovulation', cls:'ovul',
+    impls:[
+      {ico:'💎', txt:'<strong>Your sharpest 3 days.</strong> Venus-Moon in Leo 2nd house peaks — presence, charisma, clarity.'},
+      {ico:'🗣️', txt:'<strong>Communication:</strong> Negotiate now. Important conversations belong in this window.'},
+      {ico:'📈', txt:'<strong>Investments:</strong> Highest-conviction decisions belong here. Your analysis is most reliable.'},
+      {ico:'💼', txt:'<strong>BulletRaja:</strong> Client meetings, staff reviews, supplier negotiations — all peak here.'},
+      {ico:'⚠️', txt:'<strong>Watch:</strong> Jupiter as 6th lord — ovulation confidence can tip into overextension. Stay grounded.'},
+    ]
+  },
+  luteal: {
+    emoji:'🌖', name:'Luteal', cls:'lute',
+    impls:[
+      {ico:'⚡', txt:'<strong>Energy:</strong> Gradually declining — plan heavier tasks for early luteal, lighter for late.'},
+      {ico:'🔧', txt:'<strong>Best for:</strong> Systems work, detail review, editing, completing. Mercury Retrograde Virgo mind activates.'},
+      {ico:'🧠', txt:'<strong>BulletRaja:</strong> Perfect phase for coding, data review, process improvement — exactly what you\'re building.'},
+      {ico:'📊', txt:'<strong>Investments:</strong> Review existing positions. Do not initiate. Luteal clarity can feel certain but misleads.'},
+      {ico:'🌊', txt:'<strong>Gut:</strong> Most sensitive to stress, sugar, and irregular eating in this phase. Fixed meal times critical.'},
+    ]
+  },
+};
+
+// ─── STATE ───
+let todayKey = '';
+let sw = null;
+let notifSettings = {morning:true, afternoon:true, sleep:true, rx:true, jup:true};
+
+// ─── INIT ───
+function init() {
+  const now = new Date();
+  todayKey = now.toISOString().split('T')[0];
+  document.getElementById('home-date').textContent =
+    `${DAYS[now.getDay()]}, ${now.getDate()} ${MONTHS[now.getMonth()]} ${now.getFullYear()}`;
+  document.getElementById('body-date').textContent =
+    `${DAYS[now.getDay()]}, ${now.getDate()} ${MONTHS[now.getMonth()]}`;
+
+  buildGlasses();
+  buildRitualList();
+  loadAll();
+  updateMandala();
+  updateOracle();
+  checkAlerts();
+  buildStreak();
+  buildInsights();
+  buildAstroEvents();
+  updatePermUI();
+  updateCycle();
+  initSW();
+
+  document.getElementById('slp-bed').addEventListener('change', calcSleep);
+  document.getElementById('slp-wake').addEventListener('change', calcSleep);
+  calcSleep();
+}
+
+// ─── PAGE NAV ───
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('on'));
+  document.getElementById('pg-'+name).classList.add('active');
+  el.classList.add('on');
+  if(name==='insights') { buildInsights(); buildAstroEvents(); }
+}
+
+// ─── MOON PHASE ───
+function getMoonAge(date) {
+  const ms = date - KNOWN_NEW_MOON;
+  const days = ms / 86400000;
+  return ((days % LUNAR_CYCLE) + LUNAR_CYCLE) % LUNAR_CYCLE;
+}
+function moonEmoji(age) {
+  if(age < 1.85) return '🌑';
+  if(age < 7.38) return '🌒';
+  if(age < 9.22) return '🌓';
+  if(age < 14.77) return '🌔';
+  if(age < 16.61) return '🌕';
+  if(age < 22.15) return '🌖';
+  if(age < 23.99) return '🌗';
+  return '🌘';
+}
+function moonName(age) {
+  if(age < 1.85) return 'New Moon · Amavasya';
+  if(age < 7.38) return 'Waxing Crescent';
+  if(age < 9.22) return 'First Quarter';
+  if(age < 14.77) return 'Waxing Gibbous';
+  if(age < 16.61) return 'Full Moon · Purnima';
+  if(age < 22.15) return 'Waning Gibbous';
+  if(age < 23.99) return 'Last Quarter';
+  return 'Waning Crescent';
+}
+function moonPhaseKey(age) {
+  if(age < 1.85 || age > 27.5) return 'new';
+  if(age < 14.77) return 'waxing';
+  if(age < 16.61) return 'full';
+  return 'waning';
+}
+
+// ─── CYCLE ───
+function getCycleData() {
+  const stored = ls('cycle_start');
+  if(!stored) return null;
+  const start = new Date(stored);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  start.setHours(0,0,0,0);
+  const day = Math.floor((today - start) / 86400000) + 1;
+  if(day < 1 || day > 35) return null;
+  let phase;
+  if(day <= 5) phase = 'menstrual';
+  else if(day <= 13) phase = 'follicular';
+  else if(day <= 16) phase = 'ovulation';
+  else phase = 'luteal';
+  return { day, phase };
+}
+
+function updateCycle() {
+  const stored = document.getElementById('cyc-start').value || ls('cycle_start');
+  if(document.getElementById('cyc-start').value) {
+    save('cycle_start', document.getElementById('cyc-start').value);
+  }
+  if(!document.getElementById('cyc-start').value && stored) {
+    document.getElementById('cyc-start').value = stored;
+  }
+  const cd = getCycleData();
+  const implDiv = document.getElementById('cyc-impl');
+
+  if(!cd) {
+    document.getElementById('cyc-day').textContent = '—';
+    document.getElementById('cyc-name').textContent = 'Enter last period date';
+    document.getElementById('cyc-ico').textContent = '🌙';
+    implDiv.innerHTML = '';
+    return;
+  }
+
+  const pd = PHASE_DATA[cd.phase];
+  document.getElementById('cyc-day').textContent = cd.day;
+  document.getElementById('cyc-name').textContent = pd.name + ' Phase';
+  document.getElementById('cyc-ico').textContent = pd.emoji;
+
+  // Apply body phase class
+  document.body.className = pd.cls;
+
+  // Implications
+  implDiv.innerHTML = `
+    <div class="slbl">Chart Implications</div>
+    <div class="impl-crd">
+      <div class="impl-t">${pd.emoji} ${pd.name} · Day ${cd.day}</div>
+      ${pd.impls.map(i=>`<div class="impl-row"><span class="impl-ico">${i.ico}</span><span class="impl-txt">${i.txt}</span></div>`).join('')}
+    </div>`;
+
+  // Update home stats
+  document.getElementById('stat-cyc').textContent = 'D' + cd.day;
+  document.getElementById('m-cycle-day').textContent = 'Day ' + cd.day;
+  document.getElementById('m-cycle-phase').textContent = pd.name;
+}
+
+// ─── MANDALA ───
+function updateMandala() {
+  const now = new Date();
+  const age = getMoonAge(now);
+  document.getElementById('moon-emoji').textContent = moonEmoji(age);
+  document.getElementById('m-moon').textContent = moonName(age);
+  document.getElementById('m-phase').textContent = 'Today\'s Sky';
+
+  const cd = getCycleData();
+  if(cd) {
+    const pd = PHASE_DATA[cd.phase];
+    document.getElementById('m-cycle-day').textContent = 'Day ' + cd.day;
+    document.getElementById('m-cycle-phase').textContent = pd.name;
+    document.body.className = pd.cls;
+  }
+
+  updateWellnessRing();
+}
+
+function updateWellnessRing() {
+  const done = document.querySelectorAll('.rit.done').length;
+  const total = RITUALS.length;
+  const pct = done / total;
+  const circ = 534;
+  document.getElementById('mring').style.strokeDashoffset = circ - (circ * pct);
+  document.getElementById('moon-score').textContent = done + ' / ' + total;
+  document.getElementById('stat-rit').textContent = done + '/' + total;
+
+  // Rituals progress ring
+  const p = 201;
+  document.getElementById('prog-fill').style.strokeDashoffset = p - (p * pct);
+  document.getElementById('prog-done').textContent = done;
+  document.getElementById('rit-sub').textContent = done + ' of ' + total + ' done';
+  const msgs = ['Complete your rituals','Gentle start — keep going','Good momentum 🌿','Saturn approves ⭐','Cancer Lagna thriving 🌙','Perfectly aligned ✨'];
+  document.getElementById('prog-msg').textContent = msgs[Math.min(Math.floor(pct*5), 5)];
+}
+
+// ─── ORACLE ───
+function updateOracle() {
+  const cd = getCycleData();
+  const age = getMoonAge(new Date());
+  const isRx = checkMercRx(new Date());
+
+  let pool;
+  if(isRx) pool = ORACLES.rx;
+  else if(cd) pool = ORACLES[cd.phase];
+  else pool = ORACLES.dasha;
+
+  const moonKey = moonPhaseKey(age);
+  // Mix in moon oracle occasionally (every 3rd day)
+  const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+  if(dayOfYear % 3 === 0) pool = [...pool, ORACLES.moonphase[moonKey]];
+
+  const idx = dayOfYear % pool.length;
+  document.getElementById('oracle').textContent = pool[idx];
+}
+
+// ─── MERCURY RX CHECK ───
+function checkMercRx(date) {
+  const d = date.toISOString().split('T')[0];
+  return MERC_RX.some(([s,e]) => d >= s && d <= e);
+}
+function getNextMercRx(date) {
+  const d = date.toISOString().split('T')[0];
+  return MERC_RX.find(([s]) => s > d);
+}
+
+function checkAlerts() {
+  const now = new Date();
+  const isRx = checkMercRx(now);
+  const banner = document.getElementById('rx-banner');
+  const rxTxt = document.getElementById('rx-txt');
+  const alert = document.getElementById('alert-pill');
+
+  if(isRx) {
+    const rx = MERC_RX.find(([s,e]) => {
+      const d = now.toISOString().split('T')[0];
+      return d >= s && d <= e;
+    });
+    const isVirgo = rx && (rx[0].includes('09-26') || rx[0].includes('09-13'));
+    banner.classList.add('show');
+    rxTxt.innerHTML = `<strong>Mercury Retrograde active${isVirgo?' · Virgo (hits your natal chart hardest)':''}</strong><br>
+      Triple-check all contracts, verbal agreements, and communication. Your natal Rx in Virgo gives you clarity others lose — but the risk is still real.`;
+    alert.textContent = '☿ Rx Active';
+    alert.classList.add('show');
+  } else {
+    const next = getNextMercRx(now);
+    if(next) {
+      const daysUntil = Math.ceil((new Date(next[0]) - now) / 86400000);
+      if(daysUntil <= 7) {
+        alert.textContent = `☿ Rx in ${daysUntil}d`;
+        alert.classList.add('show');
+      }
+    }
+  }
+
+  // Jupiter Cancer alert
+  const daysToJup = Math.ceil((JUPITER_CANCER - now) / 86400000);
+  if(daysToJup > 0 && daysToJup <= 7) {
+    alert.textContent = `♃ Jupiter Cancer in ${daysToJup}d`;
+    alert.classList.add('show');
+  }
+}
+
+// ─── GLASSES ───
+function buildGlasses() {
+  const g = document.getElementById('glasses');
+  g.innerHTML = '';
+  const count = parseInt(ls('water_'+todayKey)||'0');
+  for(let i=0;i<8;i++){
+    const d = document.createElement('div');
+    d.className = 'gl' + (i<count?' on':'');
+    d.innerHTML = '<div class="gl-fill"></div>';
+    d.onclick = () => addWater(i+1);
+    g.appendChild(d);
+  }
+  document.getElementById('w-count').textContent = count;
+}
+function addWater(target) {
+  const current = parseInt(ls('water_'+todayKey)||'0');
+  const next = current === target ? target-1 : target;
+  save('water_'+todayKey, next);
+  buildGlasses();
+}
+function resetWater() {
+  save('water_'+todayKey, 0);
+  buildGlasses();
+}
+
+// ─── RITUALS ───
+function buildRitualList() {
+  const container = document.getElementById('rit-list');
+  const state = JSON.parse(ls('rit_'+todayKey)||'{}');
+  container.innerHTML = RITUALS.map(r => `
+    <div class="rit${state[r.id]?' done':''}" data-id="${r.id}" onclick="togRitual(this)">
+      <div class="rit-chk">✓</div>
+      <span class="rit-ico">${r.ico}</span>
+      <div class="rit-info">
+        <div class="rit-name">${r.name}</div>
+        <div class="rit-planet">${r.planet}</div>
+      </div>
+      <span class="rit-time">${r.time}</span>
+    </div>`).join('');
+  updateWellnessRing();
+}
+function togRitual(el) {
+  el.classList.toggle('done');
+  const state = JSON.parse(ls('rit_'+todayKey)||'{}');
+  state[el.dataset.id] = el.classList.contains('done');
+  save('rit_'+todayKey, JSON.stringify(state));
+  updateWellnessRing();
+}
+
+// ─── BODY OPTS ───
+function selOpt(el) {
+  const g = el.dataset.g;
+  document.querySelectorAll(`[data-g="${g}"]`).forEach(e => e.classList.remove('on'));
+  el.classList.add('on');
+}
+function togMov(el) { el.classList.toggle('on'); }
+function togSym(el) { el.classList.toggle('on'); }
+
+// ─── SLEEP ───
+function calcSleep() {
+  const bed = document.getElementById('slp-bed').value;
+  const wake = document.getElementById('slp-wake').value;
+  if(!bed || !wake) return;
+  const [bh,bm] = bed.split(':').map(Number);
+  const [wh,wm] = wake.split(':').map(Number);
+  let mins = (wh*60+wm) - (bh*60+bm);
+  if(mins < 0) mins += 1440;
+  const h = Math.floor(mins/60), m = mins%60;
+  document.getElementById('slp-hrs').textContent = h + 'h' + (m?' '+m+'m':'');
+  let st = '';
+  if(h >= 7 && h <= 8) st = '✨ Optimal — Cancer Lagna thrives';
+  else if(h < 6) st = '⚠️ Below minimum — Moon-ruled body needs more';
+  else if(h >= 9) st = '🌙 Good rest — watch for consistency';
+  else st = '✓ Acceptable — aim for 7–8 hrs';
+  document.getElementById('slp-st').textContent = st;
+  document.getElementById('stat-slp').textContent = h + 'h';
+  save('slp_bed_'+todayKey, bed);
+  save('slp_wake_'+todayKey, wake);
+}
+
+// ─── STRESS ───
+function setStress(v) {
+  ['calm','stretched','overloaded'].forEach(s => {
+    const el = document.getElementById('s-'+s.replace('overloaded','overload'));
+    el.classList.remove('on');
+  });
+  const map = {calm:'calm',stretched:'stretched',overloaded:'overload'};
+  document.getElementById('s-'+map[v]).classList.add('on');
+  save('stress_'+todayKey, v);
+}
+
+// ─── STREAK ───
+function buildStreak() {
+  const bar = document.getElementById('streak');
+  bar.innerHTML = '';
+  for(let i=6;i>=0;i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    const log = JSON.parse(ls('log_'+key)||'null');
+    const lit = log && (log.ritDone||0) >= 5;
+    bar.innerHTML += `<div class="pip${lit?' lit':''}"></div>`;
+  }
+}
+
+// ─── INSIGHTS ───
+function buildInsights() {
+  const strip = document.getElementById('i-strip');
+  const list = document.getElementById('log-list');
+  strip.innerHTML = '';
+  const logs = [];
+
+  for(let i=13;i>=0;i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    const log = JSON.parse(ls('log_'+key)||'null');
+    const score = log ? (log.ritDone||0) : null;
+    const lbl = DAYS[d.getDay()].slice(0,1);
+    let cls = '', txt = '—';
+    if(score !== null) {
+      txt = score;
+      if(score >= 8) cls = 'great';
+      else if(score >= 5) cls = 'good';
+      else cls = 'okay';
+    }
+    strip.innerHTML += `<div class="hday"><div class="hday-l">${lbl}</div><div class="hdot ${cls}">${txt}</div></div>`;
+    if(log) logs.push({key, log, d});
+  }
+
+  if(!logs.length) {
+    list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted);font-size:13px">No logs yet — start today 🌙</div>';
+    return;
+  }
+  list.innerHTML = logs.reverse().slice(0,7).map(({log,d}) => `
+    <div class="log-entry">
+      <div class="log-entry-top">
+        <span class="log-date">${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]}</span>
+        <span class="log-score">${log.ritDone||0}<small>/10</small></span>
+      </div>
+      ${log.note ? `<div class="log-note">${log.note.slice(0,120)}${log.note.length>120?'…':''}</div>` : ''}
+      <div class="log-tags">
+        ${log.stress ? `<span class="log-tag">Stress: ${log.stress}</span>` : ''}
+        ${log.slpHrs ? `<span class="log-tag">Sleep: ${log.slpHrs}</span>` : ''}
+        ${log.back ? `<span class="log-tag">Back: ${log.back}</span>` : ''}
+        ${log.phase ? `<span class="log-tag">${log.phase}</span>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function buildAstroEvents() {
+  const now = new Date();
+  const events = [];
+
+  // Mercury Rx upcoming
+  const nextRx = getNextMercRx(now);
+  if(nextRx) {
+    const days = Math.ceil((new Date(nextRx[0]) - now) / 86400000);
+    const isVirgo = nextRx[0].includes('09-');
+    events.push({
+      dot: days <= 14 ? 'red' : 'blue',
+      title: `Mercury Retrograde · ${new Date(nextRx[0]).toLocaleDateString('en-IN',{day:'numeric',month:'short'})} – ${new Date(nextRx[1]).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`,
+      detail: `${days > 0 ? 'In '+days+' days' : 'Active now'} · ${isVirgo?'Virgo transit — hits your natal chart hardest. Contracts + communication triple-check.':'Backup all work. Verify all agreements in writing.'}`,
+      badge: days <= 14 ? 'warn' : 'good',
+      badgeTxt: days <= 14 ? (days > 0 ? `In ${days}d` : 'Active') : `${days}d away`
+    });
+  }
+  if(checkMercRx(now)) {
+    const rx = MERC_RX.find(([s,e]) => now.toISOString().split('T')[0] >= s && now.toISOString().split('T')[0] <= e);
+    const days = Math.ceil((new Date(rx[1]) - now) / 86400000);
+    events.unshift({
+      dot:'red',
+      title:'☿ Mercury Retrograde · ACTIVE NOW',
+      detail:`Ends in ${days} days. Your natal Rx in Virgo means your mind is sharper — but all communications and contracts need double verification.`,
+      badge:'warn', badgeTxt:'Active'
+    });
+  }
+
+  // Jupiter Cancer
+  const daysJup = Math.ceil((JUPITER_CANCER - now) / 86400000);
+  if(daysJup > 0) {
+    events.push({
+      dot:'gold',
+      title:`♃ Jupiter enters Cancer (Exalted) · June 2026`,
+      detail:`In ${daysJup} days · Directly on your Lagna · Rarest blessing of the next 12 years · Your FD matures at the same time. `,
+      badge:'key', badgeTxt:daysJup > 30 ? `${Math.ceil(daysJup/30)}mo` : daysJup+'d'
+    });
+  } else {
+    events.push({
+      dot:'gold',
+      title:'♃ Jupiter in Cancer (Exalted) · ACTIVE',
+      detail:'The most powerful transit for your Lagna in 12 years. Every investment and decision made now has cosmic backing. Move deliberately.',
+      badge:'key', badgeTxt:'Active'
+    });
+  }
+
+  // Jupiter Leo (2nd house) — wealth house transit
+  const jupLeo = new Date('2027-06-01');
+  const daysLeo = Math.ceil((jupLeo - now) / 86400000);
+  if(daysLeo > 0) {
+    events.push({
+      dot:'green',
+      title:'♃ Jupiter enters Leo (2nd house) · June 2027',
+      detail:`In ${Math.ceil(daysLeo/30)} months · Transits your natal Moon + Venus · Direct wealth manifestation period.`,
+      badge:'good', badgeTxt:`${Math.ceil(daysLeo/30)}mo`
+    });
+  }
+
+  // Mars Mahadasha
+  const marsDasha = new Date('2030-01-01');
+  const daysMars = Math.ceil((marsDasha - now) / 86400000);
+  events.push({
+    dot:'gold',
+    title:'♂ Mars Mahadasha begins · January 2030',
+    detail:`In ${Math.ceil(daysMars/365)} years · Your Yoga Karaka activated · Peak power decade — business and investments peak 2030–2037.`,
+    badge:'key', badgeTxt:`${Math.ceil(daysMars/365)}y`
+  });
+
+  document.getElementById('astro-events').innerHTML = events.map(e => `
+    <div class="event-row">
+      <div class="event-dot ${e.dot}"></div>
+      <div class="event-info">
+        <div class="event-title">${e.title}</div>
+        <div class="event-detail">${e.detail}</div>
+      </div>
+      <span class="event-badge badge-${e.badge}">${e.badgeTxt}</span>
+    </div>`).join('');
+}
+
+// ─── SAVE ───
+function saveHome() {
+  const ritDone = document.querySelectorAll('.rit.done').length;
+  const note = document.getElementById('home-note').value;
+  const stress = ls('stress_'+todayKey);
+  const log = JSON.parse(ls('log_'+todayKey)||'{}');
+  save('log_'+todayKey, JSON.stringify({...log, ritDone, note, stress, date: todayKey}));
+  save('note_'+todayKey, note);
+  buildStreak();
+  toast('Today saved ✓');
+}
+
+function saveBody() {
+  const slpBed = document.getElementById('slp-bed').value;
+  const slpWake = document.getElementById('slp-wake').value;
+  const [bh,bm] = slpBed.split(':').map(Number);
+  const [wh,wm] = slpWake.split(':').map(Number);
+  let mins = (wh*60+wm)-(bh*60+bm); if(mins<0)mins+=1440;
+  const slpHrs = Math.floor(mins/60) + 'h';
+  const back = document.querySelector('[data-g="back"].on')?.dataset.v;
+  const gut = document.querySelector('[data-g="gut"].on')?.dataset.v;
+  const em = document.querySelector('[data-g="e-morning"].on')?.dataset.v;
+  const ee = document.querySelector('[data-g="e-evening"].on')?.dataset.v;
+  const moves = [...document.querySelectorAll('.mov.on')].map(m => m.dataset.id);
+  const log = JSON.parse(ls('log_'+todayKey)||'{}');
+  save('log_'+todayKey, JSON.stringify({...log, slpBed, slpWake, slpHrs, back, gut, energyMorn:em, energyEve:ee, moves}));
+  toast('Body log saved ✓');
+}
+
+function saveCycle() {
+  const cd = getCycleData();
+  const syms = [...document.querySelectorAll('.sym.on')].map(s => s.dataset.id);
+  const log = JSON.parse(ls('log_'+todayKey)||'{}');
+  save('log_'+todayKey, JSON.stringify({...log, phase: cd?.phase, cycleDay: cd?.day, symptoms: syms}));
+  toast('Cycle log saved ✓');
+}
+
+// ─── LOAD ALL ───
+function loadAll() {
+  // Rituals
+  const ritState = JSON.parse(ls('rit_'+todayKey)||'{}');
+  document.querySelectorAll('.rit[data-id]').forEach(el => {
+    if(ritState[el.dataset.id]) el.classList.add('done');
+  });
+  // Stress
+  const stress = ls('stress_'+todayKey);
+  if(stress) setStress(stress);
+  // Note
+  const note = ls('note_'+todayKey);
+  if(note) document.getElementById('home-note').value = note;
+  // Sleep
+  const bed = ls('slp_bed_'+todayKey);
+  const wake = ls('slp_wake_'+todayKey);
+  if(bed) document.getElementById('slp-bed').value = bed;
+  if(wake) document.getElementById('slp-wake').value = wake;
+  // Cycle
+  const cs = ls('cycle_start');
+  if(cs) document.getElementById('cyc-start').value = cs;
+  // Notif settings
+  const ns = JSON.parse(ls('notif_settings')||'null');
+  if(ns) { notifSettings = ns; syncNotifToggles(); }
+  updateWellnessRing();
+}
+
+// ─── NOTIFICATIONS ───
+async function initSW() {
+  if(!('serviceWorker' in navigator)) return;
+  try {
+    const reg = await navigator.serviceWorker.register('./sw.js');
+    sw = reg;
+    await navigator.serviceWorker.ready;
+    scheduleNotifications();
+  } catch(e) { console.warn('SW:', e); }
+}
+
+function updatePermUI() {
+  const p = Notification.permission;
+  const btn = document.getElementById('perm-btn');
+  const st = document.getElementById('perm-status');
+  if(p === 'granted') {
+    btn.textContent = '✅ Notifications Enabled';
+    btn.style.opacity = '.6';
+    btn.style.cursor = 'default';
+    st.textContent = 'You\'re all set. Add to Home Screen if not done yet.';
+  } else if(p === 'denied') {
+    btn.textContent = '🚫 Notifications Blocked';
+    btn.style.opacity = '.6';
+    st.textContent = 'Go to Settings → Safari → Notifications to re-enable.';
+  } else {
+    st.textContent = 'Tap to allow — then add to Home Screen for full PWA.';
+  }
+}
+
+async function requestPermission() {
+  if(Notification.permission === 'granted') return;
+  const r = await Notification.requestPermission();
+  updatePermUI();
+  if(r === 'granted') { scheduleNotifications(); toast('Notifications enabled ✓'); }
+}
+
+function togNotif(key) {
+  notifSettings[key] = !notifSettings[key];
+  const el = document.getElementById('tog-'+key);
+  el.classList.toggle('on', notifSettings[key]);
+  save('notif_settings', JSON.stringify(notifSettings));
+  scheduleNotifications();
+}
+function syncNotifToggles() {
+  Object.entries(notifSettings).forEach(([k,v]) => {
+    document.getElementById('tog-'+k)?.classList.toggle('on', v);
+  });
+}
+
+function getMorningMsg() {
+  const cd = getCycleData();
+  const age = getMoonAge(new Date());
+  const isRx = checkMercRx(new Date());
+
+  if(isRx && notifSettings.rx) {
+    const isVirgo = MERC_RX.find(([s,e]) => {
+      const d = new Date().toISOString().split('T')[0];
+      return d >= s && d <= e && s.includes('-09-');
+    });
+    return {
+      title: '☿ Mercury Retrograde',
+      body: isVirgo
+        ? 'Virgo Rx active — your natal chart is most affected. Triple-check all contracts today.'
+        : 'Mercury Rx active — written confirmation for everything. Your mind is clearer than most right now.'
+    };
+  }
+
+  if(cd) {
+    const msgs = {
+      menstrual: { title: '🌑 Rest day', body: 'Menstrual phase — conserve energy. Even the moon goes dark before it returns.' },
+      follicular: { title: '🌒 Rising energy', body: 'Follicular phase — Rahu 10th is ready to build. Good window for bold moves.' },
+      ovulation: { title: '🌕 Your peak day', body: 'Ovulation — sharpest clarity, strongest presence. Venus-Moon in Leo peaks. Use this window.' },
+      luteal: { title: '🌖 Systems mode', body: 'Luteal phase — Mercury Retrograde Virgo mind activates. BulletRaja detail work is perfect today.' },
+    };
+    return msgs[cd.phase];
+  }
+
+  const moonMsgs = [
+    { title: '🌙 Good morning, Jinnal', body: `${moonName(age)} — Moon-Saturn antardasha: build deliberately today.` },
+    { title: '🌙 Morning oracle', body: 'Cancer Lagna needs a slow start. Water before phone. Stillness before screen.' },
+    { title: '🌙 Punarvasu morning', body: 'The light returns. What are you building today that will outlast today?' },
+  ];
+  const idx = new Date().getDay() % moonMsgs.length;
+  return moonMsgs[idx];
+}
+
+function getAfternoonMsg() {
+  return { title: '☀️ Afternoon check', body: 'Water, back, energy — 30 seconds. How is your Virgo gut holding up?' };
+}
+
+function getSleepMsg() {
+  const cd = getCycleData();
+  const phase = cd?.phase;
+  const msgs = {
+    menstrual: '🌑 Screen off — your body needs full rest tonight. Menstrual recovery is non-negotiable.',
+    follicular: '🌒 Screen off soon. Tomorrow\'s rising energy needs tonight\'s rest.',
+    ovulation: '🌕 Screen off — protect tomorrow\'s peak clarity with proper sleep.',
+    luteal: '🌖 Screen off — luteal recovery is as important as the day\'s work.',
+  };
+  return { title: '🌙 Sleep window', body: phase ? msgs[phase] : '🌙 Screen off — Cancer Lagna needs 7–8 hrs. Rahu 10th loops must be broken.' };
+}
+
+function scheduleNotifications() {
+  if(Notification.permission !== 'granted') return;
+  if(!navigator.serviceWorker.controller) return;
+
+  const now = new Date();
+  const list = [];
+
+  function todayAt(h, m) {
+    const d = new Date(now);
+    d.setHours(h, m, 0, 0);
+    return d;
+  }
+
+  if(notifSettings.morning) {
+    const t = todayAt(7, 30);
+    if(t > now) { const m = getMorningMsg(); list.push({ts:t.getTime(), ...m, tag:'morning'}); }
+  }
+  if(notifSettings.afternoon) {
+    const t = todayAt(15, 0);
+    if(t > now) { const m = getAfternoonMsg(); list.push({ts:t.getTime(), ...m, tag:'afternoon'}); }
+  }
+  if(notifSettings.sleep) {
+    const t = todayAt(22, 15);
+    if(t > now) { const m = getSleepMsg(); list.push({ts:t.getTime(), ...m, tag:'sleep'}); }
+  }
+
+  // Jupiter Cancer alert (7 days before)
+  if(notifSettings.jup) {
+    const alert7 = new Date(JUPITER_CANCER);
+    alert7.setDate(alert7.getDate() - 7);
+    const alertDay = alert7.toISOString().split('T')[0];
+    const today = now.toISOString().split('T')[0];
+    if(alertDay === today && now.getHours() < 9) {
+      list.push({
+        ts: todayAt(9,0).getTime(),
+        title: '♃ Jupiter enters Cancer in 7 days',
+        body: 'Your FD matures as Jupiter enters your Lagna exalted. The rarest investment window in 12 years begins. Be ready.',
+        tag: 'jupiter'
+      });
+    }
+  }
+
+  // Mercury Rx advance warning (day before)
+  if(notifSettings.rx) {
+    const tomorrow = new Date(now); tomorrow.setDate(tomorrow.getDate()+1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    const rxTomorrow = MERC_RX.find(([s]) => s === tomorrowStr);
+    if(rxTomorrow) {
+      const isVirgo = rxTomorrow[0].includes('-09-');
+      list.push({
+        ts: todayAt(8,0).getTime(),
+        title: '☿ Mercury Retrograde starts tomorrow',
+        body: isVirgo
+          ? 'Virgo Rx tomorrow — most impactful for your natal chart. Sign nothing new today. Back up all systems.'
+          : 'Mercury Rx starts tomorrow. Complete any contracts, agreements, and backups today.',
+        tag: 'rx-warning'
+      });
+    }
+  }
+
+  navigator.serviceWorker.controller.postMessage({ type: 'SCHEDULE', list });
+}
+
+function testNotif() {
+  if(Notification.permission !== 'granted') {
+    toast('Please enable notifications first');
+    return;
+  }
+  const m = getMorningMsg();
+  if(navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'FIRE_NOW',
+      n: { ...m, tag: 'test-'+Date.now() }
+    });
+    toast('Test notification sent ✓');
+  } else {
+    new Notification(m.title, { body: m.body });
+    toast('Test notification sent ✓');
+  }
+}
+
+// ─── UTIL ───
+function ls(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+function save(k,v) { try { localStorage.setItem(k,String(v)); } catch(e) {} }
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+function clearData() {
+  if(confirm('Clear all saved wellness data?')) {
+    localStorage.clear();
+    location.reload();
+  }
+}
+
+// Re-schedule on app visibility (catches SW restarts)
+document.addEventListener('visibilitychange', () => {
+  if(!document.hidden) scheduleNotifications();
+});
+
+init();
+</script>
+</body>
+</html>

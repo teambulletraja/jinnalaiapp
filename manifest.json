@@ -1,0 +1,19 @@
+{
+  "name": "Jinnal · Wellness",
+  "short_name": "Jinnal",
+  "description": "Personal wellness tracker — Cancer Lagna · Magha Moon",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d0f14",
+  "theme_color": "#0d0f14",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230d0f14'/><text y='130' x='96' text-anchor='middle' font-size='120'>🌙</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
