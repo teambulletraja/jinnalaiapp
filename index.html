@@ -4,338 +4,280 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Jinnal">
-<meta name="theme-color" id="theme-color-meta" content="#0d0f14">
+<meta name="theme-color" content="#faf8f4">
 <link rel="manifest" href="./manifest.json">
 <title>Jinnal</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ── */
 :root {
-  --bg:#0d0f14;--s1:#13161d;--s2:#1a1e28;
-  --bd:rgba(255,255,255,.07);--txt:#d4cfc7;--muted:#52504c;--moon:#e8dcc8;
-  --r:16px;
-  --acc:#c9a96e;--acc-s:rgba(201,169,110,.13);--acc-g:rgba(201,169,110,.28);
-  --st:env(safe-area-inset-top,44px);--sb:env(safe-area-inset-bottom,20px);
+  --bg:#faf8f4; --s1:#f5f1ea; --s2:#f0ece4;
+  --bd:#e0dbd2; --txt:#1a1510; --txt2:#6a6058; --muted:#9a9087;
+  --acc:#c9836e; --acc-lt:rgba(201,131,110,.1); --acc-bd:rgba(201,131,110,.35);
+  --st:env(safe-area-inset-top,44px); --sb:env(safe-area-inset-bottom,20px);
 }
-/* Day themes applied to body */
-body.sun{--bg:#15100c;--s1:#1c150f;--s2:#231a12;--acc:#c9836e;--acc-s:rgba(201,131,110,.15);--acc-g:rgba(201,131,110,.3)}
-body.mon{--bg:#0d1018;--s1:#121520;--s2:#171c28;--acc:#8ea8c9;--acc-s:rgba(142,168,201,.13);--acc-g:rgba(142,168,201,.28)}
-body.tue{--bg:#180d0d;--s1:#201212;--s2:#281717;--acc:#c96e6e;--acc-s:rgba(201,110,110,.15);--acc-g:rgba(201,110,110,.3)}
-body.wed{--bg:#0c1510;--s1:#111c14;--s2:#162318;--acc:#6ec98a;--acc-s:rgba(110,201,138,.13);--acc-g:rgba(110,201,138,.28)}
-body.thu{--bg:#151208;--s1:#1c180c;--s2:#231e10;--acc:#c9b46e;--acc-s:rgba(201,180,110,.13);--acc-g:rgba(201,180,110,.28)}
-body.fri{--bg:#180d12;--s1:#201218;--s2:#28171e;--acc:#c98ea0;--acc-s:rgba(201,142,160,.13);--acc-g:rgba(201,142,160,.28)}
-body.sat{--bg:#0d0e18;--s1:#12141e;--s2:#171924;--acc:#7a8ac9;--acc-s:rgba(122,138,201,.13);--acc-g:rgba(122,138,201,.28)}
-
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow-x:hidden}
-body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:14px;transition:background .6s,--acc .6s}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:14px}
 
-/* Stars */
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(1px 1px at 12% 15%,rgba(255,255,255,.4) 0%,transparent 100%),
-  radial-gradient(1px 1px at 80% 8%,rgba(255,255,255,.3) 0%,transparent 100%),
-  radial-gradient(1.5px 1.5px at 55% 18%,var(--acc-g) 0%,transparent 100%),
-  radial-gradient(1px 1px at 35% 55%,rgba(255,255,255,.2) 0%,transparent 100%),
-  radial-gradient(1px 1px at 7% 70%,rgba(255,255,255,.18) 0%,transparent 100%),
-  radial-gradient(1px 1px at 90% 82%,rgba(255,255,255,.15) 0%,transparent 100%),
-  radial-gradient(1px 1px at 48% 88%,rgba(255,255,255,.12) 0%,transparent 100%)}
+/* wrap */
+.wrap{max-width:430px;margin:0 auto;padding-bottom:calc(60px + var(--sb))}
 
-.wrap{position:relative;z-index:1;max-width:430px;margin:0 auto;padding-bottom:calc(68px + var(--sb))}
-
-/* ── PAGES ── */
+/* pages */
 .page{display:none}
-.page.active{display:block;animation:fu .3s ease}
-@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page.active{display:block;animation:fu .28s ease}
+@keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── NAV ── */
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;
-  background:rgba(13,15,20,.94);backdrop-filter:blur(28px);border-top:1px solid var(--bd);
-  display:flex;z-index:99;padding-bottom:var(--sb)}
-.ni{flex:1;padding:10px 0 10px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none}
-.ni-ico{font-size:20px;display:block;transition:filter .2s,transform .2s}
-.ni-lbl{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.04em;transition:color .2s}
-.ni.on .ni-lbl{color:var(--acc)}
-.ni.on .ni-ico{filter:drop-shadow(0 0 5px var(--acc-g));transform:translateY(-1px)}
+/* nav */
+.nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  background:rgba(250,248,244,.96);backdrop-filter:blur(20px);
+  border-top:1px solid var(--bd);
+  display:flex;z-index:90;padding-bottom:var(--sb);
+}
+.ni{flex:1;padding:11px 0 10px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none}
+.ni-g{font-size:18px;display:block;color:var(--muted);transition:color .2s,transform .2s;font-family:'Cormorant Garamond',serif}
+.ni.on .ni-g{color:var(--acc);transform:scale(1.12)}
+
+/* ── SECTION / CARD ── */
+.sec{margin:0 18px 16px}
+.slbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.slbl::after{content:'';flex:1;height:1px;background:var(--bd)}
+.card{background:var(--s1);border-radius:12px;overflow:hidden;border:1px solid var(--bd)}
 
 /* ── HOME ── */
-.home-top{padding:calc(var(--st) + 10px) 20px 0;display:flex;justify-content:space-between;align-items:center}
-.home-date{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-.rx-chip{font-size:10px;background:rgba(201,122,122,.15);color:#e8a0a0;border:1px solid rgba(201,122,122,.3);
-  padding:3px 10px;border-radius:20px;display:none}
-.rx-chip.show{display:block}
+.home-top{
+  padding:calc(var(--st) + 10px) 18px 0;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.home-date{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.day-pill{font-size:10px;font-family:'DM Sans',sans-serif;background:var(--acc);color:#faf8f4;padding:3px 10px;border-radius:20px;letter-spacing:.04em}
 
-/* Planet Hero */
-.planet-hero{padding:20px 20px 0;text-align:center;position:relative}
-.planet-glyph{font-size:72px;display:block;line-height:1;
-  filter:drop-shadow(0 0 24px var(--acc-g));
-  animation:pulse 4s ease-in-out infinite}
-@keyframes pulse{0%,100%{filter:drop-shadow(0 0 24px var(--acc-g))}50%{filter:drop-shadow(0 0 40px var(--acc-g))}}
-.planet-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;
-  color:var(--acc);letter-spacing:.08em;margin-top:8px}
-.planet-theme{font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.1em;text-transform:uppercase}
-.planet-sub{font-size:11px;color:var(--muted);margin-top:3px;opacity:.7}
+/* Planet hero */
+.planet-hero{padding:16px 18px 0}
+.planet-rule{height:2px;background:var(--txt);margin-bottom:10px}
+.planet-name{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:400;color:var(--txt);line-height:.9;letter-spacing:-.02em}
+.planet-theme{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--acc);margin-top:6px;letter-spacing:.04em}
 
-/* Context bar */
-.ctx-bar{margin:16px 16px 0;display:flex;gap:8px}
-.ctx-pill{flex:1;background:var(--s1);border:1px solid var(--bd);border-radius:10px;
-  padding:8px 10px;text-align:center}
-.ctx-pill-ico{font-size:16px;display:block;margin-bottom:2px}
-.ctx-pill-txt{font-size:10px;color:var(--muted);line-height:1.3}
-.ctx-pill-val{font-size:11px;color:var(--acc);margin-top:1px;font-weight:500}
+/* Moon + context strip */
+.ctx-strip{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);margin:14px 0 0}
+.ctx-moon{display:flex;align-items:center;gap:7px;flex:1}
+.ctx-moon-lbl{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--txt2)}
+.ctx-divider{width:1px;height:14px;background:var(--bd);flex-shrink:0}
+.ctx-cycle{display:flex;align-items:center;gap:6px}
+.ctx-cycle-badge{font-family:'DM Sans',sans-serif;font-size:10px;background:var(--acc);color:#faf8f4;padding:3px 10px;border-radius:20px}
+.ctx-dasha{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);margin-left:auto}
 
 /* Oracle */
-.oracle-wrap{margin:14px 16px 0;background:var(--acc-s);border:1px solid var(--acc-g);
-  border-radius:14px;padding:14px 18px;text-align:center}
-.oracle-txt{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--moon);
-  font-weight:300;font-style:italic;line-height:1.6}
+.oracle-wrap{margin:14px 18px 0;padding:14px 16px;background:var(--acc-lt);border-radius:12px;border:1px solid var(--acc-bd)}
+.oracle-txt{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--txt);font-weight:400;font-style:italic;line-height:1.6}
 
-/* Guidance section */
-.sec{margin:14px 16px 0}
-.slbl{font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;
-  margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.slbl::after{content:'';flex:1;height:1px;background:var(--bd)}
+/* Guidance */
+.guidance{display:flex;flex-direction:column;gap:5px}
+.g-row{display:flex;gap:9px;align-items:flex-start;padding:9px 12px;background:var(--s1);border-radius:10px;border:1px solid var(--bd)}
+.g-row.do-row{border-left:2.5px solid var(--acc)}
+.g-row.dont-row{border-left:2.5px solid var(--bd)}
+.g-ico{font-size:14px;flex-shrink:0;margin-top:1px}
+.g-txt{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.5}
+.g-txt em{color:var(--acc);font-style:normal;font-weight:500}
 
-.guidance-list{display:flex;flex-direction:column;gap:6px}
-.g-item{display:flex;align-items:flex-start;gap:10px;background:var(--s1);
-  border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
-.g-item.do-item{border-left:2px solid var(--acc)}
-.g-item.dont-item{border-left:2px solid rgba(201,122,122,.5)}
-.g-ico{font-size:16px;flex-shrink:0;margin-top:1px}
-.g-txt{font-size:12px;color:var(--txt);line-height:1.5}
-
-/* Daily chips */
-.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.chip{font-size:11px;background:var(--s1);border:1px solid var(--bd);
-  border-radius:20px;padding:5px 12px;color:var(--muted)}
-.chip span{color:var(--acc);margin-right:4px}
+/* Chips */
+.chip-row{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:'DM Sans',sans-serif;font-size:10px;background:var(--s1);border:1px solid var(--bd);border-radius:20px;padding:4px 11px;color:var(--muted);display:flex;gap:4px}
+.chip b{color:var(--txt2);font-weight:500}
 
 /* Stress */
-.stress-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.sbtn{background:var(--s1);border:1.5px solid var(--bd);border-radius:12px;
-  padding:12px 6px;text-align:center;cursor:pointer;-webkit-user-select:none;
-  user-select:none;transition:all .18s}
-.sbtn:active{transform:scale(.95)}
-.sbtn-ico{font-size:22px;display:block;margin-bottom:4px}
-.sbtn-lbl{font-size:11px;color:var(--muted)}
-.sbtn.on .sbtn-lbl{color:var(--txt)}
-.sbtn.calm.on{background:rgba(122,171,138,.15);border-color:rgba(122,171,138,.45)}
-.sbtn.stretched.on{background:var(--acc-s);border-color:var(--acc-g)}
-.sbtn.overload.on{background:rgba(201,122,122,.15);border-color:rgba(201,122,122,.45)}
+.stress-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.sbtn{background:var(--s1);border:1.5px solid var(--bd);border-radius:10px;padding:11px 6px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
+.sbtn:active{transform:scale(.96)}
+.sbtn-ico{font-size:20px;display:block;margin-bottom:3px}
+.sbtn-lbl{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted)}
+.sbtn.calm.on{background:rgba(122,171,138,.12);border-color:rgba(122,171,138,.5)}
+.sbtn.calm.on .sbtn-lbl{color:#3a7a52;font-weight:500}
+.sbtn.stretched.on{background:var(--acc-lt);border-color:var(--acc-bd)}
+.sbtn.stretched.on .sbtn-lbl{color:var(--acc);font-weight:500}
+.sbtn.overload.on{background:rgba(201,100,100,.1);border-color:rgba(201,100,100,.35)}
+.sbtn.overload.on .sbtn-lbl{color:#a03030;font-weight:500}
 
 /* Water */
 .water-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.water-count{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--acc);font-weight:300}
+.water-lbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+.water-val{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--acc);font-weight:400}
+.water-rst{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);cursor:pointer}
 .glasses{display:flex;gap:5px}
-.gl{width:30px;height:38px;border:1.5px solid var(--bd);border-radius:4px 4px 7px 7px;
-  cursor:pointer;position:relative;overflow:hidden;background:var(--s1);
-  -webkit-user-select:none;user-select:none;transition:border-color .2s}
-.gl.on{border-color:rgba(122,155,201,.5)}
-.gl-fill{position:absolute;bottom:0;left:0;right:0;height:0;
-  background:linear-gradient(180deg,rgba(122,155,201,.55),rgba(80,120,180,.8));
-  transition:height .3s cubic-bezier(.34,1.56,.64,1);border-radius:0 0 5px 5px}
-.gl.on .gl-fill{height:82%}
-.water-reset{background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.gl{height:36px;flex:1;border:1.5px solid var(--bd);border-radius:4px 4px 7px 7px;cursor:pointer;position:relative;overflow:hidden;background:var(--bg);-webkit-user-select:none;user-select:none;transition:border-color .2s}
+.gl.on{border-color:rgba(122,155,201,.6)}
+.gl-f{position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(180deg,rgba(122,155,201,.5),rgba(80,120,180,.75));transition:height .3s cubic-bezier(.34,1.56,.64,1);border-radius:0 0 5px 5px}
+.gl.on .gl-f{height:82%}
 
-/* Note */
-.note-field{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:12px;
-  color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;
-  padding:12px 16px;outline:none;resize:none;line-height:1.5;transition:border-color .2s}
-.note-field:focus{border-color:var(--acc-g)}
-.note-field::placeholder{color:var(--muted)}
+/* Streak */
+.streak-row{display:flex;gap:5px;justify-content:center}
+.pip{width:7px;height:7px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);transition:all .25s}
+.pip.lit{background:var(--acc);border-color:var(--acc)}
 
-/* Quick log FAB */
-.fab{position:fixed;right:20px;bottom:calc(80px + var(--sb));
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 65%,#000));
-  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:22px;box-shadow:0 4px 20px var(--acc-s);z-index:98;
-  transition:transform .15s,box-shadow .15s;-webkit-user-select:none;user-select:none}
-.fab:active{transform:scale(.93);box-shadow:0 2px 10px var(--acc-s)}
+/* Amavasya / Purnima banner */
+.luna-banner{margin:14px 18px 0;padding:11px 14px;background:var(--acc-lt);border-radius:10px;border:1px solid var(--acc-bd);font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.5;display:none}
+.luna-banner.show{display:block}
+.luna-banner strong{color:var(--acc)}
 
-/* Bottom sheet */
-.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199;
-  opacity:0;pointer-events:none;transition:opacity .3s}
-.sheet-overlay.show{opacity:1;pointer-events:all}
-.sheet{position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);
-  width:100%;max-width:430px;background:var(--s1);border-radius:20px 20px 0 0;
-  border-top:1px solid var(--bd);z-index:200;transition:transform .35s cubic-bezier(.34,1.2,.64,1);
-  padding-bottom:var(--sb)}
+/* ── FAB + SHEET ── */
+.fab{position:fixed;right:18px;bottom:calc(70px + var(--sb));width:50px;height:50px;border-radius:50%;background:var(--txt);color:var(--bg);font-size:24px;line-height:1;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:88;box-shadow:0 2px 16px rgba(26,21,16,.2);transition:transform .12s;-webkit-user-select:none;user-select:none;font-family:'DM Sans',sans-serif}
+.fab:active{transform:scale(.93)}
+.overlay{position:fixed;inset:0;background:rgba(26,21,16,.45);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.show{opacity:1;pointer-events:all}
+.sheet{position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(105%);width:100%;max-width:430px;background:var(--bg);border-radius:20px 20px 0 0;border-top:1px solid var(--bd);z-index:101;transition:transform .35s cubic-bezier(.34,1.15,.64,1);padding-bottom:var(--sb)}
 .sheet.show{transform:translateX(-50%) translateY(0)}
-.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--s2);margin:12px auto 16px}
-.sheet-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--moon);
-  font-weight:300;padding:0 20px 14px;border-bottom:1px solid var(--bd)}
+.sheet-handle{width:34px;height:3px;border-radius:2px;background:var(--bd);margin:12px auto 0}
+.sheet-head{padding:14px 20px 12px;border-bottom:2px solid var(--txt)}
+.sheet-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--txt);line-height:1}
+.sheet-sub{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:4px}
 .sheet-body{padding:16px 20px}
-
-.sheet-row{margin-bottom:16px}
-.sheet-lbl{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-.sheet-opts{display:flex;gap:8px}
-.sopt{flex:1;background:var(--s2);border:1.5px solid var(--bd);border-radius:10px;
-  padding:10px 6px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none;
-  font-size:12px;transition:all .15s}
-.sopt.on{background:var(--acc-s);border-color:var(--acc-g);color:var(--acc)}
-.sopt-ico{font-size:18px;display:block;margin-bottom:3px}
-
-.sheet-time-row{display:flex;gap:10px}
-.time-inp-wrap{flex:1}
-.time-inp-lbl{font-size:11px;color:var(--muted);margin-bottom:4px}
-.time-inp{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;
-  color:var(--moon);font-family:'DM Sans',sans-serif;font-size:15px;
-  padding:8px 10px;text-align:center;outline:none}
-.time-inp:focus{border-color:var(--acc-g)}
-
-.sheet-save{width:100%;margin-top:16px;padding:14px;
-  background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 65%,#000));
-  color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
-  border:none;border-radius:12px;cursor:pointer;letter-spacing:.05em}
+.sheet-row{margin-bottom:14px}
+.sheet-lbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px}
+.sheet-opts{display:flex;gap:7px}
+.sopt{flex:1;background:var(--s1);border:1.5px solid var(--bd);border-radius:10px;padding:9px 5px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);transition:all .15s}
+.sopt-ico{font-size:17px;display:block;margin-bottom:3px}
+.sopt.on{background:var(--acc-lt);border-color:var(--acc-bd);color:var(--acc);font-weight:500}
+.time-row{display:flex;gap:10px}
+.time-wrap{flex:1}
+.time-lbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);margin-bottom:4px}
+.time-inp{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:9px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:15px;padding:8px 10px;text-align:center;outline:none}
+.time-inp:focus{border-color:var(--acc-bd)}
+.note-ta{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:10px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;padding:11px 14px;outline:none;resize:none;line-height:1.5}
+.note-ta:focus{border-color:var(--acc-bd)}
+.note-ta::placeholder{color:var(--muted)}
+.sheet-save{width:100%;padding:13px;background:var(--txt);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;border:none;border-radius:11px;cursor:pointer;letter-spacing:.04em;margin-top:14px}
 
 /* ── WEEK PAGE ── */
-.week-day-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
-  overflow:hidden;margin-bottom:10px}
-.wdc-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;
-  -webkit-user-select:none;user-select:none}
-.wdc-header:active{background:var(--s2)}
-.wdc-glyph{font-size:28px;width:36px;text-align:center;flex-shrink:0;
-  filter:drop-shadow(0 0 6px var(--acc-g))}
-.wdc-info{flex:1}
-.wdc-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300}
-.wdc-theme{font-size:11px;color:var(--muted);margin-top:2px}
-.wdc-chev{font-size:12px;color:var(--muted);transition:transform .2s}
-.wdc-body{display:none;padding:0 16px 14px;border-top:1px solid var(--bd)}
-.wdc-body.open{display:block}
-.wdc-section{margin-top:10px}
-.wdc-section-title{font-size:10px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
-.wdc-list{display:flex;flex-direction:column;gap:4px}
-.wdc-item{font-size:12px;color:var(--txt);line-height:1.5;padding:6px 10px;
-  background:var(--s2);border-radius:8px;display:flex;gap:8px}
-.wdc-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.wdc-chip{font-size:10px;background:var(--s2);border:1px solid var(--bd);
-  border-radius:20px;padding:3px 10px;color:var(--muted)}
-.wdc-chip span{color:var(--acc);margin-right:3px}
-.today-badge{font-size:10px;background:var(--acc-s);color:var(--acc);
-  border:1px solid var(--acc-g);border-radius:20px;padding:2px 8px;letter-spacing:.05em}
+.pg-hdr{padding:calc(var(--st) + 12px) 18px 14px}
+.pg-rule{height:2px;background:var(--txt);margin-bottom:10px}
+.pg-name{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--txt);line-height:.95;letter-spacing:-.02em}
+.pg-sub{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:6px}
+
+.wday-card{border-bottom:1px solid var(--bd)}
+.wday-card:last-child{border-bottom:none}
+.wday-hdr{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;-webkit-user-select:none;user-select:none;transition:background .12s}
+.wday-hdr:active{background:var(--s2)}
+.wday-glyph{font-family:'Cormorant Garamond',serif;font-size:22px;width:28px;text-align:center;flex-shrink:0;color:var(--acc)}
+.wday-info{flex:1}
+.wday-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--txt)}
+.wday-theme{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:1px}
+.wday-chev{font-size:11px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.wday-today{font-family:'DM Sans',sans-serif;font-size:9px;background:var(--acc);color:#faf8f4;padding:2px 7px;border-radius:10px}
+.wday-body{display:none;padding:0 16px 14px}
+.wday-body.open{display:block}
+.wday-sec-lbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin:10px 0 6px}
+.wday-item{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.5;padding:6px 10px;background:var(--s1);border-radius:8px;margin-bottom:4px;display:flex;gap:8px;border-left:2px solid var(--acc)}
+.wday-dont{border-left:2px solid var(--bd);color:var(--txt2)}
+.wday-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.wday-chip{font-family:'DM Sans',sans-serif;font-size:10px;background:var(--s1);border:1px solid var(--bd);border-radius:20px;padding:3px 9px;color:var(--muted);display:flex;gap:3px}
+.wday-chip b{color:var(--txt2);font-weight:500}
 
 /* ── CYCLE PAGE ── */
-.pg-hdr{padding:calc(var(--st) + 14px) 20px 14px;display:flex;align-items:baseline;gap:10px}
-.pg-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--moon);font-weight:300}
-.pg-sub{font-size:12px;color:var(--muted)}
+.cyc-hero{margin:0 18px 14px;background:var(--acc-lt);border:1px solid var(--acc-bd);border-radius:14px;padding:20px;text-align:center}
+.cyc-day-n{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:300;color:var(--txt);line-height:1}
+.cyc-day-lbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.cyc-phase-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--acc);margin-top:8px}
+.cyc-phase-ico{display:block;margin:6px 0 0;font-size:11px;font-family:'DM Sans',sans-serif;color:var(--muted)}
 
-.cyc-hero{margin:0 16px 14px;background:var(--acc-s);border:1px solid var(--acc-g);
-  border-radius:var(--r);padding:20px;text-align:center}
-.cyc-day{font-family:'Cormorant Garamond',serif;font-size:64px;color:var(--acc);font-weight:300;line-height:1}
-.cyc-day-lbl{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
-.cyc-phase-ico{font-size:36px;display:block;margin:10px 0 4px}
-.cyc-phase-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--moon);font-weight:300}
+.cyc-strip{margin-bottom:12px}
+.phase-bar{display:flex;gap:3px;margin-bottom:5px}
+.pb{height:4px;border-radius:2px;background:var(--bd);transition:background .3s}
+.pb.mens{flex:5}
+.pb.foll{flex:9}
+.pb.ovul{flex:3}
+.pb.lute{flex:11}
+.pb.active{background:var(--acc)}
+.phase-lbls{display:flex;justify-content:space-between;font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted)}
+.phase-lbls .active-lbl{color:var(--acc);font-weight:500}
 
-.cyc-input-row{display:flex;align-items:center;justify-content:space-between;
-  background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:10px}
-.cyc-lbl{font-size:13px}
-.cyc-date{background:var(--s2);border:1px solid var(--bd);border-radius:8px;
-  color:var(--moon);font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 10px;outline:none}
-.cyc-date:focus{border-color:var(--acc-g)}
+.cyc-input-row{display:flex;align-items:center;justify-content:space-between;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:13px 16px;margin-bottom:10px}
+.cyc-inp-lbl{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt)}
+.cyc-date-inp{background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 10px;outline:none}
+.cyc-date-inp:focus{border-color:var(--acc-bd)}
 
-.impl-crd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-bottom:10px}
-.impl-t{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--moon);font-weight:400;margin-bottom:10px}
-.impl-row{display:flex;gap:10px;margin-bottom:8px}
+.impl-card{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:16px;margin-bottom:10px}
+.impl-t{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--txt);margin-bottom:10px}
+.impl-row{display:flex;gap:9px;margin-bottom:7px}
 .impl-row:last-child{margin-bottom:0}
-.impl-ico{font-size:13px;flex-shrink:0;margin-top:2px}
-.impl-txt{font-size:12px;color:var(--txt);line-height:1.55}
+.impl-dash{color:var(--acc);flex-shrink:0;font-family:'DM Sans',sans-serif;font-size:13px;margin-top:1px}
+.impl-txt{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.55}
 .impl-txt strong{color:var(--acc);font-weight:500}
 
 .sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sym{background:var(--s1);border:1.5px solid var(--bd);border-radius:10px;
-  padding:12px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
-.sym.on{background:var(--acc-s);border-color:var(--acc-g);color:var(--acc)}
-.sym-ico{font-size:20px;display:block;margin-bottom:4px;font-size:20px}
-.sym-lbl{font-size:12px}
+.sym{background:var(--s1);border:1.5px solid var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt2)}
+.sym.on{background:var(--acc-lt);border-color:var(--acc-bd);color:var(--acc)}
+.sym-ico{font-size:20px;display:block;margin-bottom:4px}
 
-/* ── INSIGHTS PAGE ── */
-.i-strip{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* ── INSIGHTS ── */
+.i-strip{display:flex;gap:5px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .i-strip::-webkit-scrollbar{display:none}
-.hday{flex-shrink:0;text-align:center;width:36px}
-.hday-l{font-size:10px;color:var(--muted);margin-bottom:4px}
-.hdot{width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);
-  margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted)}
-.hdot.great{background:rgba(122,171,138,.2);border-color:rgba(122,171,138,.5);color:#7aab8a}
-.hdot.good{background:var(--acc-s);border-color:var(--acc-g);color:var(--acc)}
-.hdot.okay{background:rgba(201,131,110,.15);border-color:rgba(201,131,110,.4);color:#c9836e}
+.hday{flex-shrink:0;text-align:center;width:34px}
+.hday-l{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);margin-bottom:3px}
+.hdot{width:26px;height:26px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);margin:0 auto;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted)}
+.hdot.great{background:rgba(122,171,138,.2);border-color:rgba(122,171,138,.6);color:#3a7a52}
+.hdot.good{background:var(--acc-lt);border-color:var(--acc-bd);color:var(--acc)}
+.hdot.okay{background:rgba(201,131,110,.1);border-color:rgba(201,131,110,.35);color:var(--acc)}
 
-.log-entry{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:8px}
-.log-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.log-date{font-size:13px;color:var(--moon)}
-.log-score{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--acc);font-weight:300}
-.log-score small{font-size:11px;color:var(--muted)}
-.log-note{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:6px}
-.log-tags{display:flex;gap:6px;flex-wrap:wrap}
-.log-tag{font-size:10px;background:var(--s2);padding:2px 8px;border-radius:8px;color:var(--muted)}
+.log-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:13px 15px;margin-bottom:7px}
+.log-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.log-date{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt)}
+.log-slp{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--acc);font-weight:400}
+.log-note-txt{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:5px;font-style:italic}
+.log-tags{display:flex;gap:5px;flex-wrap:wrap}
+.log-tag{font-family:'DM Sans',sans-serif;font-size:10px;background:var(--s2);border:1px solid var(--bd);padding:2px 8px;border-radius:7px;color:var(--muted)}
 
-.event-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
-.event-row{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd)}
-.event-row:last-child{border-bottom:none}
-.event-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.event-dot.gold{background:var(--acc);box-shadow:0 0 6px var(--acc-g)}
-.event-dot.red{background:#c97a7a;box-shadow:0 0 6px rgba(201,122,122,.4)}
-.event-dot.blue{background:#7a9bc9;box-shadow:0 0 6px rgba(122,155,201,.4)}
-.event-dot.green{background:#7aab8a;box-shadow:0 0 6px rgba(122,171,138,.4)}
-.event-info{flex:1}
-.event-title{font-size:13px;color:var(--moon);margin-bottom:2px}
-.event-detail{font-size:11px;color:var(--muted);line-height:1.5}
-.event-badge{font-size:10px;padding:3px 8px;border-radius:10px;letter-spacing:.05em;flex-shrink:0}
-.badge-warn{background:rgba(201,122,122,.15);color:#c97a7a}
-.badge-good{background:rgba(122,171,138,.15);color:#7aab8a}
-.badge-key{background:var(--acc-s);color:var(--acc)}
+.event-card{border-radius:12px;overflow:hidden;border:1px solid var(--bd);background:var(--s1)}
+.ev-row{display:flex;align-items:flex-start;gap:11px;padding:12px 15px;border-bottom:1px solid var(--bd)}
+.ev-row:last-child{border-bottom:none}
+.ev-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.ev-dot.gold{background:var(--acc)}
+.ev-dot.red{background:#c97070}
+.ev-dot.blue{background:#7a9bc9}
+.ev-dot.green{background:#7aab8a}
+.ev-info{flex:1}
+.ev-title{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);font-weight:500;margin-bottom:2px}
+.ev-detail{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);line-height:1.5}
+.ev-badge{font-family:'DM Sans',sans-serif;font-size:10px;padding:3px 8px;border-radius:9px;flex-shrink:0;letter-spacing:.03em}
+.badge-warn{background:rgba(201,100,100,.12);color:#a03030;border:1px solid rgba(201,100,100,.3)}
+.badge-key{background:var(--acc-lt);color:var(--acc);border:1px solid var(--acc-bd)}
+.badge-ok{background:rgba(122,171,138,.12);color:#3a7a52;border:1px solid rgba(122,171,138,.3)}
 
-.dasha-crd{background:linear-gradient(135deg,var(--acc-s),rgba(0,0,0,0));
-  border:1px solid var(--acc-g);border-radius:var(--r);padding:16px}
-.dasha-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--acc);font-weight:300;margin-bottom:4px}
-.dasha-period{font-size:11px;color:var(--muted);letter-spacing:.08em;margin-bottom:10px}
-.dasha-body{font-size:12px;color:var(--txt);line-height:1.65}
-.dasha-next{margin-top:12px;padding-top:12px;border-top:1px solid var(--bd)}
-.dasha-next-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.dasha-next-val{font-size:13px;color:var(--txt)}
+.dasha-card{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:16px}
+.dasha-n{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--acc);margin-bottom:3px}
+.dasha-p{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:10px}
+.dasha-b{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.65}
+.dasha-next{margin-top:11px;padding-top:11px;border-top:1px solid var(--bd)}
+.dasha-next-lbl{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.dasha-next-val{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt)}
 
 /* ── SETTINGS ── */
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
-.notif-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bd)}
+.perm-btn{width:100%;padding:13px;background:var(--acc-lt);border:1px solid var(--acc-bd);border-radius:11px;color:var(--acc);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.04em;margin-bottom:8px}
+.perm-st{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);text-align:center;margin-bottom:14px}
+.notif-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd)}
 .notif-row:last-child{border-bottom:none}
-.notif-ico{font-size:20px;flex-shrink:0;width:28px;text-align:center}
+.notif-ico{font-size:18px;width:24px;text-align:center;flex-shrink:0}
 .notif-info{flex:1}
-.notif-name{font-size:13px}
-.notif-detail{font-size:11px;color:var(--muted);margin-top:2px}
-.ntog{width:44px;height:26px;border-radius:13px;background:var(--s2);border:1px solid var(--bd);
-  position:relative;transition:all .2s;cursor:pointer;flex-shrink:0}
-.ntog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
-  background:var(--muted);transition:all .2s}
+.notif-name{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt)}
+.notif-detail{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:2px}
+.ntog{width:42px;height:25px;border-radius:13px;background:var(--s2);border:1px solid var(--bd);position:relative;transition:all .2s;cursor:pointer;flex-shrink:0}
+.ntog::after{content:'';position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--muted);transition:all .2s}
 .ntog.on{background:var(--acc);border-color:var(--acc)}
-.ntog.on::after{left:21px;background:var(--bg)}
-
-.perm-btn{width:100%;padding:14px;background:var(--acc-s);border:1px solid var(--acc-g);
-  border-radius:12px;color:var(--acc);font-family:'DM Sans',sans-serif;font-size:14px;
-  font-weight:500;cursor:pointer;letter-spacing:.05em;margin-bottom:8px;transition:all .2s}
-.perm-st{font-size:12px;color:var(--muted);text-align:center;margin-bottom:14px}
-.test-btn{width:100%;padding:12px;background:var(--s1);border:1px solid var(--bd);
-  border-radius:12px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;
-  cursor:pointer;margin-bottom:8px;transition:all .2s}
-.test-btn:active{transform:scale(.98)}
+.ntog.on::after{left:20px;background:var(--bg)}
+.test-btn{width:100%;padding:12px;background:var(--s1);border:1px solid var(--bd);border-radius:11px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;margin-bottom:7px;transition:background .15s}
+.test-btn:active{background:var(--s2)}
+.chart-info{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt);line-height:1.9}
+.chart-info strong{color:var(--acc);font-weight:500}
 
 /* TOAST */
-.toast{position:fixed;bottom:calc(80px + var(--sb));left:50%;
-  transform:translateX(-50%) translateY(16px);background:var(--acc);color:var(--bg);
-  padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;
-  opacity:0;transition:all .3s;z-index:300;white-space:nowrap}
+.toast{position:fixed;bottom:calc(72px + var(--sb));left:50%;transform:translateX(-50%) translateY(14px);background:var(--txt);color:var(--bg);padding:9px 18px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;opacity:0;transition:all .28s;z-index:200;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* Streak */
-.streak-row{display:flex;gap:5px;justify-content:center;margin-top:6px}
-.pip{width:7px;height:7px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);transition:all .3s}
-.pip.lit{background:var(--acc);border-color:var(--acc);box-shadow:0 0 5px var(--acc-g)}
-
-/* Amavasya banner */
-.luna-banner{margin:0 16px 14px;background:var(--acc-s);border:1px solid var(--acc-g);
-  border-radius:12px;padding:10px 14px;display:none;font-size:12px;line-height:1.5}
-.luna-banner.show{display:block}
-.luna-banner strong{color:var(--acc)}
+/* Rx chip in header */
+.rx-chip{font-family:'DM Sans',sans-serif;font-size:10px;background:rgba(201,100,100,.12);color:#a03030;border:1px solid rgba(201,100,100,.3);padding:3px 9px;border-radius:20px;display:none}
+.rx-chip.show{display:inline-block}
 </style>
 </head>
 <body>
@@ -348,55 +290,50 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="rx-chip" id="rx-chip"></div>
   </div>
 
-  <!-- Planet Hero -->
+  <!-- Planet hero -->
   <div class="planet-hero">
-    <span class="planet-glyph" id="p-glyph"></span>
-    <div class="planet-name" id="p-name"></div>
-    <div class="planet-theme" id="p-theme"></div>
-    <div class="planet-sub" id="p-sub"></div>
+    <div class="planet-rule"></div>
+    <div class="planet-name" id="p-name">Mars</div>
+    <div class="planet-theme" id="p-theme">Power & action</div>
   </div>
 
-  <!-- Luna / Amavasya / Purnima banner -->
+  <!-- Amavasya/Purnima banner -->
   <div class="luna-banner" id="luna-banner"></div>
 
-  <!-- Context bar: moon + cycle + dasha -->
-  <div class="ctx-bar">
-    <div class="ctx-pill">
-      <span class="ctx-pill-ico" id="ctx-moon-ico"></span>
-      <div class="ctx-pill-txt">Moon</div>
-      <div class="ctx-pill-val" id="ctx-moon-val"></div>
+  <!-- Context strip: moon + cycle + dasha -->
+  <div class="ctx-strip">
+    <div class="ctx-moon">
+      <span id="moon-svg-home"></span>
+      <span class="ctx-moon-lbl" id="ctx-moon-lbl">Waxing Crescent</span>
     </div>
-    <div class="ctx-pill">
-      <span class="ctx-pill-ico" id="ctx-cyc-ico"></span>
-      <div class="ctx-pill-txt">Cycle</div>
-      <div class="ctx-pill-val" id="ctx-cyc-val"></div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-cycle">
+      <span class="ctx-cycle-badge" id="ctx-cycle-badge">Ovul · D14</span>
     </div>
-    <div class="ctx-pill">
-      <span class="ctx-pill-ico">⏳</span>
-      <div class="ctx-pill-txt">Dasha</div>
-      <div class="ctx-pill-val">Moon–Saturn</div>
-    </div>
+    <div class="ctx-dasha">Moon–Saturn ↻</div>
   </div>
 
   <!-- Oracle -->
-  <div class="oracle-wrap">
+  <div class="oracle-wrap" style="margin-top:14px">
     <div class="oracle-txt" id="oracle-txt"></div>
   </div>
 
-  <!-- Today's Dos -->
-  <div class="sec">
+  <!-- Do today -->
+  <div class="sec" style="margin-top:14px">
     <div class="slbl">Do today</div>
-    <div class="guidance-list" id="dos-list"></div>
+    <div class="guidance" id="dos-list"></div>
   </div>
 
-  <!-- Today's Don'ts -->
+  <!-- Avoid today -->
   <div class="sec">
-    <div class="slbl">Avoid today</div>
-    <div class="guidance-list" id="donts-list"></div>
+    <div class="slbl">Avoid</div>
+    <div class="guidance" id="donts-list"></div>
   </div>
 
-  <!-- Daily chips -->
-  <div class="sec" id="chips-sec" style="margin-top:10px"></div>
+  <!-- Chips: wear, food, mantra, chore -->
+  <div class="sec">
+    <div class="chip-row" id="chips-row"></div>
+  </div>
 
   <!-- Stress -->
   <div class="sec">
@@ -417,62 +354,77 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <!-- Water -->
   <div class="sec">
     <div class="water-hdr">
-      <div class="slbl" style="margin-bottom:0;flex:1">Water</div>
+      <span class="water-lbl">Water</span>
       <div style="display:flex;align-items:center;gap:8px">
-        <div class="water-count"><span id="w-count">0</span>/8</div>
-        <button class="water-reset" onclick="resetWater()">reset</button>
+        <span class="water-val"><span id="w-count">0</span> / 8</span>
+        <button class="water-rst" onclick="resetWater()">reset</button>
       </div>
     </div>
     <div class="glasses" id="glasses"></div>
   </div>
 
-  <!-- Note -->
-  <div class="sec" style="margin-bottom:16px">
-    <textarea class="note-field" id="home-note" rows="2" placeholder="One thing about today…"></textarea>
-  </div>
-
   <!-- Streak -->
-  <div class="streak-row" id="streak"></div>
-  <div style="text-align:center;font-size:10px;color:var(--muted);margin-top:4px;margin-bottom:16px">7-day streak</div>
+  <div style="padding:0 18px 16px">
+    <div class="streak-row" id="streak"></div>
+    <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);text-align:center;margin-top:5px;letter-spacing:.06em;text-transform:uppercase">7-day streak</div>
+  </div>
 </div>
 
 <!-- ═══ WEEK ═══ -->
 <div class="page" id="pg-week">
-  <div class="pg-hdr" style="padding-top:calc(var(--st) + 14px)">
-    <div class="pg-title">Week</div>
-    <div class="pg-sub">Your planetary rhythm</div>
+  <div class="pg-hdr">
+    <div class="pg-rule"></div>
+    <div class="pg-name">The Week</div>
+    <div class="pg-sub">Your planetary rhythm — tap any day</div>
   </div>
-  <div class="sec" id="week-list" style="margin-bottom:20px"></div>
+  <div class="sec" style="margin-bottom:20px">
+    <div class="card" id="week-list"></div>
+  </div>
 </div>
 
 <!-- ═══ CYCLE ═══ -->
 <div class="page" id="pg-cycle">
   <div class="pg-hdr">
-    <div class="pg-title">Cycle</div>
+    <div class="pg-rule"></div>
+    <div class="pg-name">Cycle</div>
     <div class="pg-sub">Chart-phase linked</div>
   </div>
   <div class="cyc-hero">
-    <div class="cyc-day" id="cyc-day">—</div>
+    <div class="cyc-day-n" id="cyc-day">—</div>
     <div class="cyc-day-lbl">Cycle Day</div>
-    <span class="cyc-phase-ico" id="cyc-ico">🌙</span>
-    <div class="cyc-phase-name" id="cyc-name">Enter last period date</div>
+    <div class="cyc-phase-name" id="cyc-phase-name">Set your last period date</div>
+    <div class="cyc-phase-ico" id="cyc-phase-ico"></div>
   </div>
   <div class="sec">
+    <div class="cyc-strip">
+      <div class="phase-bar">
+        <div class="pb mens" id="pb-mens"></div>
+        <div class="pb foll" id="pb-foll"></div>
+        <div class="pb ovul" id="pb-ovul"></div>
+        <div class="pb lute" id="pb-lute"></div>
+      </div>
+      <div class="phase-lbls">
+        <span id="pl-mens">Menstrual</span>
+        <span id="pl-foll">Follicular</span>
+        <span id="pl-ovul">Ovulation</span>
+        <span id="pl-lute">Luteal</span>
+      </div>
+    </div>
     <div class="cyc-input-row">
-      <span class="cyc-lbl">Last period started</span>
-      <input type="date" class="cyc-date" id="cyc-start" onchange="updateCycle()">
+      <span class="cyc-inp-lbl">Last period started</span>
+      <input type="date" class="cyc-date-inp" id="cyc-start" onchange="updateCycle()">
     </div>
   </div>
   <div class="sec" id="cyc-impl"></div>
   <div class="sec">
-    <div class="slbl">Today's Symptoms</div>
+    <div class="slbl">Today's signals</div>
     <div class="sym-grid">
-      <div class="sym" data-id="cramps" onclick="togSym(this)"><span class="sym-ico">😣</span><span class="sym-lbl">Cramps</span></div>
-      <div class="sym" data-id="bloat" onclick="togSym(this)"><span class="sym-ico">💨</span><span class="sym-lbl">Bloating</span></div>
-      <div class="sym" data-id="fatigue" onclick="togSym(this)"><span class="sym-ico">😴</span><span class="sym-lbl">Fatigue</span></div>
-      <div class="sym" data-id="mood" onclick="togSym(this)"><span class="sym-ico">🌊</span><span class="sym-lbl">Mood shifts</span></div>
-      <div class="sym" data-id="clarity" onclick="togSym(this)"><span class="sym-ico">💎</span><span class="sym-lbl">Clear mind</span></div>
-      <div class="sym" data-id="energyup" onclick="togSym(this)"><span class="sym-ico">⚡</span><span class="sym-lbl">Energy up</span></div>
+      <div class="sym" data-id="cramps" onclick="togSym(this)"><span class="sym-ico">😣</span>Cramps</div>
+      <div class="sym" data-id="bloat" onclick="togSym(this)"><span class="sym-ico">💨</span>Bloating</div>
+      <div class="sym" data-id="fatigue" onclick="togSym(this)"><span class="sym-ico">😴</span>Fatigue</div>
+      <div class="sym" data-id="mood" onclick="togSym(this)"><span class="sym-ico">🌊</span>Mood shifts</div>
+      <div class="sym" data-id="clarity" onclick="togSym(this)"><span class="sym-ico">💎</span>Clear mind</div>
+      <div class="sym" data-id="energyup" onclick="togSym(this)"><span class="sym-ico">⚡</span>Energy up</div>
     </div>
   </div>
 </div>
@@ -480,12 +432,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ═══ INSIGHTS ═══ -->
 <div class="page" id="pg-insights">
   <div class="pg-hdr">
-    <div class="pg-title">Insights</div>
+    <div class="pg-rule"></div>
+    <div class="pg-name">Insights</div>
     <div class="pg-sub">History · Astro alerts</div>
   </div>
   <div class="sec">
-    <div class="slbl">14-Day</div>
-    <div class="card" style="padding:16px">
+    <div class="slbl">14 days</div>
+    <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px">
       <div class="i-strip" id="i-strip"></div>
     </div>
   </div>
@@ -495,90 +448,65 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   </div>
   <div class="sec">
     <div class="slbl">Dasha</div>
-    <div class="dasha-crd">
-      <div class="dasha-title">Moon – Saturn Antardasha</div>
-      <div class="dasha-period">2025–2027 · You are here</div>
-      <div class="dasha-body">Build structural foundations. No impulsive financial bets. Health signals must not be ignored. What you build now is permanent — this period directly supports BulletRaja system work and the June 2026 investment plan.</div>
+    <div class="dasha-card">
+      <div class="dasha-n">Moon – Saturn Antardasha</div>
+      <div class="dasha-p">2025–2027 · You are here</div>
+      <div class="dasha-b">Build structural foundations. No impulsive financial bets. Health signals must not be ignored — what you build now is permanent. Directly supports BulletRaja system work and the June 2026 investment plan.</div>
       <div class="dasha-next">
         <div class="dasha-next-lbl">Next</div>
-        <div class="dasha-next-val">Moon – Mercury · 2027–2028</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Systems peak · Heightened nervous sensitivity · Gut awareness</div>
+        <div class="dasha-next-val">Moon – Mercury · 2027–2028 · Systems peak · Gut awareness</div>
       </div>
     </div>
   </div>
   <div class="sec">
-    <div class="slbl">Recent Logs</div>
-    <div id="log-list"><div style="text-align:center;padding:32px;color:var(--muted);font-size:13px">No logs yet — start today 🌙</div></div>
+    <div class="slbl">Recent logs</div>
+    <div id="log-list">
+      <div style="text-align:center;padding:28px;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--muted);font-style:italic">Begin logging to see your history</div>
+    </div>
   </div>
 </div>
 
 <!-- ═══ SETTINGS ═══ -->
 <div class="page" id="pg-settings">
   <div class="pg-hdr">
-    <div class="pg-title">Settings</div>
-    <div class="pg-sub">Notifications · Chart</div>
+    <div class="pg-rule"></div>
+    <div class="pg-name">Settings</div>
+    <div class="pg-sub">Notifications · Chart reference</div>
   </div>
   <div class="sec">
     <div class="slbl">Notifications</div>
     <button class="perm-btn" id="perm-btn" onclick="reqPerm()">Enable Notifications</button>
-    <div class="perm-st" id="perm-st">Add to Home Screen first, then enable</div>
+    <div class="perm-st" id="perm-st">Add to Home Screen first, then enable here</div>
     <div class="card">
-      <div class="notif-row">
-        <div class="notif-ico">🌅</div>
-        <div class="notif-info"><div class="notif-name">Morning Oracle</div><div class="notif-detail">7:30 AM · Planet of day + cycle + top do/don't</div></div>
-        <div class="ntog on" id="tog-morning" onclick="togN('morning')"></div>
-      </div>
-      <div class="notif-row">
-        <div class="notif-ico">☀️</div>
-        <div class="notif-info"><div class="notif-name">Afternoon Check</div><div class="notif-detail">3:00 PM · Day-specific prompt</div></div>
-        <div class="ntog on" id="tog-afternoon" onclick="togN('afternoon')"></div>
-      </div>
-      <div class="notif-row">
-        <div class="notif-ico">🌆</div>
-        <div class="notif-info"><div class="notif-name">Evening Reminder</div><div class="notif-detail">7:00 PM · Day-specific don't reminder</div></div>
-        <div class="ntog on" id="tog-evening" onclick="togN('evening')"></div>
-      </div>
-      <div class="notif-row">
-        <div class="notif-ico">🌙</div>
-        <div class="notif-info"><div class="notif-name">Sleep Nudge</div><div class="notif-detail">10:15 PM · Cycle-phase aware</div></div>
-        <div class="ntog on" id="tog-sleep" onclick="togN('sleep')"></div>
-      </div>
-      <div class="notif-row">
-        <div class="notif-ico">☿</div>
-        <div class="notif-info"><div class="notif-name">Mercury Rx Alert</div><div class="notif-detail">Day before retrograde starts</div></div>
-        <div class="ntog on" id="tog-rx" onclick="togN('rx')"></div>
-      </div>
-      <div class="notif-row">
-        <div class="notif-ico">♃</div>
-        <div class="notif-info"><div class="notif-name">Jupiter Transit Alert</div><div class="notif-detail">7 days before Jupiter enters Cancer · June 2026</div></div>
-        <div class="ntog on" id="tog-jup" onclick="togN('jup')"></div>
-      </div>
-      <div class="notif-row">
-        <div class="notif-ico">🌑</div>
-        <div class="notif-info"><div class="notif-name">Amavasya & Purnima</div><div class="notif-detail">New moon and full moon alerts</div></div>
-        <div class="ntog on" id="tog-luna" onclick="togN('luna')"></div>
-      </div>
+      <div class="notif-row"><div class="notif-ico">🌅</div><div class="notif-info"><div class="notif-name">Morning Oracle</div><div class="notif-detail">7:30 AM · Planet + cycle + top do/don't</div></div><div class="ntog on" id="tog-morning" onclick="togN('morning')"></div></div>
+      <div class="notif-row"><div class="notif-ico">☀️</div><div class="notif-info"><div class="notif-name">Afternoon Check</div><div class="notif-detail">3:00 PM · Day-specific prompt</div></div><div class="ntog on" id="tog-afternoon" onclick="togN('afternoon')"></div></div>
+      <div class="notif-row"><div class="notif-ico">🌆</div><div class="notif-info"><div class="notif-name">Evening Reminder</div><div class="notif-detail">7:00 PM · Day-specific don't</div></div><div class="ntog on" id="tog-evening" onclick="togN('evening')"></div></div>
+      <div class="notif-row"><div class="notif-ico">🌙</div><div class="notif-info"><div class="notif-name">Sleep Nudge</div><div class="notif-detail">10:15 PM · Cycle-phase aware</div></div><div class="ntog on" id="tog-sleep" onclick="togN('sleep')"></div></div>
+      <div class="notif-row"><div class="notif-ico">☿</div><div class="notif-info"><div class="notif-name">Mercury Rx Alert</div><div class="notif-detail">Day before retrograde — triple-check contracts</div></div><div class="ntog on" id="tog-rx" onclick="togN('rx')"></div></div>
+      <div class="notif-row"><div class="notif-ico">♃</div><div class="notif-info"><div class="notif-name">Jupiter Transit</div><div class="notif-detail">7 days before Jupiter enters Cancer · June 2026</div></div><div class="ntog on" id="tog-jup" onclick="togN('jup')"></div></div>
+      <div class="notif-row"><div class="notif-ico">🌑</div><div class="notif-info"><div class="notif-name">Amavasya & Purnima</div><div class="notif-detail">New moon and full moon alerts</div></div><div class="ntog on" id="tog-luna" onclick="togN('luna')"></div></div>
     </div>
   </div>
   <div class="sec">
-    <div class="slbl">Test</div>
-    <button class="test-btn" onclick="testNotif()">🔔 Send Test Notification</button>
-    <button class="test-btn" onclick="clearAll()">🗑️ Clear All Data</button>
+    <div class="slbl">Test & data</div>
+    <button class="test-btn" onclick="testNotif()">Send test notification</button>
+    <button class="test-btn" onclick="clearAll()">Clear all saved data</button>
   </div>
   <div class="sec">
-    <div class="slbl">Your Chart</div>
-    <div class="card" style="padding:16px">
-      <div style="font-size:13px;color:var(--txt);line-height:1.9">
-        <div><strong style="color:var(--acc)">Lagna</strong> · Cancer · Punarvasu Nakshatra</div>
-        <div><strong style="color:var(--acc)">Moon</strong> · Leo 2nd · Magha Nakshatra</div>
-        <div><strong style="color:var(--acc)">Yoga Karaka</strong> · Mars (5th & 10th)</div>
-        <div><strong style="color:var(--acc)">Mercury</strong> · Retrograde Virgo 3rd</div>
-        <div><strong style="color:var(--acc)">Jupiter</strong> · Taurus 11th (Gains)</div>
-        <div><strong style="color:var(--acc)">Rahu</strong> · Aries 10th · Ketu · Libra 4th</div>
-        <div><strong style="color:var(--acc)">Mahadasha</strong> · Moon 2020–2030</div>
-        <div><strong style="color:var(--acc)">Antardasha</strong> · Saturn 2025–2027</div>
-        <div><strong style="color:var(--acc)">Key transit</strong> · Jupiter exalted Cancer · June 2026</div>
-        <div><strong style="color:var(--acc)">Mars Mahadasha</strong> · January 2030</div>
+    <div class="slbl">Your chart</div>
+    <div style="background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:16px">
+      <div class="chart-info">
+        <div><strong>Lagna</strong> · Cancer · Punarvasu Nakshatra</div>
+        <div><strong>Moon</strong> · Leo 2nd · Magha Nakshatra</div>
+        <div><strong>Yoga Karaka</strong> · Mars — rules 5th & 10th</div>
+        <div><strong>Mercury</strong> · Retrograde in Virgo 3rd</div>
+        <div><strong>Jupiter</strong> · Taurus 11th (Gains)</div>
+        <div><strong>Rahu / Ketu</strong> · Aries 10th / Libra 4th</div>
+        <div><strong>Mahadasha</strong> · Moon 2020–2030</div>
+        <div><strong>Antardasha</strong> · Saturn 2025–2027</div>
+        <div><strong>Jupiter exalted</strong> · Cancer · June 2026</div>
+        <div><strong>Mars Mahadasha</strong> · January 2030</div>
+        <div><strong>Own home possession</strong> · Runwal Pinnacle · June 2027</div>
       </div>
     </div>
   </div>
@@ -586,14 +514,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 </div><!-- /wrap -->
 
-<!-- Quick Log FAB -->
+<!-- FAB -->
 <button class="fab" id="fab" onclick="openSheet()">＋</button>
 
-<!-- Bottom Sheet -->
-<div class="sheet-overlay" id="overlay" onclick="closeSheet()"></div>
+<!-- Sheet overlay + sheet -->
+<div class="overlay" id="overlay" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-handle"></div>
-  <div class="sheet-title">Quick Log</div>
+  <div class="sheet-head">
+    <div class="sheet-title">Quick Log</div>
+    <div class="sheet-sub">15 seconds · done</div>
+  </div>
   <div class="sheet-body">
     <div class="sheet-row">
       <div class="sheet-lbl">How you woke</div>
@@ -612,7 +543,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
     </div>
     <div class="sheet-row">
-      <div class="sheet-lbl">Movement done</div>
+      <div class="sheet-lbl">Movement</div>
       <div class="sheet-opts">
         <div class="sopt" data-g="move" data-v="strength" onclick="selSheet(this)"><span class="sopt-ico">🏋️‍♀️</span>Strength</div>
         <div class="sopt" data-g="move" data-v="walk" onclick="selSheet(this)"><span class="sopt-ico">🌳</span>Walk</div>
@@ -621,176 +552,148 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
     <div class="sheet-row">
       <div class="sheet-lbl">Sleep</div>
-      <div class="sheet-time-row">
-        <div class="time-inp-wrap">
-          <div class="time-inp-lbl">Bedtime</div>
-          <input type="time" class="time-inp" id="slp-bed" value="22:45">
-        </div>
-        <div class="time-inp-wrap">
-          <div class="time-inp-lbl">Wake time</div>
-          <input type="time" class="time-inp" id="slp-wake" value="07:00">
-        </div>
+      <div class="time-row">
+        <div class="time-wrap"><div class="time-lbl">Bedtime</div><input type="time" class="time-inp" id="slp-bed" value="22:45"></div>
+        <div class="time-wrap"><div class="time-lbl">Wake</div><input type="time" class="time-inp" id="slp-wake" value="07:00"></div>
       </div>
     </div>
-    <button class="sheet-save" onclick="saveSheet()">Save Log</button>
+    <div class="sheet-row">
+      <div class="sheet-lbl">One thing about today</div>
+      <textarea class="note-ta" id="sheet-note" rows="2" placeholder="How did the day feel…"></textarea>
+    </div>
+    <button class="sheet-save" onclick="saveSheet()">Save</button>
   </div>
 </div>
 
 <!-- Nav -->
 <div class="nav">
-  <div class="ni on" onclick="showPage('home',this)"><span class="ni-ico">✦</span><div class="ni-lbl">Today</div></div>
-  <div class="ni" onclick="showPage('week',this)"><span class="ni-ico">☽</span><div class="ni-lbl">Week</div></div>
-  <div class="ni" onclick="showPage('cycle',this)"><span class="ni-ico">🩸</span><div class="ni-lbl">Cycle</div></div>
-  <div class="ni" onclick="showPage('insights',this)"><span class="ni-ico">★</span><div class="ni-lbl">Insights</div></div>
-  <div class="ni" onclick="showPage('settings',this)"><span class="ni-ico">⚙</span><div class="ni-lbl">Settings</div></div>
+  <div class="ni on" onclick="showPage('home',this)"><span class="ni-g" id="nav-home-g">♂</span></div>
+  <div class="ni" onclick="showPage('week',this)"><span class="ni-g">≡</span></div>
+  <div class="ni" onclick="showPage('cycle',this)"><span class="ni-g">◯</span></div>
+  <div class="ni" onclick="showPage('insights',this)"><span class="ni-g">★</span></div>
+  <div class="ni" onclick="showPage('settings',this)"><span class="ni-g">⊙</span></div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ── DATA ──
-const DAY_DATA = {
-  0:{planet:'Sun',glyph:'☀️',cls:'sun',theme:'Wealth & Rest',sub:'2nd house · Family · Nourishment',
-    wear:'Orange · Saffron · Copper',food:'Warm home-cooked, nourishing',mantra:'Om Suryaya Namah',
-    chore:'Cook for the week · Financial review',
-    dos:[{i:'🌞',t:'Spend 20 min in morning sunlight — 2nd house vitality needs solar activation'},
-      {i:'🍳',t:'Cook a proper meal at home — Moon 2nd house nourishment, Sunday kitchen is your weekly anchor'},
-      {i:'💰',t:'Review finances — Sun in your wealth house makes Sunday your sharpest financial review day'},
-      {i:'👨‍👩‍👧',t:'Family connection — feeds your 2nd house and Cancer Lagna simultaneously'},
-      {i:'😴',t:'Rest deliberately — not scrolling, actual rest. Cancer Lagna depletes without it'}],
-    donts:[{i:'🚫',t:'Don\'t begin new ventures — Sunday is review and rest, not initiation'},
-      {i:'📱',t:'No heavy screens after 9 PM — sets poor sleep tone for the entire week (Rahu 10th)'},
-      {i:'😤',t:'Don\'t exhaust yourself socially — Cancer Lagna needs Sunday as genuine recharge'}],
-    am:'☀️ Sun day — morning sunlight, family, and rest. Cook today. Review finances.',
-    pm:'☀️ Sunday afternoon — sunlight, rest, cook for the week. Phone down before 9 PM.',
-    eve:'Sunday evening: screen down. Cancer Lagna needs Sunday to carry the whole week.'},
-  1:{planet:'Moon',glyph:'🌙',cls:'mon',theme:'Home & Intuition',sub:'Your ruling planet · Self · Water · Mother',
-    wear:'White · Cream · Silver',food:'Light, sattvic, home-cooked',mantra:'Om Som Somaya Namah',
-    chore:'Deep home cleaning · Water rituals · Northeast diya',
-    dos:[{i:'🧹',t:'Deep home cleaning — Moon rules your home, Monday is the weekly space reset for Cancer Lagna'},
-      {i:'💧',t:'Water rituals — clean, cook, fill vessels. Your ruling element on your ruling day'},
-      {i:'🕯️',t:'Light the Northeast diya — most important weekly moment for Cancer Lagna home energy'},
-      {i:'🤱',t:'Connect with mother or maternal figures — Moon rules mother, Monday amplifies this deeply'},
-      {i:'🎨',t:'Intuitive and creative work — Moon days favour right-brain over analytical mind'}],
-    donts:[{i:'📝',t:'Don\'t sign contracts or begin ventures — Moon is changeable, not the planet of fixed commitments'},
-      {i:'💸',t:'Avoid major financial decisions — Monday analysis is less reliable than Tuesday or Wednesday'},
-      {i:'🥩',t:'Avoid heavy non-vegetarian food — creates specific heaviness for Cancer Lagna on Moon\'s day'}],
-    am:'🌙 Moon day — your ruling planet. Clean the home. Light the diya. Intuitive work only.',
-    pm:'🌙 Monday check — water, home energy. Have you done one cleaning ritual today?',
-    eve:'Monday evening: light the Northeast diya. No major decisions — Moon is changeable.'},
-  2:{planet:'Mars',glyph:'♂️',cls:'tue',theme:'Power & Action',sub:'Yoga Karaka · 5th & 10th house · Your strongest day',
-    wear:'Red · Coral · Deep orange',food:'Protein-rich, energising',mantra:'Om Mangalaya Namah',
-    chore:'Physical effort · Move heavy things · Effortful tasks',
-    dos:[{i:'⚡',t:'Schedule highest-stakes work — negotiations, presentations, difficult conversations belong on Tuesday'},
-      {i:'🏋️‍♀️',t:'Strength training — Mars Yoga Karaka on Mars day is your peak physical window all week'},
-      {i:'📈',t:'Financial and investment decisions — your Yoga Karaka makes Tuesday your sharpest analytical day'},
-      {i:'💼',t:'BulletRaja operational moves — staff conversations, vendor decisions, system launches'},
-      {i:'🔥',t:'Begin new important projects — Mars gives initiating energy other days lack'}],
-    donts:[{i:'😤',t:'Watch for aggression — Sun+Mars in Virgo can overheat on a Mars day. Assertive, not combative'},
-      {i:'🏃‍♀️',t:'Don\'t skip exercise — unexercised Mars on its own day creates irritability with nowhere to go'},
-      {i:'🏥',t:'Avoid scheduled surgery or medical procedures if possible — Mars rules blood and cutting'}],
-    am:'♂️ Mars day — your power day. Schedule the hard thing. Exercise. Make the bold move.',
-    pm:'♂️ Tuesday Mars check — have you moved your body? Unexercised Mars creates restlessness.',
-    eve:'Tuesday evening: did you do the hard thing today? Mars rewards Tuesday completion.'},
-  3:{planet:'Mercury',glyph:'☿',cls:'wed',theme:'Systems & Mind',sub:'3rd house · Communication · Analytical peak',
-    wear:'Green · Emerald',food:'Light, varied — Mercury is curious, not heavy',mantra:'Om Budhaya Namah',
-    chore:'Administration · Bills · Emails · Filing · Paperwork',
-    dos:[{i:'💻',t:'Coding, documentation, app work — your Mercury Retrograde Virgo mind most externally expressible today'},
-      {i:'📧',t:'Important written communication — contracts review, key emails, anything that needs documenting'},
-      {i:'📚',t:'Learning and studying — Mercury governs new information absorption most efficiently'},
-      {i:'🗂️',t:'Administration — bills, filing, paperwork. Mercury days make admin feel genuinely lighter'},
-      {i:'🚶‍♀️',t:'Short local errands and travel — Mercury governs short journeys, Wednesday is ideal'}],
-    donts:[{i:'📝',t:'Don\'t finalise contracts during Mercury Rx — doubles your natal retrograde risk significantly'},
-      {i:'🌀',t:'Avoid overthinking spirals — set a decision deadline and keep it. Mercury Virgo loops are real'},
-      {i:'🍽️',t:'Don\'t skip meals — Mercury rules your intestines, Wednesday amplifies Virgo gut sensitivity'}],
-    am:'☿ Mercury day — systems, writing, communication. Your analytical peak. Use it for building.',
-    pm:'☿ Wednesday check — any pending docs, emails, or admin? This is your window before it closes.',
-    eve:'Wednesday evening: did you eat at fixed times today? Mercury rules your Virgo gut.'},
-  4:{planet:'Jupiter',glyph:'♃',cls:'thu',theme:'Expansion & Wisdom',sub:'Lagna Nakshatra lord · Watch: overcommitment',
-    wear:'Yellow · Gold · Saffron',food:'Yellow foods — turmeric dal, banana, ghee',mantra:'Om Gurave Namah',
-    chore:'Grocery & provisions · Add plants · Buy for the home',
-    dos:[{i:'📖',t:'Learning, teaching, mentoring — Jupiter\'s natural domain amplified on Thursday'},
-      {i:'🤲',t:'Charitable acts — Jupiter in 11th (gains) + Thursday = karmically aligned generosity'},
-      {i:'👨',t:'Connect with father or guru figures — Jupiter rules both, Thursday deepens this'},
-      {i:'🛒',t:'Grocery and home provisions — abundance-gathering is Thursday\'s natural energy'},
-      {i:'🌱',t:'Buy plants or flowers for home — Jupiter expanding the living space beautifully'}],
-    donts:[{i:'⚠️',t:'THURSDAY WATCH: Jupiter as 6th lord makes this the day you overcommit and overpromise. Notice it.'},
-      {i:'🍽️',t:'Avoid excessive rich food — Thursday is when overeating feels justified. Liver watch (Saturn 6th)'},
-      {i:'💳',t:'Don\'t ignore financial obligations — Jupiter 6th lord means Thursday debts need acknowledgment'}],
-    am:'♃ Jupiter day — learning, giving, gathering. Watch for overcommitment today. It\'s your pattern.',
-    pm:'♃ Thursday afternoon — have you overcommitted to anything today? Check before saying yes again.',
-    eve:'Thursday evening: did you eat well — not too much? Jupiter rules expansion. Keep it tonight.'},
-  5:{planet:'Venus',glyph:'♀️',cls:'fri',theme:'Home & Gains',sub:'4th house · 11th house · Self-care · Beauty',
-    wear:'White · Pink · Pastel',food:'Whatever feels beautiful and nourishing to you',mantra:'Om Shukraya Namah',
-    chore:'Fresh flowers · Home beauty · Personal care · Skin ritual',
-    dos:[{i:'🌸',t:'Fresh flowers in the home — Venus ruling 4th, Friday home additions have specific auspicious energy'},
-      {i:'✨',t:'Skincare ritual — Venus-Moon in Leo 2nd house, Friday skin care has direct chart resonance'},
-      {i:'🛁',t:'Bath rather than shower — Cancer Lagna water ritual on Venus day is deeply restorative'},
-      {i:'💆‍♀️',t:'Deliberate self-nourishment — Venus day is your weekly chart permission for self-care'},
-      {i:'💭',t:'Plan next week — Venus in 11th (gains) makes Friday the ideal forward-planning window'}],
-    donts:[{i:'😤',t:'Avoid harsh conversations and confrontation — Venus days are genuinely not designed for conflict'},
-      {i:'💼',t:'Don\'t overwork Friday evening — Venus days where you push through create specific depletion'},
-      {i:'🏥',t:'Don\'t start new health treatments or fasts — complete things, don\'t begin on Friday'}],
-    am:'♀️ Venus day — self-care, beauty, planning. One nourishing thing for yourself today.',
-    pm:'♀️ Friday afternoon — one self-care thing before evening. Bath, oil, flowers, something beautiful.',
-    eve:'Friday evening: this is Venus time. Work stops here. Only nourishing things from now.'},
-  6:{planet:'Saturn',glyph:'♄',cls:'sat',theme:'Discipline & Completion',sub:'7th & 8th house · Long game · Service',
-    wear:'Dark blue · Black · Dark grey',food:'Simple and light — sesame seeds specifically',mantra:'Om Shanaischaraya Namah',
-    chore:'Declutter · Donate · Clear what no longer serves · Sesame oil lamp',
-    dos:[{i:'🗑️',t:'Declutter and dispose — Saturday is the best weekly clear-out day. Release what no longer serves'},
-      {i:'🕯️',t:'Light a sesame oil lamp Saturday evening — classical Saturn pacification, protective for your 7th/8th lord'},
-      {i:'🤝',t:'Acts of service to others — Saturn days and giving are karmically aligned specifically'},
-      {i:'✅',t:'Complete unfinished tasks — Saturn rewards completion above all. Finish what\'s been sitting'},
-      {i:'🫘',t:'Eat sesame (til) today — til seeds, til oil. Both Saturn offering and real back/joint health support'}],
-    donts:[{i:'🚀',t:'Don\'t begin important new things — Saturn is completion energy, not initiation energy'},
-      {i:'🛍️',t:'Avoid impulse purchases — Saturn 8th lord makes Saturday impulse buying specifically prone to regret'},
-      {i:'🍷',t:'Avoid alcohol — Saturn 8th lord + liver (Saturn Sagittarius 6th) + Saturday = most impactful combination'},
-      {i:'⚖️',t:'Avoid confrontations with authority, landlords, legal entities — disproportionate weight gets added'}],
-    am:'♄ Saturn day — complete, release, serve. What can you finish and let go of today?',
-    pm:'♄ Saturday afternoon — what can you complete before evening? Saturn rewards finishing.',
-    eve:'Saturday evening: light the sesame oil lamp. Simple dinner. No impulse decisions tonight.'},
-};
-
-const CYCLE_PHASES = {
-  menstrual:{emoji:'🌑',name:'Menstrual',cls:'mon',
-    impls:[{i:'⚡',t:'<strong>Energy:</strong> Low — this is correct, not failure. Conserve deliberately.'},
-      {i:'🧠',t:'<strong>Decisions:</strong> Not the time for major financial or business moves. Review only.'},
-      {i:'🌙',t:'<strong>Chart context:</strong> Moon-Ketu energy is highest. Rest activates Magha\'s ancestral intelligence.'},
-      {i:'💊',t:'<strong>Body:</strong> Gut most sensitive. Warm, cooked, anti-inflammatory food only.'},
-      {i:'🪔',t:'<strong>Practice:</strong> Best day for ancestral ritual. Magha Moon responds most here.'}]},
-  follicular:{emoji:'🌒',name:'Follicular',cls:'foll',
-    impls:[{i:'⚡',t:'<strong>Energy:</strong> Rising — use it on initiatives, not busywork.'},
-      {i:'🧠',t:'<strong>Decisions:</strong> Excellent window. Rahu 10th ambition aligns with rising energy.'},
-      {i:'📈',t:'<strong>Investments:</strong> Good window to initiate new positions or research.'},
-      {i:'💼',t:'<strong>BulletRaja:</strong> Bold operational decisions, new features, staff conversations.'},
-      {i:'🏋️‍♀️',t:'<strong>Movement:</strong> Best phase for strength training — energy supports it.'}]},
-  ovulation:{emoji:'🌕',name:'Ovulation',cls:'ovul',
-    impls:[{i:'💎',t:'<strong>Your sharpest 3 days.</strong> Venus-Moon in Leo peaks — presence, charisma, clarity.'},
-      {i:'🗣️',t:'<strong>Communication:</strong> Negotiate now. Important conversations belong in this window.'},
-      {i:'📈',t:'<strong>Investments:</strong> Highest-conviction decisions belong here. Your analysis is most reliable.'},
-      {i:'💼',t:'<strong>BulletRaja:</strong> Client meetings, staff reviews, supplier negotiations — all peak here.'},
-      {i:'⚠️',t:'<strong>Watch:</strong> Jupiter as 6th lord — ovulation confidence can tip into overextension.'}]},
-  luteal:{emoji:'🌖',name:'Luteal',cls:'lute',
-    impls:[{i:'⚡',t:'<strong>Energy:</strong> Gradually declining — heavy tasks early luteal, lighter later.'},
-      {i:'🔧',t:'<strong>Best for:</strong> Systems work, detail review, editing, completing tasks.'},
-      {i:'🧠',t:'<strong>BulletRaja:</strong> Perfect for coding, data review, process improvement.'},
-      {i:'📊',t:'<strong>Investments:</strong> Review existing positions only. Do not initiate new ones.'},
-      {i:'🌊',t:'<strong>Gut:</strong> Most sensitive phase. Fixed meal times are critical right now.'}]},
-};
-
-const MERC_RX = [
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const LUNAR=29.53058867;
+const KNOWN_NM=new Date('2025-01-29T00:00:00Z');
+const JUPITER_CANCER=new Date('2026-06-02');
+const MERC_RX=[
   ['2025-01-26','2025-02-20'],['2025-05-29','2025-06-22'],
   ['2025-09-26','2025-10-20'],['2026-01-16','2026-02-07'],
   ['2026-05-15','2026-06-08'],['2026-09-13','2026-10-06'],
   ['2027-01-03','2027-01-25'],['2027-05-01','2027-05-25'],
 ];
-const JUPITER_CANCER = new Date('2026-06-02');
-const KNOWN_NM = new Date('2025-01-29T00:00:00Z');
-const LUNAR = 29.53058867;
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-const ORACLES = {
+const DAY_DATA={
+  0:{planet:'Sun',glyph:'☉',acc:'#c9836e',alt:'rgba(201,131,110,.1)',altb:'rgba(201,131,110,.35)',
+    theme:'Wealth & rest',sub:'2nd house · Family · Nourishment',wear:'Orange · Saffron',food:'Warm home-cooked',mantra:'Om Suryaya Namah',chore:'Cook for the week',
+    dos:[{i:'☀️',t:'<em>Morning sunlight</em> — 20 min. Sun in your 2nd house needs solar activation.'},
+      {i:'🍳',t:'<em>Cook a proper meal</em> — Moon 2nd house nourishment. Sunday kitchen sets the week.'},
+      {i:'💰',t:'<em>Review finances</em> — Sun ruling wealth house makes Sunday your sharpest review day.'},
+      {i:'😴',t:'<em>Rest deliberately</em> — not scrolling, actual rest. Cancer Lagna depletes without it.'}],
+    donts:[{i:'🚀',t:'No new ventures — Sunday is review, not initiation.'},
+      {i:'📱',t:'No heavy screens past 9 PM — sets poor sleep for the whole week (Rahu 10th).'}],
+    am:'☉ Sun day — morning sunlight, family, cook, review finances.',
+    pm:'Sun afternoon — sunlight, rest. Phone down before 9 PM.',
+    eve:'Sunday evening: screen down. Cancer Lagna needs Sunday to carry the week.'},
+  1:{planet:'Moon',glyph:'☽',acc:'#7a9bc9',alt:'rgba(122,155,201,.1)',altb:'rgba(122,155,201,.3)',
+    theme:'Home & intuition',sub:'Your ruling planet · Self · Water · Mother',wear:'White · Cream · Silver',food:'Light, sattvic, home-cooked',mantra:'Om Som Somaya Namah',chore:'Deep home cleaning · Light the Northeast diya',
+    dos:[{i:'🧹',t:'<em>Deep home clean</em> — Moon rules home, Monday is your weekly space reset.'},
+      {i:'💧',t:'<em>Water rituals</em> — clean, cook, fill vessels. Your element on your ruling day.'},
+      {i:'🕯️',t:'<em>Light the Northeast diya</em> — most important weekly moment for Cancer Lagna.'},
+      {i:'🎨',t:'<em>Intuitive work</em> — Moon days favour right-brain over analysis.'}],
+    donts:[{i:'📝',t:'Don\'t sign contracts — Moon is changeable, not the planet of fixed commitments.'},
+      {i:'🥩',t:'Avoid heavy non-vegetarian food — creates specific heaviness for Cancer Lagna on Moon\'s day.'}],
+    am:'☽ Moon day — your ruling planet. Clean the home. Light the diya. Intuitive work only.',
+    pm:'Monday check — water, home energy. One cleaning ritual today?',
+    eve:'Monday evening: light the Northeast diya. No major decisions — Moon is changeable.'},
+  2:{planet:'Mars',glyph:'♂',acc:'#c96e6e',alt:'rgba(201,110,110,.1)',altb:'rgba(201,110,110,.3)',
+    theme:'Power & action',sub:'Yoga Karaka · 5th & 10th · Your strongest day',wear:'Red · Coral · Deep orange',food:'Protein-rich, energising',mantra:'Om Mangalaya Namah',chore:'Physical effort · Move heavy things',
+    dos:[{i:'⚡',t:'<em>High-stakes work</em> — negotiations, difficult conversations, bold BulletRaja decisions.'},
+      {i:'🏋️‍♀️',t:'<em>Strength training</em> — Mars Yoga Karaka on Mars day is your peak physical window.'},
+      {i:'📈',t:'<em>Financial decisions</em> — Yoga Karaka makes Tuesday your sharpest analytical day.'},
+      {i:'🔥',t:'<em>Begin important projects</em> — Mars gives initiating energy other days lack.'}],
+    donts:[{i:'😤',t:'Watch for aggression — Sun+Mars in Virgo can overheat on a Mars day.'},
+      {i:'🏃‍♀️',t:'Don\'t skip exercise — unexercised Mars creates irritability with nowhere to go.'}],
+    am:'♂ Mars day — your power day. Schedule the hard thing. Exercise. Make the bold move.',
+    pm:'Mars check — have you moved your body? Unexercised Mars creates restlessness.',
+    eve:'Tuesday evening: did you do the hard thing? Mars rewards Tuesday completion.'},
+  3:{planet:'Mercury',glyph:'☿',acc:'#6ec98a',alt:'rgba(110,201,138,.1)',altb:'rgba(110,201,138,.3)',
+    theme:'Systems & mind',sub:'3rd house · Communication · Analytical peak',wear:'Green · Emerald',food:'Light, varied — Mercury is curious',mantra:'Om Budhaya Namah',chore:'Admin · Bills · Filing · Paperwork',
+    dos:[{i:'💻',t:'<em>Coding, documentation</em> — Mercury Retrograde Virgo mind most externally expressible today.'},
+      {i:'📧',t:'<em>Key written communication</em> — contracts review, important emails, anything documented.'},
+      {i:'🗂️',t:'<em>Administration</em> — bills, filing, pending paperwork. Mercury makes admin feel lighter.'},
+      {i:'📚',t:'<em>Learning</em> — Mercury governs new information absorption most efficiently.'}],
+    donts:[{i:'📝',t:'Don\'t finalise contracts if Mercury is Rx — doubles your natal retrograde risk.'},
+      {i:'🌀',t:'Avoid overthinking spirals — set a decision deadline. Mercury Virgo loops are real.'}],
+    am:'☿ Mercury day — systems, writing, communication. Your analytical peak. Use it for building.',
+    pm:'Wednesday check — pending docs, emails, admin? This is your window.',
+    eve:'Wednesday: did you eat at fixed times? Mercury rules your Virgo gut.'},
+  4:{planet:'Jupiter',glyph:'♃',acc:'#c9b46e',alt:'rgba(201,180,110,.1)',altb:'rgba(201,180,110,.3)',
+    theme:'Expansion & wisdom',sub:'Lagna Nakshatra lord · Watch: overcommitment',wear:'Yellow · Gold · Saffron',food:'Yellow foods — turmeric, dal, banana, ghee',mantra:'Om Gurave Namah',chore:'Grocery · Buy plants · Add beauty to home',
+    dos:[{i:'📖',t:'<em>Learning, teaching, mentoring</em> — Jupiter\'s domain, amplified today.'},
+      {i:'🤲',t:'<em>Charitable acts</em> — Jupiter in 11th (gains) + Thursday = karmically aligned giving.'},
+      {i:'🛒',t:'<em>Grocery and home provisions</em> — abundance-gathering is Thursday\'s natural energy.'},
+      {i:'👨',t:'<em>Connect with father or guru figures</em> — Jupiter rules both, Thursday deepens this.'}],
+    donts:[{i:'⚠️',t:'THURSDAY WATCH: Jupiter as 6th lord — this is the day you overcommit and overpromise. Notice it.'},
+      {i:'🍽️',t:'Avoid excessive rich food — Thursday is when overeating feels justified. Liver watch (Saturn 6th).'}],
+    am:'♃ Jupiter day — learning, giving, gathering. Watch for overcommitment today.',
+    pm:'Thursday: have you overcommitted to anything today? Check before saying yes again.',
+    eve:'Thursday evening: did you eat well — not too much? Jupiter rules expansion. Keep it.'},
+  5:{planet:'Venus',glyph:'♀',acc:'#c98ea0',alt:'rgba(201,142,160,.1)',altb:'rgba(201,142,160,.3)',
+    theme:'Home & beauty',sub:'4th house · 11th house · Self-care · Gains',wear:'White · Pink · Pastel',food:'Whatever feels beautiful and nourishing',mantra:'Om Shukraya Namah',chore:'Fresh flowers · Skin ritual · Plan next week',
+    dos:[{i:'🌸',t:'<em>Fresh flowers at home</em> — Venus ruling 4th, Friday home additions have auspicious energy.'},
+      {i:'✨',t:'<em>Skincare ritual</em> — Venus-Moon in Leo 2nd house. Friday skin care has direct chart resonance.'},
+      {i:'🛁',t:'<em>Bath rather than shower</em> — Cancer Lagna water ritual on Venus day is deeply restorative.'},
+      {i:'💭',t:'<em>Plan next week</em> — Venus in 11th (gains) makes Friday the ideal forward-planning window.'}],
+    donts:[{i:'😤',t:'Avoid harsh conversations — Venus days are genuinely not designed for conflict.'},
+      {i:'💼',t:'Don\'t overwork Friday evening — creates specific depletion for your chart.'}],
+    am:'♀ Venus day — self-care, beauty, planning. One nourishing thing for yourself today.',
+    pm:'Friday afternoon — one self-care thing before evening. Bath, flowers, something beautiful.',
+    eve:'Friday evening: Venus time. Work stops here. Only nourishing things from now.'},
+  6:{planet:'Saturn',glyph:'♄',acc:'#7a8ac9',alt:'rgba(122,138,201,.1)',altb:'rgba(122,138,201,.3)',
+    theme:'Discipline & completion',sub:'7th & 8th house · Long game · Service',wear:'Dark blue · Black · Dark grey',food:'Simple and light — sesame seeds (til) specifically',mantra:'Om Shanaischaraya Namah',chore:'Declutter · Donate · Sesame oil lamp this evening',
+    dos:[{i:'🗑️',t:'<em>Declutter and dispose</em> — best weekly clear-out day. Release what no longer serves.'},
+      {i:'🕯️',t:'<em>Sesame oil lamp this evening</em> — classical Saturn pacification, protective for your 7th/8th lord.'},
+      {i:'✅',t:'<em>Complete unfinished tasks</em> — Saturn rewards completion above all. Finish what\'s been sitting.'},
+      {i:'🫘',t:'<em>Eat sesame today</em> — til seeds, til oil. Saturn offering and real back/joint health support.'}],
+    donts:[{i:'🚀',t:'Don\'t begin important new things — Saturn is completion energy, not initiation.'},
+      {i:'🍷',t:'Avoid alcohol — Saturn 8th lord + liver sensitivity (Saturn Sagittarius 6th) + Saturday = most impactful.'}],
+    am:'♄ Saturn day — complete, release, serve. What can you finish and let go of today?',
+    pm:'Saturday afternoon — what can you complete before evening? Saturn rewards finishing.',
+    eve:'Saturday evening: light the sesame oil lamp. Simple dinner. No impulse decisions.'},
+};
+
+const CYCLE_PHASES={
+  menstrual:{emoji:'🌑',name:'Menstrual',
+    impls:[{d:'—',t:'<strong>Energy:</strong> Low — this is correct, not failure. Conserve deliberately.'},
+      {d:'—',t:'<strong>Decisions:</strong> Not the time for major financial or business moves. Review only.'},
+      {d:'—',t:'<strong>Chart:</strong> Moon-Ketu energy is highest. Rest activates Magha\'s ancestral intelligence.'},
+      {d:'—',t:'<strong>Practice:</strong> Best day for ancestral ritual. Magha Moon responds most strongly here.'}]},
+  follicular:{emoji:'🌒',name:'Follicular',
+    impls:[{d:'—',t:'<strong>Energy:</strong> Rising — use it on initiatives, not busywork.'},
+      {d:'—',t:'<strong>Decisions:</strong> Excellent window. Rahu 10th ambition aligns with rising energy.'},
+      {d:'—',t:'<strong>BulletRaja:</strong> Bold operational decisions, new features, staff conversations.'},
+      {d:'—',t:'<strong>Movement:</strong> Best phase for strength training — energy supports it.'}]},
+  ovulation:{emoji:'🌕',name:'Ovulation',
+    impls:[{d:'—',t:'<strong>Your sharpest 3 days.</strong> Venus-Moon in Leo peaks — presence, charisma, clarity.'},
+      {d:'—',t:'<strong>Communication:</strong> Negotiate now. Important conversations belong in this window.'},
+      {d:'—',t:'<strong>BulletRaja:</strong> Client meetings, staff reviews, supplier negotiations — all peak here.'},
+      {d:'⚠',t:'<strong>Watch:</strong> Jupiter as 6th lord — ovulation confidence can tip into overextension.'}]},
+  luteal:{emoji:'🌖',name:'Luteal',
+    impls:[{d:'—',t:'<strong>Energy:</strong> Gradually declining — heavy tasks early luteal, lighter later.'},
+      {d:'—',t:'<strong>Best for:</strong> Systems work, detail review, editing — Mercury Retrograde Virgo activates.'},
+      {d:'—',t:'<strong>BulletRaja:</strong> Coding, data review, process improvement — exactly right.'},
+      {d:'⚠',t:'<strong>Investments:</strong> Review existing positions only. Do not initiate new ones.'}]},
+};
+
+const ORACLES={
   menstrual:['Rest is your work today. Even the moon goes dark before it returns.',
     'Ketu\'s quietude is asking — listen. Not every day needs to be productive.',
     'Your Magha Moon knows: rest is ancestral wisdom, not weakness.'],
@@ -798,15 +701,15 @@ const ORACLES = {
     'Punarvasu Lagna — the light returns. New initiatives are favoured.',
     'Mars Yoga Karaka activates here — bold moves, well-researched, well-timed.'],
   ovulation:['Your sharpest days. Venus-Moon in Leo says: be visible today.',
-    'This is your peak communication window — negotiate, present, decide.',
+    'This is your peak communication window — negotiate, present, decide boldly.',
     'The full expression of your chart\'s intelligence. Use this window deliberately.'],
-  luteal:['Mercury Retrograde mind thrives here — detail work, systems, review.',
+  luteal:['Mercury Retrograde mind thrives in the luteal phase — detail, systems, review.',
     'This phase built the BulletRaja OS. Inward is productive, not retreat.',
     'Saturn antardasha and luteal phase align — steady, structural, building.'],
   rx:['☿ Rx active. Your natal Rx in Virgo gives you clarity while others lose it — but triple-check every contract.',
     '☿ Retrograde: your mind sharpens. But verbal agreements will be misread. Write everything down.'],
   dasha:['Moon-Saturn antardasha: discipline is the weapon. What you build now lasts.',
-    'Saturn\'s sub-period rewards patience and punishes shortcuts. Build the foundation.',
+    'Saturn rewards patience and punishes shortcuts. Build the foundation.',
     'The permanence of Saturn + the personal nature of Moon = your most important building phase.'],
   moonphase:{new:'Amavasya — your Magha Moon\'s ancestral moment. Rest and honour lineage today.',
     waxing:'Waxing moon — energy building. Good window for initiating investments and new projects.',
@@ -815,65 +718,35 @@ const ORACLES = {
 };
 
 // ── STATE ──
-let todayKey = '';
-let nSettings = {morning:true,afternoon:true,evening:true,sleep:true,rx:true,jup:true,luna:true};
-
-// ── INIT ──
-function init(){
-  const now = new Date();
-  todayKey = now.toISOString().split('T')[0];
-  const dow = now.getDay();
-  const d = DAY_DATA[dow];
-
-  // Apply day theme
-  document.body.className = d.cls;
-  document.getElementById('theme-color-meta')?.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--bg').trim());
-
-  // Header date
-  document.getElementById('home-date').textContent =
-    `${DAYS[dow]}, ${now.getDate()} ${MONTHS[now.getMonth()]} ${now.getFullYear()}`;
-
-  // Planet hero
-  document.getElementById('p-glyph').textContent = d.glyph;
-  document.getElementById('p-name').textContent = d.planet + '\'s Day';
-  document.getElementById('p-theme').textContent = d.theme;
-  document.getElementById('p-sub').textContent = d.sub;
-
-  // Checks
-  checkRx(now);
-  checkLunaBanner(now);
-  updateContextBar(now);
-  renderOracle(now);
-  renderGuidance(dow);
-  buildGlasses();
-  buildWeek(dow);
-  buildStreak();
-  loadToday();
-  updateCycle();
-  initSW();
-  buildInsights();
-  buildAstroEvents();
-  loadNSettings();
-
-  document.addEventListener('visibilitychange', ()=>{
-    if(!document.hidden) scheduleNotifs();
-  });
-}
+let todayKey='', nSettings={morning:true,afternoon:true,evening:true,sleep:true,rx:true,jup:true,luna:true};
 
 // ── MOON ──
-function moonAge(d){ const ms=d-KNOWN_NM; const days=ms/86400000; return((days%LUNAR)+LUNAR)%LUNAR; }
-function moonEmoji(a){ if(a<1.85)return'🌑';if(a<7.38)return'🌒';if(a<9.22)return'🌓';if(a<14.77)return'🌔';if(a<16.61)return'🌕';if(a<22.15)return'🌖';if(a<23.99)return'🌗';return'🌘'; }
-function moonName(a){ if(a<1.85)return'Amavasya';if(a<7.38)return'Waxing Crescent';if(a<9.22)return'First Quarter';if(a<14.77)return'Waxing Gibbous';if(a<16.61)return'Purnima';if(a<22.15)return'Waning Gibbous';if(a<23.99)return'Last Quarter';return'Waning Crescent'; }
-function moonKey(a){ if(a<1.85||a>27.5)return'new';if(a<14.77)return'waxing';if(a<16.61)return'full';return'waning'; }
+function moonAge(d){const ms=d-KNOWN_NM;const days=ms/86400000;return((days%LUNAR)+LUNAR)%LUNAR;}
+function moonName(a){if(a<1.85)return'Amavasya';if(a<7.38)return'Waxing Crescent';if(a<9.22)return'First Quarter';if(a<14.77)return'Waxing Gibbous';if(a<16.61)return'Purnima';if(a<22.15)return'Waning Gibbous';if(a<23.99)return'Last Quarter';return'Waning Crescent';}
+function moonKey(a){if(a<1.85||a>27.5)return'new';if(a<14.77)return'waxing';if(a<16.61)return'full';return'waning';}
+
+function moonSVG(age,sz=20){
+  const LUNAR=29.53,r=sz/2-1,c=sz/2;
+  const frac=((age%LUNAR)+LUNAR)%LUNAR;
+  const illum=(1-Math.cos(2*Math.PI*frac/LUNAR))/2;
+  const wax=frac<LUNAR/2;
+  const trx=r*Math.abs(1-2*illum);
+  if(illum<0.03)return`<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" style="display:block;flex-shrink:0"><circle cx="${c}" cy="${c}" r="${r}" fill="#e0dbd2" opacity=".3"/><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#e0dbd2" stroke-width=".5"/></svg>`;
+  if(illum>0.97)return`<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" style="display:block;flex-shrink:0"><circle cx="${c}" cy="${c}" r="${r}" fill="#e8dcc8"/></svg>`;
+  const ls=wax?1:0;
+  const ts=illum<0.5?(wax?1:0):(wax?0:1);
+  const path=`M${c} ${c-r} A${r} ${r} 0 0 ${ls} ${c} ${c+r} A${trx} ${r} 0 0 ${ts} ${c} ${c-r}Z`;
+  return`<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" style="display:block;flex-shrink:0"><circle cx="${c}" cy="${c}" r="${r}" fill="#e0dbd2" opacity=".2"/><path d="${path}" fill="#e8dcc8"/><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#e0dbd2" stroke-width=".5"/></svg>`;
+}
 
 // ── CYCLE ──
 function getCycle(){
-  const s=ls('cycle_start'); if(!s)return null;
-  const start=new Date(s); const today=new Date();
-  today.setHours(0,0,0,0); start.setHours(0,0,0,0);
+  const s=ls('cycle_start');if(!s)return null;
+  const start=new Date(s),today=new Date();
+  today.setHours(0,0,0,0);start.setHours(0,0,0,0);
   const day=Math.floor((today-start)/86400000)+1;
   if(day<1||day>35)return null;
-  let phase; if(day<=5)phase='menstrual';else if(day<=13)phase='follicular';else if(day<=16)phase='ovulation';else phase='luteal';
+  let phase;if(day<=5)phase='menstrual';else if(day<=13)phase='follicular';else if(day<=16)phase='ovulation';else phase='luteal';
   return{day,phase};
 }
 
@@ -882,139 +755,161 @@ function updateCycle(){
   if(document.getElementById('cyc-start').value) save('cycle_start',document.getElementById('cyc-start').value);
   if(!document.getElementById('cyc-start').value&&stored) document.getElementById('cyc-start').value=stored;
   const cd=getCycle();
+  const phasesOrder=['menstrual','follicular','ovulation','luteal'];
+  phasesOrder.forEach(p=>{
+    document.getElementById('pb-'+p.slice(0,4)).classList.toggle('active',cd&&cd.phase===p);
+    const lbl=document.getElementById('pl-'+p.slice(0,4));
+    if(lbl) lbl.classList.toggle('active-lbl',cd&&cd.phase===p);
+  });
   if(!cd){
     document.getElementById('cyc-day').textContent='—';
-    document.getElementById('cyc-name').textContent='Enter last period date';
-    document.getElementById('cyc-ico').textContent='🌙';
+    document.getElementById('cyc-phase-name').textContent='Set your last period date';
+    document.getElementById('cyc-phase-ico').textContent='';
     document.getElementById('cyc-impl').innerHTML='';
+    document.getElementById('ctx-cycle-badge').textContent='Set cycle';
     return;
   }
   const pd=CYCLE_PHASES[cd.phase];
   document.getElementById('cyc-day').textContent=cd.day;
-  document.getElementById('cyc-name').textContent=pd.name+' Phase';
-  document.getElementById('cyc-ico').textContent=pd.emoji;
+  document.getElementById('cyc-phase-name').textContent=pd.name+' Phase';
+  document.getElementById('cyc-phase-ico').textContent=pd.emoji+' Day '+cd.day+' of cycle';
+  document.getElementById('ctx-cycle-badge').textContent=pd.name.slice(0,4)+' · D'+cd.day;
   document.getElementById('cyc-impl').innerHTML=`
-    <div class="slbl">Chart Implications</div>
-    <div class="impl-crd">
-      <div class="impl-t">${pd.emoji} ${pd.name} · Day ${cd.day}</div>
-      ${pd.impls.map(i=>`<div class="impl-row"><span class="impl-ico">${i.i}</span><span class="impl-txt">${i.t}</span></div>`).join('')}
+    <div class="slbl">Chart implications</div>
+    <div class="impl-card">
+      <div class="impl-t">${pd.name} Phase — Day ${cd.day}</div>
+      ${pd.impls.map(i=>`<div class="impl-row"><span class="impl-dash">${i.d}</span><span class="impl-txt">${i.t}</span></div>`).join('')}
     </div>`;
-  updateContextBar(new Date());
 }
 
-function togSym(el){ el.classList.toggle('on'); }
+function togSym(el){el.classList.toggle('on');}
 
-// ── CONTEXT BAR ──
-function updateContextBar(now){
+// ── INIT ──
+function init(){
+  const now=new Date();
+  todayKey=now.toISOString().split('T')[0];
+  const dow=now.getDay();
+  const d=DAY_DATA[dow];
+
+  // Apply accent color
+  document.documentElement.style.setProperty('--acc',d.acc);
+  document.documentElement.style.setProperty('--acc-lt',d.alt);
+  document.documentElement.style.setProperty('--acc-bd',d.altb);
+
+  // Theme color meta
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#faf8f4');
+
+  // Nav home glyph = today's planet
+  document.getElementById('nav-home-g').textContent=d.glyph;
+
+  // Date
+  document.getElementById('home-date').textContent=`${DAYS[dow]}, ${now.getDate()} ${MONTHS[now.getMonth()]} ${now.getFullYear()}`;
+
+  // Planet hero
+  document.getElementById('p-name').textContent=d.planet;
+  document.getElementById('p-theme').textContent=d.theme;
+
+  // Moon
   const age=moonAge(now);
-  document.getElementById('ctx-moon-ico').textContent=moonEmoji(age);
-  document.getElementById('ctx-moon-val').textContent=moonName(age);
-  const cd=getCycle();
-  if(cd){
-    const pd=CYCLE_PHASES[cd.phase];
-    document.getElementById('ctx-cyc-ico').textContent=pd.emoji;
-    document.getElementById('ctx-cyc-val').textContent=pd.name+' D'+cd.day;
-  } else {
-    document.getElementById('ctx-cyc-ico').textContent='🩸';
-    document.getElementById('ctx-cyc-val').textContent='Set cycle';
-  }
+  document.getElementById('moon-svg-home').innerHTML=moonSVG(age,20);
+  document.getElementById('ctx-moon-lbl').textContent=moonName(age);
+
+  checkRx(now);
+  checkLunaBanner(now);
+  renderOracle(now,dow);
+  renderGuidance(dow);
+  buildGlasses();
+  buildWeek(dow);
+  buildStreak();
+  loadToday();
+  updateCycle();
+  buildInsights();
+  buildAstroEvents();
+  loadNSettings();
+  initSW();
+
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)scheduleNotifs();});
+}
+
+// ── CHECKS ──
+function rxBool(d){const s=d.toISOString().split('T')[0];return MERC_RX.some(([a,b])=>s>=a&&s<=b);}
+function nextRx(d){const s=d.toISOString().split('T')[0];return MERC_RX.find(([a])=>a>s);}
+
+function checkRx(now){
+  const chip=document.getElementById('rx-chip');
+  if(rxBool(now)){chip.textContent='☿ Rx Active';chip.classList.add('show');return;}
+  const nx=nextRx(now);
+  if(nx){const d=Math.ceil((new Date(nx[0])-now)/86400000);if(d<=7){chip.textContent=`☿ Rx in ${d}d`;chip.classList.add('show');}}
+  const dj=Math.ceil((JUPITER_CANCER-now)/86400000);
+  if(dj>0&&dj<=7){chip.textContent=`♃ Cancer in ${dj}d`;chip.classList.add('show');}
+}
+
+function checkLunaBanner(now){
+  const age=moonAge(now);const b=document.getElementById('luna-banner');
+  if(age<1.5){b.innerHTML='<strong>🌑 Amavasya today</strong> — Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings today.';b.classList.add('show');}
+  else if(age>14.5&&age<16){b.innerHTML='<strong>🌕 Purnima today</strong> — Cancer Lagna most emotionally activated. Creative work peaks. Not the day for conflict resolution.';b.classList.add('show');}
 }
 
 // ── ORACLE ──
-function renderOracle(now){
-  const cd=getCycle(); const age=moonAge(now);
-  const isRx=checkMercRxBool(now);
+function renderOracle(now,dow){
+  const cd=getCycle();const age=moonAge(now);const isRx=rxBool(now);
   let pool;
-  if(isRx) pool=ORACLES.rx;
-  else if(cd) pool=ORACLES[cd.phase];
+  if(isRx)pool=ORACLES.rx;
+  else if(cd)pool=ORACLES[cd.phase];
   else pool=ORACLES.dasha;
   const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
-  if(doy%3===0) pool=[...pool,ORACLES.moonphase[moonKey(age)]];
+  if(doy%3===0)pool=[...pool,ORACLES.moonphase[moonKey(age)]];
   document.getElementById('oracle-txt').textContent=pool[doy%pool.length];
 }
 
 // ── GUIDANCE ──
 function renderGuidance(dow){
   const d=DAY_DATA[dow];
-  const dl=document.getElementById('dos-list');
-  const dnl=document.getElementById('donts-list');
-  dl.innerHTML=d.dos.slice(0,3).map(g=>`<div class="g-item do-item"><span class="g-ico">${g.i}</span><span class="g-txt">${g.t}</span></div>`).join('');
-  dnl.innerHTML=d.donts.slice(0,2).map(g=>`<div class="g-item dont-item"><span class="g-ico">${g.i}</span><span class="g-txt">${g.t}</span></div>`).join('');
-  document.getElementById('chips-sec').innerHTML=`<div class="chip-row">
-    <div class="chip"><span>Wear</span>${d.wear}</div>
-    <div class="chip"><span>Eat</span>${d.food}</div>
-    <div class="chip"><span>Mantra</span>${d.mantra}</div>
-    <div class="chip"><span>Chore</span>${d.chore}</div>
-  </div>`;
+  document.getElementById('dos-list').innerHTML=d.dos.slice(0,3).map(g=>`<div class="g-row do-row"><span class="g-ico">${g.i}</span><span class="g-txt">${g.t}</span></div>`).join('');
+  document.getElementById('donts-list').innerHTML=d.donts.slice(0,2).map(g=>`<div class="g-row dont-row"><span class="g-ico">${g.i}</span><span class="g-txt">${g.t}</span></div>`).join('');
+  document.getElementById('chips-row').innerHTML=[
+    `<span class="chip"><b>Wear</b>${d.wear}</span>`,
+    `<span class="chip"><b>Eat</b>${d.food}</span>`,
+    `<span class="chip"><b>Mantra</b>${d.mantra}</span>`,
+    `<span class="chip"><b>Chore</b>${d.chore}</span>`,
+  ].join('');
 }
 
-// ── WEEK PAGE ──
+// ── WEEK ──
 function buildWeek(today){
-  const c=document.getElementById('week-list');
-  c.innerHTML=Object.entries(DAY_DATA).map(([di,d])=>{
+  document.getElementById('week-list').innerHTML=Object.entries(DAY_DATA).map(([di,d])=>{
     const isToday=parseInt(di)===today;
-    return`<div class="week-day-card">
-      <div class="wdc-header" onclick="togWDC(this)">
-        <span class="wdc-glyph">${d.glyph}</span>
-        <div class="wdc-info">
-          <div class="wdc-name" style="${isToday?'color:var(--acc)':''}">${DAYS[di]} — ${d.planet}</div>
-          <div class="wdc-theme">${d.theme}</div>
+    return`<div class="wday-card">
+      <div class="wday-hdr" onclick="togWDay(this)" style="${isToday?'background:var(--acc-lt)':''}">
+        <span class="wday-glyph" style="color:${d.acc}">${d.glyph}</span>
+        <div class="wday-info">
+          <div class="wday-name">${DAYS[di]} — ${d.planet}</div>
+          <div class="wday-theme">${d.theme}</div>
         </div>
-        ${isToday?'<span class="today-badge">Today</span>':''}
-        <span class="wdc-chev">▾</span>
+        ${isToday?'<span class="wday-today">Today</span>':''}
+        <span class="wday-chev">▾</span>
       </div>
-      <div class="wdc-body${isToday?' open':''}">
-        <div class="wdc-section">
-          <div class="wdc-section-title">Do</div>
-          <div class="wdc-list">${d.dos.map(g=>`<div class="wdc-item"><span>${g.i}</span><span>${g.t}</span></div>`).join('')}</div>
-        </div>
-        <div class="wdc-section">
-          <div class="wdc-section-title">Avoid</div>
-          <div class="wdc-list">${d.donts.map(g=>`<div class="wdc-item"><span>${g.i}</span><span>${g.t}</span></div>`).join('')}</div>
-        </div>
-        <div class="wdc-chips">
-          <div class="wdc-chip"><span>Wear</span>${d.wear}</div>
-          <div class="wdc-chip"><span>Chore</span>${d.chore}</div>
-          <div class="wdc-chip"><span>Mantra</span>${d.mantra}</div>
+      <div class="wday-body${isToday?' open':''}">
+        <div class="wday-sec-lbl" style="color:${d.acc}">Do</div>
+        ${d.dos.map(g=>`<div class="wday-item" style="border-left-color:${d.acc}"><span>${g.i}</span><span>${g.t.replace(/<\/?em>/g,'')}</span></div>`).join('')}
+        <div class="wday-sec-lbl" style="color:${d.acc};margin-top:10px">Avoid</div>
+        ${d.donts.map(g=>`<div class="wday-item wday-dont"><span>${g.i}</span><span>${g.t}</span></div>`).join('')}
+        <div class="wday-chips">
+          <div class="wday-chip"><b>Wear</b>${d.wear}</div>
+          <div class="wday-chip"><b>Mantra</b>${d.mantra}</div>
+          <div class="wday-chip"><b>Chore</b>${d.chore}</div>
         </div>
       </div>
     </div>`;
   }).join('');
 }
-function togWDC(h){
-  const b=h.nextElementSibling;
-  const c=h.querySelector('.wdc-chev');
-  b.classList.toggle('open');
-  c.style.transform=b.classList.contains('open')?'rotate(180deg)':'';
+
+function togWDay(h){
+  const b=h.nextElementSibling,c=h.querySelector('.wday-chev');
+  b.classList.toggle('open');c.style.transform=b.classList.contains('open')?'rotate(180deg)':'';
 }
 
-// ── CHECKS ──
-function checkMercRxBool(d){ const s=d.toISOString().split('T')[0]; return MERC_RX.some(([a,b])=>s>=a&&s<=b); }
-function getNextRx(d){ const s=d.toISOString().split('T')[0]; return MERC_RX.find(([a])=>a>s); }
-
-function checkRx(now){
-  const isRx=checkMercRxBool(now);
-  const chip=document.getElementById('rx-chip');
-  if(isRx){ chip.textContent='☿ Rx Active'; chip.classList.add('show'); return; }
-  const next=getNextRx(now);
-  if(next){ const d=Math.ceil((new Date(next[0])-now)/86400000); if(d<=7){chip.textContent=`☿ Rx in ${d}d`;chip.classList.add('show');}}
-  const dj=Math.ceil((JUPITER_CANCER-now)/86400000);
-  if(dj>0&&dj<=7){chip.textContent=`♃ Cancer in ${dj}d`;chip.classList.add('show');}
-}
-
-function checkLunaBanner(now){
-  const age=moonAge(now);
-  const b=document.getElementById('luna-banner');
-  if(age<1.5){
-    b.innerHTML='<strong>🌑 Amavasya today</strong> — Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings today.';
-    b.classList.add('show');
-  } else if(age>14.5&&age<16){
-    b.innerHTML='<strong>🌕 Purnima today</strong> — Cancer Lagna most emotionally activated. Creative work peaks. Not the day for conflict resolution.';
-    b.classList.add('show');
-  }
-}
-
-// ── WATER ──
+// ── GLASSES ──
 function buildGlasses(){
   const g=document.getElementById('glasses');
   const count=parseInt(ls('water_'+todayKey)||'0');
@@ -1022,14 +917,14 @@ function buildGlasses(){
   for(let i=0;i<8;i++){
     const el=document.createElement('div');
     el.className='gl'+(i<count?' on':'');
-    el.innerHTML='<div class="gl-fill"></div>';
+    el.innerHTML='<div class="gl-f"></div>';
     el.onclick=()=>addWater(i+1);
     g.appendChild(el);
   }
   document.getElementById('w-count').textContent=count;
 }
-function addWater(t){ const c=parseInt(ls('water_'+todayKey)||'0'); save('water_'+todayKey,c===t?t-1:t); buildGlasses(); }
-function resetWater(){ save('water_'+todayKey,0); buildGlasses(); }
+function addWater(t){const c=parseInt(ls('water_'+todayKey)||'0');save('water_'+todayKey,c===t?t-1:t);buildGlasses();}
+function resetWater(){save('water_'+todayKey,0);buildGlasses();}
 
 // ── STRESS ──
 function setStress(v){
@@ -1039,51 +934,36 @@ function setStress(v){
 }
 
 // ── SHEET ──
-function openSheet(){ document.getElementById('overlay').classList.add('show'); document.getElementById('sheet').classList.add('show'); }
-function closeSheet(){ document.getElementById('overlay').classList.remove('show'); document.getElementById('sheet').classList.remove('show'); }
-function selSheet(el){
-  const g=el.dataset.g;
-  document.querySelectorAll(`[data-g="${g}"]`).forEach(e=>e.classList.remove('on'));
-  el.classList.add('on');
-}
+function openSheet(){document.getElementById('overlay').classList.add('show');document.getElementById('sheet').classList.add('show');}
+function closeSheet(){document.getElementById('overlay').classList.remove('show');document.getElementById('sheet').classList.remove('show');}
+function selSheet(el){document.querySelectorAll(`[data-g="${el.dataset.g}"]`).forEach(e=>e.classList.remove('on'));el.classList.add('on');}
+
 function saveSheet(){
   const wake=document.querySelector('[data-g="wake"].on')?.dataset.v;
   const back=document.querySelector('[data-g="back"].on')?.dataset.v;
   const move=document.querySelector('[data-g="move"].on')?.dataset.v;
   const bed=document.getElementById('slp-bed').value;
   const wk=document.getElementById('slp-wake').value;
-  const [bh,bm]=bed.split(':').map(Number);
-  const [wh,wm]=wk.split(':').map(Number);
-  let mins=(wh*60+wm)-(bh*60+bm); if(mins<0)mins+=1440;
-  const slpHrs=Math.floor(mins/60)+'h'+(mins%60?` ${mins%60}m`:'');
-  const note=document.getElementById('home-note').value;
+  const note=document.getElementById('sheet-note').value;
+  let slpHrs='';
+  if(bed&&wk){const[bh,bm]=bed.split(':').map(Number);const[wh,wm]=wk.split(':').map(Number);let mins=(wh*60+wm)-(bh*60+bm);if(mins<0)mins+=1440;const h=Math.floor(mins/60);const m=mins%60;slpHrs=h+'h'+(m?` ${m}m`:'');}
   const stress=ls('stress_'+todayKey);
   const water=ls('water_'+todayKey)||'0';
   const log=JSON.parse(ls('log_'+todayKey)||'{}');
   save('log_'+todayKey,JSON.stringify({...log,wake,back,move,bed,slpHrs,note,stress,water,date:todayKey}));
+  if(note) save('note_'+todayKey,note);
   closeSheet();
-  toast('Logged ✓');
+  toast('Saved ✓');
+  if(navigator.vibrate) navigator.vibrate(8);
   buildStreak();
   buildInsights();
-  if(navigator.vibrate) navigator.vibrate(10);
-}
-
-// ── LOAD ──
-function loadToday(){
-  const stress=ls('stress_'+todayKey);
-  if(stress) setStress(stress);
-  const note=ls('note_'+todayKey);
-  if(note) document.getElementById('home-note').value=note;
-  const ns=JSON.parse(ls('notif_settings')||'null');
-  if(ns){ nSettings=ns; syncNToggles(); }
 }
 
 // ── STREAK ──
 function buildStreak(){
-  const b=document.getElementById('streak');
-  b.innerHTML='';
+  const b=document.getElementById('streak');b.innerHTML='';
   for(let i=6;i>=0;i--){
-    const d=new Date(); d.setDate(d.getDate()-i);
+    const d=new Date();d.setDate(d.getDate()-i);
     const k=d.toISOString().split('T')[0];
     const log=JSON.parse(ls('log_'+k)||'null');
     const lit=log&&(log.wake||log.back||log.move||log.stress);
@@ -1091,172 +971,69 @@ function buildStreak(){
   }
 }
 
+// ── LOAD ──
+function loadToday(){
+  const stress=ls('stress_'+todayKey);if(stress)setStress(stress);
+  const ns=JSON.parse(ls('notif_settings')||'null');if(ns){nSettings=ns;syncNToggles();}
+}
+
 // ── INSIGHTS ──
 function buildInsights(){
-  const strip=document.getElementById('i-strip');
-  const list=document.getElementById('log-list');
-  strip.innerHTML='';
-  const logs=[];
+  const strip=document.getElementById('i-strip'),list=document.getElementById('log-list');
+  strip.innerHTML='';const logs=[];
   for(let i=13;i>=0;i--){
-    const d=new Date(); d.setDate(d.getDate()-i);
+    const d=new Date();d.setDate(d.getDate()-i);
     const k=d.toISOString().split('T')[0];
     const log=JSON.parse(ls('log_'+k)||'null');
-    const filled=log?Object.keys(log).filter(k=>k!=='date').length:0;
+    const filled=log?Object.keys(log).filter(k=>!['date'].includes(k)).length:0;
     const lbl=DAYS[d.getDay()].slice(0,1);
-    let cls='',txt='—';
-    if(filled>0){ txt=filled; if(filled>=4)cls='great'; else if(filled>=2)cls='good'; else cls='okay'; }
+    let cls='',txt='·';
+    if(filled>0){txt=filled;if(filled>=4)cls='great';else if(filled>=2)cls='good';else cls='okay';}
     strip.innerHTML+=`<div class="hday"><div class="hday-l">${lbl}</div><div class="hdot ${cls}">${txt}</div></div>`;
-    if(log) logs.push({k,log,d});
+    if(log)logs.push({k,log,d});
   }
-  if(!logs.length){ list.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);font-size:13px">No logs yet — start today 🌙</div>'; return; }
+  if(!logs.length){list.innerHTML=`<div style="text-align:center;padding:28px;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--muted);font-style:italic">Begin logging to see your history</div>`;return;}
   list.innerHTML=logs.reverse().slice(0,7).map(({log,d})=>`
-    <div class="log-entry">
+    <div class="log-card">
       <div class="log-top">
         <span class="log-date">${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]}</span>
-        <span class="log-score">${log.slpHrs||'—'}</span>
+        <span class="log-slp">${log.slpHrs||'—'}</span>
       </div>
-      ${log.note?`<div class="log-note">${log.note.slice(0,120)}${log.note.length>120?'…':''}</div>`:''}
+      ${log.note?`<div class="log-note-txt">"${log.note.slice(0,100)}${log.note.length>100?'…':''}"</div>`:''}
       <div class="log-tags">
         ${log.stress?`<span class="log-tag">Feel: ${log.stress}</span>`:''}
         ${log.wake?`<span class="log-tag">Woke: ${log.wake}</span>`:''}
         ${log.back?`<span class="log-tag">Back: ${log.back}</span>`:''}
-        ${log.move?`<span class="log-tag">Moved: ${log.move}</span>`:''}
-        ${log.water?`<span class="log-tag">💧 ${log.water}/8</span>`:''}
+        ${log.move?`<span class="log-tag">${log.move}</span>`:''}
+        ${log.water&&log.water!=='0'?`<span class="log-tag">💧 ${log.water}/8</span>`:''}
       </div>
     </div>`).join('');
 }
 
 function buildAstroEvents(){
-  const now=new Date(); const events=[];
-  const isRx=checkMercRxBool(now);
+  const now=new Date();const events=[];
+  const isRx=rxBool(now);
   if(isRx){
-    const rx=MERC_RX.find(([s,e])=>{ const d=now.toISOString().split('T')[0]; return d>=s&&d<=e; });
+    const rx=MERC_RX.find(([s,e])=>{const d=now.toISOString().split('T')[0];return d>=s&&d<=e;});
     const days=Math.ceil((new Date(rx[1])-now)/86400000);
     const isVirgo=rx[0].includes('-09-');
-    events.push({dot:'red',title:`☿ Mercury Retrograde · ACTIVE`,
-      detail:`Ends in ${days} days. ${isVirgo?'Virgo transit — hits your natal chart hardest.':''}Triple-check all contracts and written agreements.`,badge:'warn',bt:'Active'});
+    events.push({dot:'red',title:'☿ Mercury Retrograde — Active now',detail:`Ends in ${days} days. ${isVirgo?'Virgo transit — hits your natal chart hardest. ':''}Triple-check all contracts and written agreements.`,badge:'warn',bt:'Active'});
   } else {
-    const next=getNextRx(now);
-    if(next){ const d=Math.ceil((new Date(next[0])-now)/86400000);
-      events.push({dot:d<=14?'red':'blue',title:`☿ Mercury Retrograde · ${new Date(next[0]).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`,
-        detail:`In ${d} days. ${next[0].includes('-09-')?'Virgo transit — most impactful for your natal chart.':''}Back up work, verify agreements before it starts.`,badge:d<=14?'warn':'good',bt:d+'d'});
-    }
+    const nx=nextRx(now);
+    if(nx){const d=Math.ceil((new Date(nx[0])-now)/86400000);const isV=nx[0].includes('-09-');
+      events.push({dot:d<=14?'red':'blue',title:`☿ Mercury Retrograde — ${new Date(nx[0]).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`,detail:`In ${d} days. ${isV?'Virgo transit — most impactful for your natal chart. ':''}Back up work, verify agreements before it starts.`,badge:d<=14?'warn':'ok',bt:d+'d'});}
   }
   const dj=Math.ceil((JUPITER_CANCER-now)/86400000);
-  if(dj>0) events.push({dot:'gold',title:'♃ Jupiter enters Cancer (Exalted) · June 2026',
-    detail:`In ${dj} days. Directly on your Lagna. Rarest investment window in 12 years. FD matures simultaneously.`,badge:'key',bt:dj>30?Math.ceil(dj/30)+'mo':dj+'d'});
-  else events.push({dot:'gold',title:'♃ Jupiter in Cancer · ACTIVE',
-    detail:'Most powerful transit for your Lagna in 12 years. Every decision made now has cosmic backing.',badge:'key',bt:'Active'});
-  events.push({dot:'green',title:'♃ Jupiter enters Leo (2nd house) · June 2027',
-    detail:`Transits your natal Moon + Venus. Direct wealth manifestation period. Possession of Runwal Pinnacle.`,badge:'good',bt:Math.ceil((new Date('2027-06-01')-now)/86400000/30)+'mo'});
-  events.push({dot:'gold',title:'♂ Mars Mahadasha · January 2030',
-    detail:'Your Yoga Karaka activated. Peak power decade — business and investments peak 2030–2037.',badge:'key',bt:Math.ceil((new Date('2030-01-01')-now)/86400000/365)+'y'});
+  if(dj>0)events.push({dot:'gold',title:'♃ Jupiter enters Cancer — Exalted · June 2026',detail:`In ${dj} days. Directly on your Lagna. Rarest investment window in 12 years. FD matures simultaneously.`,badge:'key',bt:dj>30?Math.ceil(dj/30)+'mo':dj+'d'});
+  else events.push({dot:'gold',title:'♃ Jupiter in Cancer — Active',detail:'Most powerful transit for your Lagna in 12 years. Every investment and decision made now has cosmic backing.',badge:'key',bt:'Active'});
+  events.push({dot:'green',title:'♃ Jupiter enters Leo (2nd house) — June 2027',detail:`Transits your natal Moon + Venus. Direct wealth manifestation period. Runwal Pinnacle possession window.`,badge:'ok',bt:Math.ceil((new Date('2027-06-01')-now)/86400000/30)+'mo'});
+  events.push({dot:'gold',title:'♂ Mars Mahadasha — January 2030',detail:'Your Yoga Karaka activated. Peak power decade — business and investments peak 2030–2037.',badge:'key',bt:Math.ceil((new Date('2030-01-01')-now)/86400000/365)+'yr'});
   document.getElementById('astro-events').innerHTML=events.map(e=>`
-    <div class="event-row">
-      <div class="event-dot ${e.dot}"></div>
-      <div class="event-info"><div class="event-title">${e.title}</div><div class="event-detail">${e.detail}</div></div>
-      <span class="event-badge badge-${e.badge}">${e.bt}</span>
+    <div class="ev-row">
+      <div class="ev-dot ${e.dot}"></div>
+      <div class="ev-info"><div class="ev-title">${e.title}</div><div class="ev-detail">${e.detail}</div></div>
+      <span class="ev-badge badge-${e.badge}">${e.bt}</span>
     </div>`).join('');
-}
-
-// ── NOTIFICATIONS ──
-async function initSW(){
-  if(!('serviceWorker' in navigator)) return;
-  try{
-    await navigator.serviceWorker.register('./sw.js');
-    await navigator.serviceWorker.ready;
-    scheduleNotifs();
-  } catch(e){ console.warn('SW:',e); }
-}
-
-function getMorningNotif(){
-  const now=new Date(); const dow=now.getDay(); const d=DAY_DATA[dow];
-  const cd=getCycle(); const isRx=checkMercRxBool(now); const age=moonAge(now);
-  let title=`${d.glyph} ${d.planet}'s Day`;
-  let body='';
-  if(age<1.5) body='🌑 Amavasya — rest and honour lineage today. '+d.am;
-  else if(age>14.5&&age<16) body='🌕 Purnima — Cancer Lagna activated. '+d.am;
-  else if(isRx) body='☿ Rx active — triple-check every contract today. '+d.am;
-  else if(cd){ const pd=CYCLE_PHASES[cd.phase]; body=`${pd.emoji} ${pd.name} Day ${cd.day} — ${d.am}`; }
-  else body=d.am;
-  return{title,body,tag:'morning'};
-}
-
-function getAfternoonNotif(){
-  const d=DAY_DATA[new Date().getDay()];
-  return{title:'Afternoon check',body:d.pm,tag:'afternoon'};
-}
-function getEveningNotif(){
-  const d=DAY_DATA[new Date().getDay()];
-  return{title:'Evening reminder',body:d.eve,tag:'evening'};
-}
-function getSleepNotif(){
-  const cd=getCycle();
-  const msgs={menstrual:'🌑 Screen off — menstrual recovery needs full rest tonight.',
-    follicular:'🌒 Screen off — tomorrow\'s rising energy needs tonight\'s sleep.',
-    ovulation:'🌕 Screen off — protect tomorrow\'s peak clarity.',
-    luteal:'🌖 Screen off — luteal recovery is as important as the day\'s work.'};
-  const body=cd?msgs[cd.phase]:'🌙 Screen off — Cancer Lagna needs 7-8 hrs. Before 11 PM.';
-  return{title:'Sleep window',body,tag:'sleep'};
-}
-
-function scheduleNotifs(){
-  if(Notification.permission!=='granted') return;
-  if(!navigator.serviceWorker.controller) return;
-  const now=new Date();
-  const list=[];
-  function at(h,m){ const d=new Date(now); d.setHours(h,m,0,0); return d; }
-  if(nSettings.morning){ const t=at(7,30); if(t>now){ const n=getMorningNotif(); list.push({ts:t.getTime(),...n}); }}
-  if(nSettings.afternoon){ const t=at(15,0); if(t>now){ const n=getAfternoonNotif(); list.push({ts:t.getTime(),...n}); }}
-  if(nSettings.evening){ const t=at(19,0); if(t>now){ const n=getEveningNotif(); list.push({ts:t.getTime(),...n}); }}
-  if(nSettings.sleep){ const t=at(22,15); if(t>now){ const n=getSleepNotif(); list.push({ts:t.getTime(),...n}); }}
-  if(nSettings.jup){
-    const dj=Math.ceil((JUPITER_CANCER-now)/86400000);
-    if(dj===7){ const t=at(9,0); if(t>now) list.push({ts:t.getTime(),title:'♃ Jupiter enters Cancer in 7 days',body:'Your FD matures as Jupiter enters your Lagna exalted. The rarest investment window in 12 years begins. Be ready.',tag:'jupiter'}); }
-  }
-  if(nSettings.rx){
-    const tom=new Date(now); tom.setDate(tom.getDate()+1);
-    const ts=tom.toISOString().split('T')[0];
-    const rxTom=MERC_RX.find(([s])=>s===ts);
-    if(rxTom){ const isV=rxTom[0].includes('-09-'); const t=at(8,0); if(t>now)
-      list.push({ts:t.getTime(),title:'☿ Mercury Retrograde starts tomorrow',
-        body:isV?'Virgo Rx tomorrow — most impactful for your natal chart. Sign nothing new today. Back up all systems.':'Mercury Rx tomorrow. Complete contracts and backups today.',tag:'rx-warn'}); }
-  }
-  if(nSettings.luna){
-    const age=moonAge(now);
-    if(age<1||age>28.5){ const t=at(7,0); if(t>now) list.push({ts:t.getTime(),title:'🌑 Amavasya today',body:'Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings.',tag:'amavasya'}); }
-    if(age>14&&age<15){ const t=at(7,0); if(t>now) list.push({ts:t.getTime(),title:'🌕 Purnima today',body:'Cancer Lagna most activated. Creative work peaks. Not the day for conflict resolution.',tag:'purnima'}); }
-  }
-  navigator.serviceWorker.controller.postMessage({type:'SCHEDULE',list});
-}
-
-async function reqPerm(){
-  const r=await Notification.requestPermission();
-  updatePermUI();
-  if(r==='granted'){scheduleNotifs();toast('Notifications enabled ✓');}
-}
-function updatePermUI(){
-  const p=Notification.permission;
-  const btn=document.getElementById('perm-btn');
-  const st=document.getElementById('perm-st');
-  if(p==='granted'){btn.textContent='✅ Notifications Enabled';btn.style.opacity='.6';st.textContent='All set. Notifications scheduled daily.';}
-  else if(p==='denied'){btn.textContent='🚫 Blocked — go to Safari Settings';btn.style.opacity='.6';}
-}
-function togN(k){
-  nSettings[k]=!nSettings[k];
-  document.getElementById('tog-'+k).classList.toggle('on',nSettings[k]);
-  save('notif_settings',JSON.stringify(nSettings));
-  scheduleNotifs();
-}
-function syncNToggles(){ Object.entries(nSettings).forEach(([k,v])=>document.getElementById('tog-'+k)?.classList.toggle('on',v)); }
-function loadNSettings(){ const ns=JSON.parse(ls('notif_settings')||'null'); if(ns){nSettings=ns;syncNToggles();} updatePermUI(); }
-function testNotif(){
-  if(Notification.permission!=='granted'){toast('Enable notifications first');return;}
-  const n=getMorningNotif();
-  if(navigator.serviceWorker.controller){
-    navigator.serviceWorker.controller.postMessage({type:'FIRE_NOW',n});
-    toast('Test sent ✓');
-  } else { new Notification(n.title,{body:n.body}); toast('Test sent ✓'); }
 }
 
 // ── PAGE NAV ──
@@ -1265,27 +1042,75 @@ function showPage(name,el){
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
   document.getElementById('pg-'+name).classList.add('active');
   el.classList.add('on');
-  document.getElementById('fab').style.display=name==='home'?'flex':'none';
+  document.getElementById('fab').style.display=(name==='home')?'flex':'none';
   if(name==='insights'){buildInsights();buildAstroEvents();}
-  if(name==='week'){buildWeek(new Date().getDay());}
+  if(name==='week')buildWeek(new Date().getDay());
+}
+
+// ── NOTIFICATIONS ──
+async function initSW(){
+  if(!('serviceWorker' in navigator))return;
+  try{await navigator.serviceWorker.register('./sw.js');await navigator.serviceWorker.ready;scheduleNotifs();}catch(e){console.warn('SW:',e);}
+}
+
+function getMorningNotif(){
+  const now=new Date();const dow=now.getDay();const d=DAY_DATA[dow];
+  const cd=getCycle();const isRx=rxBool(now);const age=moonAge(now);
+  let title=`${d.glyph} ${d.planet}'s Day`;let body='';
+  if(age<1.5)body='Amavasya — rest and honour lineage today. '+d.am;
+  else if(age>14.5&&age<16)body='Purnima — Cancer Lagna activated. '+d.am;
+  else if(isRx)body='☿ Rx active — triple-check every contract today. '+d.am;
+  else if(cd){const pd=CYCLE_PHASES[cd.phase];body=`${pd.name} Phase, Day ${cd.day}. ${d.am}`;}
+  else body=d.am;
+  return{title,body,tag:'morning'};
+}
+function getAfternoonNotif(){const d=DAY_DATA[new Date().getDay()];return{title:'Afternoon check',body:d.pm,tag:'afternoon'};}
+function getEveningNotif(){const d=DAY_DATA[new Date().getDay()];return{title:'Evening reminder',body:d.eve,tag:'evening'};}
+function getSleepNotif(){
+  const cd=getCycle();
+  const msgs={menstrual:'Menstrual recovery needs full rest tonight. Screen off.',follicular:'Tomorrow\'s rising energy needs tonight\'s sleep. Screen off.',ovulation:'Protect tomorrow\'s peak clarity with proper sleep. Screen off.',luteal:'Luteal recovery is as important as the day\'s work. Screen off.'};
+  return{title:'Sleep window',body:'🌙 '+(cd?msgs[cd.phase]:'Cancer Lagna needs 7–8 hrs. Before 11 PM.'),tag:'sleep'};
+}
+
+function scheduleNotifs(){
+  if(Notification.permission!=='granted')return;
+  if(!navigator.serviceWorker.controller)return;
+  const now=new Date();const list=[];
+  function at(h,m){const d=new Date(now);d.setHours(h,m,0,0);return d;}
+  if(nSettings.morning){const t=at(7,30);if(t>now){const n=getMorningNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.afternoon){const t=at(15,0);if(t>now){const n=getAfternoonNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.evening){const t=at(19,0);if(t>now){const n=getEveningNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.sleep){const t=at(22,15);if(t>now){const n=getSleepNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.jup){const dj=Math.ceil((JUPITER_CANCER-now)/86400000);if(dj===7){const t=at(9,0);if(t>now)list.push({ts:t.getTime(),title:'♃ Jupiter enters Cancer in 7 days',body:'Your FD matures as Jupiter enters your Lagna exalted. The rarest investment window in 12 years begins. Be ready.',tag:'jupiter'});}}
+  if(nSettings.rx){const tom=new Date(now);tom.setDate(tom.getDate()+1);const ts=tom.toISOString().split('T')[0];const rxTom=MERC_RX.find(([s])=>s===ts);if(rxTom){const isV=rxTom[0].includes('-09-');const t=at(8,0);if(t>now)list.push({ts:t.getTime(),title:'☿ Mercury Retrograde starts tomorrow',body:isV?'Virgo Rx tomorrow — most impactful for your natal chart. Sign nothing new today. Back up all systems.':'Mercury Rx tomorrow. Complete contracts and backups today.',tag:'rx-warn'});}}
+  if(nSettings.luna){const age=moonAge(now);if(age<1||age>28.5){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌑 Amavasya today',body:'Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings.',tag:'amavasya'});}if(age>14&&age<15){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌕 Purnima today',body:'Cancer Lagna most activated. Creative work peaks. Not the day for conflict resolution.',tag:'purnima'});}}
+  navigator.serviceWorker.controller.postMessage({type:'SCHEDULE',list});
+}
+
+async function reqPerm(){
+  const r=await Notification.requestPermission();updatePermUI();
+  if(r==='granted'){scheduleNotifs();toast('Notifications enabled ✓');}
+}
+function updatePermUI(){
+  const p=Notification.permission;const btn=document.getElementById('perm-btn');const st=document.getElementById('perm-st');
+  if(p==='granted'){btn.textContent='✓ Notifications enabled';btn.style.opacity='.6';btn.style.cursor='default';st.textContent='You\'re all set — notifications scheduled daily.';}
+  else if(p==='denied'){btn.textContent='Blocked — go to Safari Settings';btn.style.opacity='.6';}
+}
+function togN(k){nSettings[k]=!nSettings[k];document.getElementById('tog-'+k).classList.toggle('on',nSettings[k]);save('notif_settings',JSON.stringify(nSettings));scheduleNotifs();}
+function syncNToggles(){Object.entries(nSettings).forEach(([k,v])=>document.getElementById('tog-'+k)?.classList.toggle('on',v));}
+function loadNSettings(){const ns=JSON.parse(ls('notif_settings')||'null');if(ns){nSettings=ns;syncNToggles();}updatePermUI();}
+function testNotif(){
+  if(Notification.permission!=='granted'){toast('Enable notifications first');return;}
+  const n=getMorningNotif();
+  if(navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'FIRE_NOW',n});toast('Test sent ✓');}
+  else{new Notification(n.title,{body:n.body});toast('Test sent ✓');}
 }
 
 // ── UTIL ──
 function ls(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function save(k,v){try{localStorage.setItem(k,String(v));}catch(e){}}
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
-}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 function clearAll(){if(confirm('Clear all data?')){localStorage.clear();location.reload();}}
-
-// Auto-save note
-document.getElementById('home-note').addEventListener('input',function(){
-  save('note_'+todayKey,this.value);
-  const log=JSON.parse(ls('log_'+todayKey)||'{}');
-  save('log_'+todayKey,JSON.stringify({...log,note:this.value}));
-});
 
 init();
 </script>
