@@ -262,6 +262,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .notif-info{flex:1}
 .notif-name{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt)}
 .notif-detail{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:2px}
+.notif-time{width:84px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:11px;padding:5px 7px;text-align:center;outline:none}
 .ntog{width:42px;height:25px;border-radius:13px;background:var(--s2);border:1px solid var(--bd);position:relative;transition:all .2s;cursor:pointer;flex-shrink:0}
 .ntog::after{content:'';position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--muted);transition:all .2s}
 .ntog.on{background:var(--acc);border-color:var(--acc)}
@@ -478,10 +479,10 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
     <button class="perm-btn" id="perm-btn" onclick="reqPerm()">Enable Notifications</button>
     <div class="perm-st" id="perm-st">Add to Home Screen first, then enable here</div>
     <div class="card">
-      <div class="notif-row"><div class="notif-ico">🌅</div><div class="notif-info"><div class="notif-name">Morning Oracle</div><div class="notif-detail">7:30 AM · Planet + cycle + top do/don't</div></div><div class="ntog on" id="tog-morning" onclick="togN('morning')"></div></div>
-      <div class="notif-row"><div class="notif-ico">☀️</div><div class="notif-info"><div class="notif-name">Afternoon Check</div><div class="notif-detail">3:00 PM · Day-specific prompt</div></div><div class="ntog on" id="tog-afternoon" onclick="togN('afternoon')"></div></div>
-      <div class="notif-row"><div class="notif-ico">🌆</div><div class="notif-info"><div class="notif-name">Evening Reminder</div><div class="notif-detail">7:00 PM · Day-specific don't</div></div><div class="ntog on" id="tog-evening" onclick="togN('evening')"></div></div>
-      <div class="notif-row"><div class="notif-ico">🌙</div><div class="notif-info"><div class="notif-name">Sleep Nudge</div><div class="notif-detail">10:15 PM · Cycle-phase aware</div></div><div class="ntog on" id="tog-sleep" onclick="togN('sleep')"></div></div>
+      <div class="notif-row"><div class="notif-ico">🌅</div><div class="notif-info"><div class="notif-name">Morning Oracle</div><div class="notif-detail">Planet + cycle + top do/don't</div></div><input class="notif-time" id="time-morning" type="time" value="07:30" onchange="setNTime('morning',this.value)"><div class="ntog on" id="tog-morning" onclick="togN('morning')"></div></div>
+      <div class="notif-row"><div class="notif-ico">☀️</div><div class="notif-info"><div class="notif-name">Afternoon Check</div><div class="notif-detail">Day-specific prompt</div></div><input class="notif-time" id="time-afternoon" type="time" value="15:00" onchange="setNTime('afternoon',this.value)"><div class="ntog on" id="tog-afternoon" onclick="togN('afternoon')"></div></div>
+      <div class="notif-row"><div class="notif-ico">🌆</div><div class="notif-info"><div class="notif-name">Evening Reminder</div><div class="notif-detail">Day-specific don't</div></div><input class="notif-time" id="time-evening" type="time" value="19:00" onchange="setNTime('evening',this.value)"><div class="ntog on" id="tog-evening" onclick="togN('evening')"></div></div>
+      <div class="notif-row"><div class="notif-ico">🌙</div><div class="notif-info"><div class="notif-name">Sleep Nudge</div><div class="notif-detail">Cycle-phase aware</div></div><input class="notif-time" id="time-sleep" type="time" value="22:15" onchange="setNTime('sleep',this.value)"><div class="ntog on" id="tog-sleep" onclick="togN('sleep')"></div></div>
       <div class="notif-row"><div class="notif-ico">☿</div><div class="notif-info"><div class="notif-name">Mercury Rx Alert</div><div class="notif-detail">Day before retrograde — triple-check contracts</div></div><div class="ntog on" id="tog-rx" onclick="togN('rx')"></div></div>
       <div class="notif-row"><div class="notif-ico">♃</div><div class="notif-info"><div class="notif-name">Jupiter Transit</div><div class="notif-detail">7 days before Jupiter enters Cancer · June 2026</div></div><div class="ntog on" id="tog-jup" onclick="togN('jup')"></div></div>
       <div class="notif-row"><div class="notif-ico">🌑</div><div class="notif-info"><div class="notif-name">Amavasya & Purnima</div><div class="notif-detail">New moon and full moon alerts</div></div><div class="ntog on" id="tog-luna" onclick="togN('luna')"></div></div>
@@ -718,7 +719,7 @@ const ORACLES={
 };
 
 // ── STATE ──
-let todayKey='', nSettings={morning:true,afternoon:true,evening:true,sleep:true,rx:true,jup:true,luna:true};
+let todayKey='', nSettings={morning:true,afternoon:true,evening:true,sleep:true,rx:true,jup:true,luna:true}, nTimes={morning:'07:30',afternoon:'15:00',evening:'19:00',sleep:'22:15'};
 
 // ── MOON ──
 function moonAge(d){const ms=d-KNOWN_NM;const days=ms/86400000;return((days%LUNAR)+LUNAR)%LUNAR;}
@@ -1074,17 +1075,18 @@ function getSleepNotif(){
 
 function scheduleNotifs(){
   if(Notification.permission!=='granted')return;
-  if(!navigator.serviceWorker.controller)return;
   const now=new Date();const list=[];
   function at(h,m){const d=new Date(now);d.setHours(h,m,0,0);return d;}
-  if(nSettings.morning){const t=at(7,30);if(t>now){const n=getMorningNotif();list.push({ts:t.getTime(),...n});}}
-  if(nSettings.afternoon){const t=at(15,0);if(t>now){const n=getAfternoonNotif();list.push({ts:t.getTime(),...n});}}
-  if(nSettings.evening){const t=at(19,0);if(t>now){const n=getEveningNotif();list.push({ts:t.getTime(),...n});}}
-  if(nSettings.sleep){const t=at(22,15);if(t>now){const n=getSleepNotif();list.push({ts:t.getTime(),...n});}}
+  function atKey(k){const d=new Date(now);const [h,m]=(nTimes[k]||'07:30').split(':').map(Number);d.setHours(h,m,0,0);return d;}
+  if(nSettings.morning){const t=atKey('morning');if(t>now){const n=getMorningNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.afternoon){const t=atKey('afternoon');if(t>now){const n=getAfternoonNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.evening){const t=atKey('evening');if(t>now){const n=getEveningNotif();list.push({ts:t.getTime(),...n});}}
+  if(nSettings.sleep){const t=atKey('sleep');if(t>now){const n=getSleepNotif();list.push({ts:t.getTime(),...n});}}
   if(nSettings.jup){const dj=Math.ceil((JUPITER_CANCER-now)/86400000);if(dj===7){const t=at(9,0);if(t>now)list.push({ts:t.getTime(),title:'♃ Jupiter enters Cancer in 7 days',body:'Your FD matures as Jupiter enters your Lagna exalted. The rarest investment window in 12 years begins. Be ready.',tag:'jupiter'});}}
   if(nSettings.rx){const tom=new Date(now);tom.setDate(tom.getDate()+1);const ts=tom.toISOString().split('T')[0];const rxTom=MERC_RX.find(([s])=>s===ts);if(rxTom){const isV=rxTom[0].includes('-09-');const t=at(8,0);if(t>now)list.push({ts:t.getTime(),title:'☿ Mercury Retrograde starts tomorrow',body:isV?'Virgo Rx tomorrow — most impactful for your natal chart. Sign nothing new today. Back up all systems.':'Mercury Rx tomorrow. Complete contracts and backups today.',tag:'rx-warn'});}}
   if(nSettings.luna){const age=moonAge(now);if(age<1||age>28.5){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌑 Amavasya today',body:'Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings.',tag:'amavasya'});}if(age>14&&age<15){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌕 Purnima today',body:'Cancer Lagna most activated. Creative work peaks. Not the day for conflict resolution.',tag:'purnima'});}}
-  navigator.serviceWorker.controller.postMessage({type:'SCHEDULE',list});
+  const sw=navigator.serviceWorker.controller||navigator.serviceWorker.ready.then(r=>r.active).catch(()=>null);
+  Promise.resolve(sw).then(w=>w&&w.postMessage({type:'SCHEDULE',list}));
 }
 
 async function reqPerm(){
@@ -1098,7 +1100,13 @@ function updatePermUI(){
 }
 function togN(k){nSettings[k]=!nSettings[k];document.getElementById('tog-'+k).classList.toggle('on',nSettings[k]);save('notif_settings',JSON.stringify(nSettings));scheduleNotifs();}
 function syncNToggles(){Object.entries(nSettings).forEach(([k,v])=>document.getElementById('tog-'+k)?.classList.toggle('on',v));}
-function loadNSettings(){const ns=JSON.parse(ls('notif_settings')||'null');if(ns){nSettings=ns;syncNToggles();}updatePermUI();}
+function setNTime(k,v){if(!/^\d{2}:\d{2}$/.test(v))return;nTimes[k]=v;save('notif_times',JSON.stringify(nTimes));scheduleNotifs();toast('Notification time updated');}
+function syncNTimes(){Object.entries(nTimes).forEach(([k,v])=>{const el=document.getElementById('time-'+k);if(el)el.value=v;});}
+function loadNSettings(){
+  const ns=JSON.parse(ls('notif_settings')||'null');if(ns){Object.assign(nSettings,ns);syncNToggles();}
+  const nt=JSON.parse(ls('notif_times')||'null');if(nt)Object.assign(nTimes,nt);
+  syncNTimes();updatePermUI();
+}
 function testNotif(){
   if(Notification.permission!=='granted'){toast('Enable notifications first');return;}
   const n=getMorningNotif();
