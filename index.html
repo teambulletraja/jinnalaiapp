@@ -22,7 +22,7 @@ html,body{height:100%;overflow-x:hidden}
 body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:14px}
 
 /* wrap */
-.wrap{max-width:430px;margin:0 auto;padding-bottom:calc(60px + var(--sb))}
+.wrap{max-width:430px;margin:0 auto;padding-bottom:calc(68px + var(--sb))}
 
 /* pages */
 .page{display:none}
@@ -37,9 +37,11 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
   border-top:1px solid var(--bd);
   display:flex;z-index:90;padding-bottom:var(--sb);
 }
-.ni{flex:1;padding:11px 0 10px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none}
-.ni-g{font-size:18px;display:block;color:var(--muted);transition:color .2s,transform .2s;font-family:'Cormorant Garamond',serif}
+.ni{flex:1;padding:8px 0 7px;text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ni-g{font-size:16px;display:block;color:var(--muted);transition:color .2s,transform .2s;font-family:'Cormorant Garamond',serif;line-height:1}
+.ni-l{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);letter-spacing:.06em;transition:color .2s;line-height:1}
 .ni.on .ni-g{color:var(--acc);transform:scale(1.12)}
+.ni.on .ni-l{color:var(--acc);font-weight:500}
 
 /* ── SECTION / CARD ── */
 .sec{margin:0 18px 16px}
@@ -279,6 +281,132 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 /* Rx chip in header */
 .rx-chip{font-family:'DM Sans',sans-serif;font-size:10px;background:rgba(201,100,100,.12);color:#a03030;border:1px solid rgba(201,100,100,.3);padding:3px 9px;border-radius:20px;display:none}
 .rx-chip.show{display:inline-block}
+
+/* ── ENERGY SCORE ── */
+.energy-bar{margin:14px 18px 0;display:flex;align-items:stretch;gap:0;border-radius:13px;overflow:hidden;border:1px solid var(--bd)}
+.energy-score-block{background:var(--txt);color:var(--bg);padding:14px 18px;display:flex;flex-direction:column;justify-content:center;min-width:78px;flex-shrink:0}
+.energy-n{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1;color:var(--bg)}
+.energy-max{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(250,248,244,.45);letter-spacing:.1em}
+.energy-text-block{background:var(--s1);padding:12px 14px;flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.energy-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+.energy-why{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--txt);font-style:italic;line-height:1.45}
+.energy-factors{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.ef{font-family:'DM Sans',sans-serif;font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid var(--bd);color:var(--muted)}
+.ef.up{background:rgba(122,171,138,.1);border-color:rgba(122,171,138,.4);color:#3a7a52}
+.ef.down{background:rgba(201,100,100,.08);border-color:rgba(201,100,100,.25);color:#a03030}
+.ef.neutral{background:var(--s2)}
+
+/* ── PANCHANG ── */
+.panchang{margin:14px 18px 0;background:var(--s1);border-radius:12px;border:1px solid var(--bd);overflow:hidden}
+.panchang-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px;border-bottom:1px solid var(--bd);cursor:pointer;-webkit-user-select:none;user-select:none}
+.panchang-title{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase}
+.panchang-special{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--acc);font-weight:500}
+.panchang-chev{font-size:10px;color:var(--muted);transition:transform .2s}
+.panchang-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.panchang-body.collapsed{display:none}
+.pc{padding:10px 14px;border-bottom:1px solid var(--bd);border-right:1px solid var(--bd)}
+.pc:nth-child(even){border-right:none}
+.pc:nth-last-child(-n+2){border-bottom:none}
+.pc-lbl{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+.pc-val{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--txt);font-weight:400}
+.pc-sub{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);margin-top:1px;line-height:1.4}
+.pc-acc{color:var(--acc)}
+
+/* ── VEDIC EVENTS ── */
+.vedic-banner{margin:10px 18px 0;padding:11px 14px;border-radius:10px;border:1px solid var(--acc-bd);background:var(--acc-lt);display:none}
+.vedic-banner.show{display:block}
+.vedic-banner-name{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--acc);margin-bottom:3px}
+.vedic-banner-desc{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.5}
+
+/* ── SADHANA TAB ── */
+.moon-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px}
+.mc-hdr{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);text-align:center;padding-bottom:3px;letter-spacing:.06em}
+.mc-day{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);cursor:pointer;-webkit-user-select:none;user-select:none;position:relative;background:var(--bg);border:1px solid transparent}
+.mc-day.today{border-color:var(--acc);color:var(--acc);font-weight:600}
+.mc-day.amavasya{background:rgba(26,21,16,.08)}
+.mc-day.purnima{background:rgba(232,220,200,.5)}
+.mc-day.ekadashi{background:rgba(201,180,110,.12)}
+.mc-day.special{background:var(--acc-lt)}
+.mc-day.other-month{opacity:.3}
+.mc-dot{width:4px;height:4px;border-radius:50%;position:absolute;bottom:2px}
+.mc-dot.gold{background:var(--acc)}
+.mc-dot.silver{background:#b0a898}
+.mc-month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mc-month-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--txt)}
+.mc-nav-btn{background:none;border:1px solid var(--bd);border-radius:8px;padding:5px 12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt2);cursor:pointer}
+
+.ritual-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--bd)}
+.ritual-row:last-child{border-bottom:none}
+.ritual-ico{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.ritual-info{flex:1}
+.ritual-name{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt);font-weight:500}
+.ritual-when{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:1px}
+.ritual-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);background:var(--bg);cursor:pointer;-webkit-user-select:none;user-select:none;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;flex-shrink:0}
+.ritual-check.done{background:var(--acc);border-color:var(--acc);color:#faf8f4}
+
+.year-phase{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:8px}
+.yp-period{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.yp-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--txt);margin-bottom:6px}
+.yp-body{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt2);line-height:1.6}
+.yp-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.yp-badge{font-family:'DM Sans',sans-serif;font-size:9px;padding:2px 8px;border-radius:8px;border:1px solid var(--bd);color:var(--muted)}
+.yp-badge.act{background:var(--acc-lt);border-color:var(--acc-bd);color:var(--acc)}
+.yp-badge.warn{background:rgba(201,100,100,.08);border-color:rgba(201,100,100,.25);color:#a03030}
+.yp-badge.good{background:rgba(122,171,138,.1);border-color:rgba(122,171,138,.4);color:#3a7a52}
+
+.body-track-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bt-card{background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:13px}
+.bt-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.bt-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--txt);line-height:1}
+.bt-sub{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);margin-top:3px}
+.bt-bar{height:4px;background:var(--bd);border-radius:2px;margin-top:8px;overflow:hidden}
+.bt-bar-fill{height:100%;border-radius:2px;background:var(--acc);transition:width .4s ease}
+
+/* ── ENHANCED CYCLE ── */
+.phase-card{background:var(--s1);border:1px solid var(--bd);border-radius:13px;overflow:hidden;margin-bottom:10px}
+.phase-card-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.phase-card-ico{font-size:24px;flex-shrink:0}
+.phase-card-info{flex:1}
+.phase-card-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--txt)}
+.phase-card-days{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:2px}
+.phase-card-body{padding:14px 16px}
+.phase-section-lbl{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin:12px 0 6px}
+.phase-section-lbl:first-child{margin-top:0}
+
+.day-by-day{display:flex;flex-direction:column;gap:4px}
+.dbd-row{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;background:var(--bg);border-radius:8px;border:1px solid var(--bd)}
+.dbd-day{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--acc);min-width:28px;flex-shrink:0;line-height:1.2}
+.dbd-info{flex:1}
+.dbd-feel{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);font-weight:500;margin-bottom:2px}
+.dbd-detail{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);line-height:1.5}
+.dbd-row.active-day{background:var(--acc-lt);border-color:var(--acc-bd)}
+.dbd-row.active-day .dbd-day{color:var(--acc)}
+
+.signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sig{background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:9px 10px}
+.sig-ico{font-size:14px;margin-bottom:3px}
+.sig-lbl{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--txt);font-weight:500}
+.sig-desc{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4}
+
+/* Happy hormone section */
+.hormone-card{background:var(--s1);border:1px solid var(--bd);border-radius:13px;overflow:hidden;margin-bottom:10px}
+.hormone-hdr{padding:12px 16px;background:var(--txt);color:var(--bg);display:flex;align-items:center;gap:8px}
+.hormone-hdr-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--bg)}
+.hormone-hdr-sub{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(250,248,244,.55);margin-top:1px}
+.hormone-body{padding:14px 16px}
+.h-type{margin-bottom:12px}
+.h-type:last-child{margin-bottom:0}
+.h-type-name{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:5px}
+.h-hit-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:4px}
+.h-hit-ico{font-size:13px;flex-shrink:0;margin-top:1px}
+.h-hit-txt{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.5}
+.h-hit-txt span{color:var(--muted);font-size:11px;display:block;margin-top:1px}
+.safari-notice{margin:14px 18px 0;padding:12px 14px;background:rgba(122,155,201,.08);border:1px solid rgba(122,155,201,.3);border-radius:10px;display:none}
+.safari-notice.show{display:flex;gap:10px;align-items:flex-start}
+.safari-notice-ico{font-size:18px;flex-shrink:0}
+.safari-notice-txt{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt2);line-height:1.5}
+.safari-notice-txt strong{color:var(--txt);display:block;margin-bottom:2px}
+.safari-notice-close{font-size:16px;color:var(--muted);cursor:pointer;flex-shrink:0;padding:0 2px}
 </style>
 </head>
 <body>
@@ -298,8 +426,44 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
     <div class="planet-theme" id="p-theme">Power & action</div>
   </div>
 
+  <!-- Safari/notification notice -->
+  <div class="safari-notice" id="safari-notice">
+    <span class="safari-notice-ico">🔔</span>
+    <div class="safari-notice-txt"><strong>Enable daily notifications</strong>Open in Safari → Share → Add to Home Screen. Notifications only work from Safari PWA on iPhone.</div>
+    <span class="safari-notice-close" onclick="dismissSafariNotice()">✕</span>
+  </div>
+
+  <!-- Vedic special day banner -->
+  <div class="vedic-banner" id="vedic-banner">
+    <div class="vedic-banner-name" id="vedic-banner-name"></div>
+    <div class="vedic-banner-desc" id="vedic-banner-desc"></div>
+  </div>
+
   <!-- Amavasya/Purnima banner -->
   <div class="luna-banner" id="luna-banner"></div>
+
+  <!-- Energy Score -->
+  <div class="energy-bar" id="energy-bar">
+    <div class="energy-score-block">
+      <div class="energy-n" id="energy-n">—</div>
+      <div class="energy-max">/ 10</div>
+    </div>
+    <div class="energy-text-block">
+      <div class="energy-label">Today's energy</div>
+      <div class="energy-why" id="energy-why"></div>
+      <div class="energy-factors" id="energy-factors"></div>
+    </div>
+  </div>
+
+  <!-- Panchang -->
+  <div class="panchang" id="panchang-card">
+    <div class="panchang-hdr" onclick="togPanchang()">
+      <span class="panchang-title">Panchang · Today</span>
+      <span class="panchang-special" id="panchang-special"></span>
+      <span class="panchang-chev" id="panchang-chev">▾</span>
+    </div>
+    <div class="panchang-body collapsed" id="panchang-body"></div>
+  </div>
 
   <!-- Context strip: moon + cycle + dasha -->
   <div class="ctx-strip">
@@ -388,7 +552,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
   <div class="pg-hdr">
     <div class="pg-rule"></div>
     <div class="pg-name">Cycle</div>
-    <div class="pg-sub">Chart-phase linked</div>
+    <div class="pg-sub">Day-by-day · Hormones · Chart-linked</div>
   </div>
   <div class="cyc-hero">
     <div class="cyc-day-n" id="cyc-day">—</div>
@@ -416,7 +580,28 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
       <input type="date" class="cyc-date-inp" id="cyc-start" onchange="updateCycle()">
     </div>
   </div>
+
+  <!-- Happy Hormones -->
+  <div class="sec">
+    <div class="slbl">Happy hormone hit · today</div>
+    <div class="hormone-card" id="hormone-card">
+      <div class="hormone-hdr">
+        <div>
+          <div class="hormone-hdr-title" id="hormone-title">Set your cycle date first</div>
+          <div class="hormone-hdr-sub" id="hormone-sub"></div>
+        </div>
+      </div>
+      <div class="hormone-body" id="hormone-body"></div>
+    </div>
+  </div>
+
+  <!-- Phase detail cards -->
+  <div class="sec" id="phase-detail-cards"></div>
+
+  <!-- Chart implications -->
   <div class="sec" id="cyc-impl"></div>
+
+  <!-- Today's signals -->
   <div class="sec">
     <div class="slbl">Today's signals</div>
     <div class="sym-grid">
@@ -444,6 +629,10 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
     </div>
   </div>
   <div class="sec">
+    <div class="slbl">Vedic calendar · Next 30 days</div>
+    <div class="event-card" id="vedic-events"></div>
+  </div>
+  <div class="sec">
     <div class="slbl">Upcoming</div>
     <div class="event-card" id="astro-events"></div>
   </div>
@@ -464,6 +653,56 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
     <div id="log-list">
       <div style="text-align:center;padding:28px;font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--muted);font-style:italic">Begin logging to see your history</div>
     </div>
+  </div>
+</div>
+
+<!-- ═══ SADHANA ═══ -->
+<div class="page" id="pg-sadhana">
+  <div class="pg-hdr">
+    <div class="pg-rule"></div>
+    <div class="pg-name">Sadhana</div>
+    <div class="pg-sub">Practice · Body · Year · Moon</div>
+  </div>
+
+  <!-- Daily Rituals -->
+  <div class="sec">
+    <div class="slbl">Today's rituals</div>
+    <div class="card" id="rituals-list"></div>
+  </div>
+
+  <!-- Body Tracker Summary -->
+  <div class="sec">
+    <div class="slbl">Body · 7-day</div>
+    <div class="body-track-grid" id="body-track"></div>
+  </div>
+
+  <!-- Moon Calendar -->
+  <div class="sec">
+    <div class="slbl">Moon calendar</div>
+    <div class="card" style="padding:14px 12px">
+      <div class="mc-month-nav">
+        <button class="mc-nav-btn" onclick="mcNav(-1)">‹</button>
+        <span class="mc-month-title" id="mc-month-title"></span>
+        <button class="mc-nav-btn" onclick="mcNav(1)">›</button>
+      </div>
+      <div class="mc-hdr-row" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px">
+        <div class="mc-hdr">S</div><div class="mc-hdr">M</div><div class="mc-hdr">T</div>
+        <div class="mc-hdr">W</div><div class="mc-hdr">T</div><div class="mc-hdr">F</div><div class="mc-hdr">S</div>
+      </div>
+      <div class="moon-cal" id="moon-cal"></div>
+      <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:rgba(26,21,16,.08)"></div><span style="font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)">Amavasya</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:rgba(232,220,200,.5)"></div><span style="font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)">Purnima</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:rgba(201,180,110,.12)"></div><span style="font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)">Ekadashi</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--acc-lt)"></div><span style="font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)">Special</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Year Ahead -->
+  <div class="sec">
+    <div class="slbl">Year ahead · Jun 2026 – Jun 2027</div>
+    <div id="year-phases"></div>
   </div>
 </div>
 
@@ -568,11 +807,12 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 <!-- Nav -->
 <div class="nav">
-  <div class="ni on" onclick="showPage('home',this)"><span class="ni-g" id="nav-home-g">♂</span></div>
-  <div class="ni" onclick="showPage('week',this)"><span class="ni-g">≡</span></div>
-  <div class="ni" onclick="showPage('cycle',this)"><span class="ni-g">◯</span></div>
-  <div class="ni" onclick="showPage('insights',this)"><span class="ni-g">★</span></div>
-  <div class="ni" onclick="showPage('settings',this)"><span class="ni-g">⊙</span></div>
+  <div class="ni on" onclick="showPage('home',this)"><span class="ni-g" id="nav-home-g">☉</span><span class="ni-l">Today</span></div>
+  <div class="ni" onclick="showPage('sadhana',this)"><span class="ni-g">ॐ</span><span class="ni-l">Sadhana</span></div>
+  <div class="ni" onclick="showPage('cycle',this)"><span class="ni-g">☽</span><span class="ni-l">Cycle</span></div>
+  <div class="ni" onclick="showPage('week',this)"><span class="ni-g">≋</span><span class="ni-l">Week</span></div>
+  <div class="ni" onclick="showPage('insights',this)"><span class="ni-g">✦</span><span class="ni-l">Insights</span></div>
+  <div class="ni" onclick="showPage('settings',this)"><span class="ni-g">⊙</span><span class="ni-l">Settings</span></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -584,6 +824,7 @@ const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov',
 const LUNAR=29.53058867;
 const KNOWN_NM=new Date('2025-01-29T00:00:00Z');
 const JUPITER_CANCER=new Date('2026-06-02');
+const JUPITER_LEO=new Date('2027-06-01');
 const MERC_RX=[
   ['2025-01-26','2025-02-20'],['2025-05-29','2025-06-22'],
   ['2025-09-26','2025-10-20'],['2026-01-16','2026-02-07'],
@@ -781,9 +1022,758 @@ function updateCycle(){
       <div class="impl-t">${pd.name} Phase — Day ${cd.day}</div>
       ${pd.impls.map(i=>`<div class="impl-row"><span class="impl-dash">${i.d}</span><span class="impl-txt">${i.t}</span></div>`).join('')}
     </div>`;
+  buildPhaseDetailCards(cd);
+  buildHormoneCard(cd);
 }
 
 function togSym(el){el.classList.toggle('on');}
+
+// ── PANCHANG ENGINE ──
+// Tithi: lunar day 1-30 calculated from moon age
+function getTithi(moonAge){
+  const t=Math.floor(moonAge/LUNAR*30)+1;
+  return Math.min(t,30);
+}
+function getTithiName(t){
+  const names=['Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Purnima / Amavasya'];
+  const idx=((t-1)%15);
+  const phase=t<=15?'Shukla':'Krishna';
+  const n=idx===14?(t===15?'Purnima':'Amavasya'):names[idx];
+  return{name:n,phase,num:t};
+}
+// Nakshatra: 27 nakshatras, moon traverses all in ~27.32 days
+function getNakshatra(moonAge){
+  const idx=Math.floor((moonAge/27.32)*27)%27;
+  const nakshatras=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+  const lords=['Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury','Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury','Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'];
+  // Meanings relevant to Cancer Lagna
+  const meanings={
+    'Punarvasu':'Your Lagna Nakshatra — heightened personal energy today',
+    'Magha':'Your natal Moon — ancestors, lineage, authority strongly activated',
+    'Ashwini':'Fresh starts, healing — Ketu\'s swift energy',
+    'Rohini':'Abundance, beauty, Venus energy at peak',
+    'Pushya':'Most auspicious Nakshatra — ideal for investments and new begins',
+    'Hasta':'Skill, craftsmanship — Mercury\'s dexterity',
+    'Chitra':'Artistry and brilliance — Mars energy',
+    'Vishakha':'Focus and determination — Jupiter-Mars',
+    'Anuradha':'Devotion and friendship — Saturn grace',
+    'Mrigashira':'Seeking, curiosity — Soma energy',
+    'Uttara Phalguni':'Contracts and alliances — Sun authority',
+    'Uttara Ashadha':'Victory after sustained effort — Sun-Jupiter',
+    'Shravana':'Listening and learning — Moon\'s wisdom',
+    'Revati':'Completion, nourishment — Mercury closes cycles',
+  };
+  return{name:nakshatras[idx],lord:lords[idx],meaning:meanings[nakshatras[idx]]||null,idx};
+}
+// Yoga: sum of sun + moon longitudes / 13.333 degrees
+function getYoga(moonAge){
+  // Approximate: uses moon age as proxy (sun moves ~1°/day)
+  const now=new Date();const dayOfYear=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
+  const sunLon=(dayOfYear/365.25)*360;
+  const moonLon=(moonAge/27.32)*360;
+  const yogaIdx=Math.floor(((sunLon+moonLon)%360)/13.333)%27;
+  const yogas=['Vishkambha','Priti','Ayushman','Saubhagya','Shobhana','Atiganda','Sukarma','Dhriti','Shula','Ganda','Vriddhi','Dhruva','Vyaghata','Harshana','Vajra','Siddhi','Vyatipata','Variyan','Parigha','Shiva','Siddha','Sadhya','Shubha','Shukla','Brahma','Indra','Vaidhriti'];
+  const good=[1,2,3,4,5,7,8,10,13,15,19,20,21,22,23,24,25];
+  const isGood=good.includes(yogaIdx);
+  return{name:yogas[yogaIdx],good:isGood};
+}
+// Karana: half-tithi
+function getKarana(moonAge){
+  const karanas=['Bava','Balava','Kaulava','Taitila','Garija','Vanija','Vishti','Shakuni','Chatushpada','Naga','Kimstughna'];
+  const half=Math.floor(moonAge/(LUNAR/60));
+  const idx=half%11;
+  const isBhadra=idx===6;// Vishti/Bhadra is inauspicious
+  return{name:karanas[idx],bhadra:isBhadra};
+}
+
+// Special Vedic days lookup
+function getSpecialDay(moonAge,now){
+  const t=getTithi(moonAge);
+  const dow=now.getDay();
+  const special=[];
+
+  // Ekadashi (11th tithi both paksha)
+  if(t===11||t===26){
+    special.push({
+      name:'Ekadashi 🙏',
+      desc:'Most powerful fasting day — Saturn antardasha rewards today\'s discipline. Light food or fast before 6 PM activates karmic clearing. No grain until sunset.',
+      karmic:'high'
+    });
+  }
+  // Pradosh (13th tithi)
+  if(t===13||t===28){
+    special.push({
+      name:'Pradosh Vrat',
+      desc:'Shiva-Saturn worship window (6–8 PM today). Saturn is your antardasha lord — Pradosh prayer directly addresses your current karmic period. Light a diya at dusk.',
+      karmic:'high'
+    });
+  }
+  // Amavasya
+  if(moonAge<1.5||moonAge>28){
+    special.push({
+      name:'Amavasya 🌑',
+      desc:'Magha Moon\'s ancestral peak. Offer water to lineage (pitru tarpan). No new beginnings. No haircut. Light a diya for ancestors. Rest activates your deepest chart intelligence.',
+      karmic:'high'
+    });
+  }
+  // Purnima
+  if(moonAge>14.5&&moonAge<15.5){
+    special.push({
+      name:'Purnima 🌕',
+      desc:'Cancer Lagna most emotionally charged day of the month. Creative output peaks. Chant your Moon mantra. Begin nothing conflictual — full moon amplifies everything.',
+      karmic:'high'
+    });
+  }
+  // Ashtami (8th)
+  if(t===8||t===23){
+    special.push({
+      name:'Ashtami',
+      desc:'Durga\'s day — powerful for women\'s health and cycle work. Back care especially important today. Avoid confrontations.',
+      karmic:'medium'
+    });
+  }
+  // Chaturthi (4th)
+  if(t===4||t===19){
+    special.push({
+      name:'Chaturthi — Ganesha\'s day',
+      desc:'Best day for removing obstacles in business and systems. Light incense before work. BulletRaja problems encountered today yield faster solutions.',
+      karmic:'medium'
+    });
+  }
+  // Saturday + Amavasya (Shani Amavasya)
+  if(dow===6&&(moonAge<1.5||moonAge>28)){
+    special.push({
+      name:'Shani Amavasya ⚡',
+      desc:'Rarest and most powerful Saturn day. Triple sesame oil lamp tonight. No new commitments. Deeply protective for Saturn antardasha period.',
+      karmic:'high'
+    });
+  }
+  // Monday + Purnima
+  if(dow===1&&moonAge>14.5&&moonAge<15.5){
+    special.push({
+      name:'Somvar Purnima',
+      desc:'Moon\'s day meets Moon\'s full power. Your ruling planet at maximum strength. Day of unusual intuition and clarity — trust gut decisions made today.',
+      karmic:'high'
+    });
+  }
+  // Dwitiya (2nd) — generally good for starting
+  if(t===2||t===17){
+    special.push({
+      name:'Dwitiya — Auspicious tithi',
+      desc:'Good tithi for starting new work, signing agreements, beginning projects. One of the clean green-light tithis.',
+      karmic:'good'
+    });
+  }
+  // Panchami (5th)
+  if(t===5||t===20){
+    special.push({name:'Panchami — Naga Panchami energy',desc:'Good for learning, healing, Saraswati work. Mercury and knowledge-based tasks favoured.',karmic:'good'});
+  }
+
+  return special;
+}
+
+// Check Adhik Maas (roughly every 2.7 years — next is ~Nov 2026)
+function checkAdhikMaas(now){
+  // Adhik Maas (Purushottam Maas) occurs when there's no Sankranti in a lunar month
+  // Next: approximately Nov 16 – Dec 15, 2026
+  const start=new Date('2026-11-16');const end=new Date('2026-12-15');
+  if(now>=start&&now<=end){
+    return{active:true,desc:'Adhik Maas (Purushottam Maas) is active — the sacred leap month. Spiritual work done now yields 10x karmic fruit. Fast on Ekadashi, offer to Vishnu. No major new worldly ventures — focus inward.'};
+  }
+  const days=Math.ceil((start-now)/86400000);
+  if(days>0&&days<=30) return{upcoming:true,days,desc:`Adhik Maas begins in ${days} days — prepare for a month of intensified spiritual practice.`};
+  return null;
+}
+
+// ── ENERGY SCORE ──
+function calcEnergyScore(now,moonAge,dow){
+  let score=5;const factors=[];
+  const t=getTithi(moonAge);
+  const cd=getCycle();
+  const isRx=rxBool(now);
+
+  // Tithi quality
+  const goodTithis=[2,3,5,7,10,11,12,13,15,17,18,20,22,25,27];
+  const badTithis=[4,6,8,9,14,19,23,24,28,29];
+  if(goodTithis.includes(t)){score+=1;factors.push({t:'Auspicious tithi',dir:'up'});}
+  if(badTithis.includes(t)){score-=1;factors.push({t:'Inauspicious tithi',dir:'down'});}
+
+  // Karana
+  const k=getKarana(moonAge);
+  if(k.bhadra){score-=1;factors.push({t:'Bhadra karana',dir:'down'});}
+
+  // Day of week
+  const dayBoost={2:2,5:1,1:1,4:0,3:0,0:-0,6:0};// Tue best, Fri/Mon good
+  score+=dayBoost[dow]||0;
+  if(dow===2){factors.push({t:'Mars day — your peak',dir:'up'});}
+  else if(dow===5){factors.push({t:'Venus day — rest & gains',dir:'up'});}
+  else if(dow===1){factors.push({t:'Moon day — intuition',dir:'up'});}
+
+  // Moon phase
+  if(moonAge>13&&moonAge<17){score+=1;factors.push({t:'Full moon energy',dir:'up'});}
+  else if(moonAge<1.5||moonAge>28){score-=1;factors.push({t:'Amavasya — low energy',dir:'down'});}
+  else if(moonAge>5&&moonAge<13){score+=1;factors.push({t:'Waxing moon',dir:'up'});}
+
+  // Mercury Rx
+  if(isRx){score-=1;factors.push({t:'Mercury Rx active',dir:'down'});}
+
+  // Cycle phase
+  if(cd){
+    if(cd.phase==='ovulation'){score+=2;factors.push({t:'Ovulation — peak clarity',dir:'up'});}
+    else if(cd.phase==='follicular'){score+=1;factors.push({t:'Follicular — rising',dir:'up'});}
+    else if(cd.phase==='menstrual'){score-=1;factors.push({t:'Menstrual — rest day',dir:'down'});}
+  }
+
+  // Jupiter now in Cancer — base boost for this whole year
+  score+=1;factors.push({t:'Jupiter on Lagna',dir:'up'});
+
+  score=Math.max(1,Math.min(10,Math.round(score)));
+
+  // Why text
+  const whys={
+    10:'Everything aligned. Act boldly.',
+    9:'Near-peak day. Schedule your hardest task first.',
+    8:'Strong energy. Trust your instincts today.',
+    7:'Good flow. Steady and productive.',
+    6:'Decent day. Stay the course.',
+    5:'Neutral day. Maintenance mode.',
+    4:'Slightly heavy. Don\'t force outcomes.',
+    3:'Rest and review. Not the day to push.',
+    2:'Low-energy day. Protect your input.',
+    1:'Amavasya or Bhadra. Rest, honour, release.'
+  };
+
+  return{score,why:whys[score]||whys[5],factors:factors.slice(0,4)};
+}
+
+function buildEnergyScore(now,moonAge,dow){
+  const {score,why,factors}=calcEnergyScore(now,moonAge,dow);
+  document.getElementById('energy-n').textContent=score;
+  document.getElementById('energy-why').textContent=why;
+  document.getElementById('energy-factors').innerHTML=factors.map(f=>`<span class="ef ${f.dir}">${f.t}</span>`).join('');
+  // Colour the score block
+  const block=document.querySelector('.energy-score-block');
+  if(score>=8)block.style.background='#3a5a42';
+  else if(score>=6)block.style.background='var(--txt)';
+  else if(score<=3)block.style.background='#6b3030';
+  else block.style.background='var(--txt)';
+}
+
+// ── PANCHANG RENDER ──
+function buildPanchang(moonAge,now){
+  const tithi=getTithiName(getTithi(moonAge));
+  const nak=getNakshatra(moonAge);
+  const yoga=getYoga(moonAge);
+  const karana=getKarana(moonAge);
+  const special=getSpecialDay(moonAge,now);
+  const adhik=checkAdhikMaas(now);
+
+  // Special label in header
+  const specEl=document.getElementById('panchang-special');
+  if(special.length){specEl.textContent=special[0].name;}
+  else if(adhik&&adhik.active){specEl.textContent='Adhik Maas 🪔';}
+  else{specEl.textContent='';}
+
+  // Personal nakshatra note
+  let nakNote=nak.meaning||('Moon in '+nak.name);
+  if(nak.name==='Punarvasu')nakNote='Your Lagna Nakshatra — personal power peaks';
+  if(nak.name==='Magha')nakNote='Your natal Moon Nakshatra — ancestral intelligence peaks';
+
+  document.getElementById('panchang-body').innerHTML=`
+    <div class="pc">
+      <div class="pc-lbl">Tithi</div>
+      <div class="pc-val ${tithi.phase==='Shukla'?'pc-acc':''}">${tithi.name}</div>
+      <div class="pc-sub">${tithi.phase} Paksha · Day ${tithi.num}</div>
+    </div>
+    <div class="pc">
+      <div class="pc-lbl">Nakshatra</div>
+      <div class="pc-val">${nak.name}</div>
+      <div class="pc-sub">${nakNote}</div>
+    </div>
+    <div class="pc">
+      <div class="pc-lbl">Yoga</div>
+      <div class="pc-val ${yoga.good?'pc-acc':''}">${yoga.name}</div>
+      <div class="pc-sub">${yoga.good?'Auspicious yoga':'Inauspicious yoga'}</div>
+    </div>
+    <div class="pc">
+      <div class="pc-lbl">Karana</div>
+      <div class="pc-val ${karana.bhadra?'':'pc-acc'}">${karana.name}</div>
+      <div class="pc-sub">${karana.bhadra?'Vishti — avoid new starts':'Favourable half-day'}</div>
+    </div>
+  `;
+
+  // Vedic banner
+  if(special.length){
+    const s=special[0];
+    document.getElementById('vedic-banner-name').textContent=s.name;
+    document.getElementById('vedic-banner-desc').textContent=s.desc;
+    document.getElementById('vedic-banner').classList.add('show');
+  } else if(adhik&&adhik.active){
+    document.getElementById('vedic-banner-name').textContent='🪔 Adhik Maas — Purushottam Maas';
+    document.getElementById('vedic-banner-desc').textContent=adhik.desc;
+    document.getElementById('vedic-banner').classList.add('show');
+  } else if(adhik&&adhik.upcoming){
+    document.getElementById('vedic-banner-name').textContent='Adhik Maas approaching';
+    document.getElementById('vedic-banner-desc').textContent=adhik.desc;
+    document.getElementById('vedic-banner').classList.add('show');
+  }
+}
+
+function togPanchang(){
+  const b=document.getElementById('panchang-body');
+  const c=document.getElementById('panchang-chev');
+  b.classList.toggle('collapsed');
+  c.style.transform=b.classList.contains('collapsed')?'':'rotate(180deg)';
+}
+
+// ── SAFARI NOTICE ──
+function checkSafariNotice(){
+  if(ls('safari_notice_dismissed'))return;
+  // Show if not in standalone mode (i.e. not added to home screen) and on iOS
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isStandalone=window.navigator.standalone===true;
+  const isSafari=/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if(isIOS&&!isStandalone){
+    document.getElementById('safari-notice').classList.add('show');
+  }
+}
+function dismissSafariNotice(){
+  save('safari_notice_dismissed','1');
+  document.getElementById('safari-notice').classList.remove('show');
+}
+
+// ── IMPROVED NOTIFICATION CONTENT ──
+function getMorningNotif(){
+  const now=new Date();const dow=now.getDay();const d=DAY_DATA[dow];
+  const moonAge_val=moonAge(now);
+  const t=getTithi(moonAge_val);
+  const nak=getNakshatra(moonAge_val);
+  const cd=getCycle();
+  const isRx=rxBool(now);
+  const {score}=calcEnergyScore(now,moonAge_val,dow);
+  const special=getSpecialDay(moonAge_val,now);
+
+  let title=`${d.glyph} ${score}/10 — ${d.planet}'s Day`;
+  let body='';
+
+  if(special.length&&special[0].karmic==='high'){
+    body=`${special[0].name} today. ${special[0].desc.slice(0,80)}…`;
+  } else if(moonAge_val<1.5||moonAge_val>28){
+    body=`Amavasya. Honour your ancestors, rest deeply. Score ${score}/10.`;
+  } else if(moonAge_val>14.5&&moonAge_val<15.5){
+    body=`Purnima. Cancer Lagna peaks — go outward, be visible. Score ${score}/10.`;
+  } else if(nak.name==='Punarvasu'){
+    body=`Your Lagna Nakshatra active. Personal power at peak. ${d.am}`;
+  } else if(nak.name==='Magha'){
+    body=`Magha — your Moon's nakshatra. Ancestral clarity runs high today. ${d.am}`;
+  } else if(isRx){
+    body=`☿ Rx: your natal Rx mind sharpens. Others fumble — you don't. Triple-check contracts.`;
+  } else if(cd&&cd.phase==='ovulation'){
+    body=`Ovulation + ${d.planet}'s Day = your sharpest window. Negotiate, decide, be seen.`;
+  } else if(score>=8){
+    body=`Energy ${score}/10. ${d.planet}'s Day is charged. Schedule your hardest task first.`;
+  } else {
+    body=d.am;
+  }
+  return{title,body,tag:'morning'};
+}
+
+function getAfternoonNotif(){
+  const now=new Date();const d=DAY_DATA[now.getDay()];
+  const moonAge_val=moonAge(now);
+  const {score}=calcEnergyScore(now,moonAge_val,now.getDay());
+  return{title:`${d.glyph} Midday — ${score}/10`,body:d.pm,tag:'afternoon'};
+}
+
+function getEveningNotif(){
+  const now=new Date();const d=DAY_DATA[now.getDay()];
+  const moonAge_val=moonAge(now);
+  const special=getSpecialDay(moonAge_val,now);
+  let body=d.eve;
+  if(special.length&&special[0].karmic==='high'){
+    body=`${special[0].name} tonight — ${special[0].desc.slice(0,70)}`;
+  }
+  return{title:`Evening · ${d.planet}'s Day`,body,tag:'evening'};
+}
+
+// ── CYCLE DAY-BY-DAY DATA ──
+const CYCLE_DAYS = {
+  menstrual: {
+    days: [
+      {d:'1',feel:'Heavy, inward, raw',detail:'Progesterone and oestrogen both crash. Fatigue is hormonal, not weakness. Uterus is actively working — this is real physical labour.',phys:'Cramps peak today. Lower back and hips may ache. Energy at lowest point of cycle.',emo:'Emotionally tender, hypersensitive to criticism. Tears may come easily. Deep need for solitude.'},
+      {d:'2',feel:'Heavy flow, low energy',detail:'Prostaglandins (the cramping hormones) are highest today. Heat, rest and slow movement are your medicine.',phys:'Heaviest flow day. Headache possible as oestrogen is still very low. Iron dips.',emo:'Introversion is at its deepest. Social situations feel genuinely draining today.'},
+      {d:'3',feel:'Still tired, slightly lighter',detail:'The worst is usually over by today. Your body begins its first tentative turn toward the follicular phase.',phys:'Cramps easing. Flow lightening. Slight lift in energy by afternoon.',emo:'Still quiet inside, but the harshness softens. A gentler kind of sadness rather than raw pain.'},
+      {d:'4',feel:'Emerging slowly',detail:'Oestrogen begins its first real climb. The hormonal floor is behind you.',phys:'Flow much lighter. Energy begins to return. Sleep may improve tonight.',emo:'Clarity returning in glimpses. First inklings of wanting to engage with the world again.'},
+      {d:'5',feel:'Turning a corner',detail:'FSH rising, oestrogen climbing. The follicular energy has almost begun.',phys:'Near end of flow. Body energy noticeably different from Day 1 — lighter, more available.',emo:'Motivation returning. The inner world starts to open outward again.'},
+    ],
+    signals:{
+      physical:['Cramping (especially days 1–2)','Lower back heaviness','Breast tenderness easing','Fatigue that doesn\'t lift with sleep','Possible headache (oestrogen withdrawal)'],
+      emotional:['Deep need for stillness','Hypersensitivity to conflict','Strong intuition and dream activity','Emotional release — tears feel cleansing','Ancestral and inner connection heightened (Magha Moon)'],
+    }
+  },
+  follicular: {
+    days: [
+      {d:'6',feel:'Rising energy, fresh start',detail:'Oestrogen climbing steadily. FSH stimulating follicle development. Your body is building toward ovulation.',phys:'Energy rising. Skin often clearer. Digestion improves. Gym performance noticeably better.',emo:'Optimism returning. Ideas come easily. Willingness to take on new things.'},
+      {d:'7',feel:'Curious, motivated',detail:'Oestrogen continues rising. Dopamine begins to increase — your brain\'s reward system reactivates.',phys:'Physical endurance increasing. Sleep quality good. Appetite more stable.',emo:'The internal critic quiets. Confidence starts rebuilding. Good day to revisit goals.'},
+      {d:'8',feel:'Sharpening mentally',detail:'Oestrogen near mid-follicular peak. Prefrontal cortex activity increases — analytical ability strengthening.',phys:'Strength and stamina at good levels. Focus sustained for longer periods.',emo:'Clarity of thought. Rahu 10th ambition reactivates here — drive feels purposeful, not anxious.'},
+      {d:'9',feel:'Creative, bold',detail:'Testosterone begins a gentle rise alongside oestrogen. Boldness and creative energy both increase.',phys:'High energy. Strong performance in any physical challenge. Voice is stronger.',emo:'Willingness to be seen. Good day for difficult conversations or presentations.'},
+      {d:'10',feel:'Building confidence',detail:'Oestrogen approaching its first peak. Social ease, verbal fluency, and confidence are all rising.',phys:'Feel physically capable and strong. Coordination and reaction time both peak here.',emo:'Natural leadership energy. Others notice you differently in this phase.'},
+      {d:'11',feel:'Pre-ovulatory peak energy',detail:'Oestrogen surging toward its peak. LH surge beginning. Your body is preparing for its most powerful moment.',phys:'Libido rising. Skin glowing. Eyes appear brighter. Physical peak approaching.',emo:'Magnetic, outward, generous. The follicular phase gifts you its best self today.'},
+      {d:'12',feel:'Charged, ready',detail:'LH surge likely today or tomorrow. Oestrogen at peak. Venus-Moon in Leo is most naturally activated.',phys:'Body temperature slightly lower (pre-ovulation baseline). Cervical fluid changes.',emo:'Charisma at high point. Natural desire to connect, create, collaborate.'},
+      {d:'13',feel:'Electric, peak approaching',detail:'Final day before ovulation window. Energy, confidence and clarity all peaking together.',phys:'Physical peak. Best day for strength training, sprints, demanding physical work.',emo:'Bold, decisive, magnetic. Trust the decisions made in this window — they come from your clearest self.'},
+    ],
+    signals:{
+      physical:['Energy surge that feels clean and sustainable','Skin clearing and glowing','Physical strength at cycle peak','Digestion light and efficient','Libido beginning to rise'],
+      emotional:['Ideas flowing without effort','Confidence in own judgment','Natural optimism — not forced','Desire to initiate and build (Rahu 10th)','Social ease, verbal fluency'],
+    }
+  },
+  ovulation: {
+    days: [
+      {d:'14',feel:'Peak clarity and charisma',detail:'Ovulation day. Oestrogen at absolute peak. LH surge. Testosterone peaks simultaneously — rare triple-hormone peak.',phys:'Body temperature dips then rises 0.2°C after ovulation. Cervical fluid peaks. Libido highest.',emo:'Presence is magnetic. The room responds to you differently. This is your most visible, expressive day.'},
+      {d:'15',feel:'Peak expression',detail:'Still in ovulation window. The hormonal peak sustains for 12–36 hours.',phys:'Energy very high. Physical confidence. Voice strongest of the month.',emo:'Decisiveness, generosity, warmth. Natural ability to read others and connect. Negotiate now.'},
+      {d:'16',feel:'Window closing, still strong',detail:'Ovulation window ending. The brief testosterone drop begins but oestrogen still supports energy.',phys:'Energy beginning to shift. First faint signals of the luteal transition — not yet noticeable.',emo:'Slight softening of the ovulation peak. Still very capable and clear, but the inner edge begins to turn.'},
+    ],
+    signals:{
+      physical:['Mild one-sided twinge (Mittelschmerz)','Cervical fluid most slippery','Body temperature shift','Highest physical energy of cycle','Skin at its most luminous'],
+      emotional:['Sharpest communication ability','Deepest empathy and social attunement','Courage to say difficult things kindly','Jupiter overextension risk — watch Thursday overcommit','Presence that others feel without being told'],
+    }
+  },
+  luteal: {
+    days: [
+      {d:'17',feel:'Inward shift begins',detail:'Progesterone rises sharply after ovulation. This is the hormone of nesting, detail, and inner focus. Not a downfall — a different kind of intelligence.',phys:'Slight bloating possible. Body temperature stays elevated. Appetite increases.',emo:'The outward energy turns inward. Detail-oriented, quality-focused. Mercury Retrograde Virgo mind activates.'},
+      {d:'18',feel:'Detail and systems mode',detail:'Progesterone climbing. Oestrogen making its second smaller rise. A focused, productive window.',phys:'Best days for sustained, deep work. Physical intensity should reduce — longer walks over sprints.',emo:'Perfectionism emerges. Systems thinking sharpens. Ideal for BulletRaja code review, audit, process work.'},
+      {d:'19',feel:'Deep work phase',detail:'Progesterone near peak. Inner focus at its strongest. External stimulation feels like too much.',phys:'Slower metabolism. Cravings for carbohydrates are real (progesterone driven). Sleep may deepen.',emo:'Rich inner life. Intuition clear when not panicked. Not the time for new social commitments.'},
+      {d:'20',feel:'Nesting and creating',detail:'Mid-luteal phase. Progesterone dominant. The body prepares for either pregnancy or the next cycle.',phys:'Fullness in body. Breast tenderness may begin. Gut sensitivity increases — Mercury Virgo gut watch.',emo:'Desire to complete, to tie loose ends, to make things perfect before the cycle resets.'},
+      {d:'21',feel:'Slower, more deliberate',detail:'Progesterone peak approaching. Energy slows but focus can be very deep when channelled.',phys:'Physical energy lower than follicular. Heavier feeling in body. Warmth and rest restore well.',emo:'Emotional depth. Old issues may surface for review. Saturn antardasha truth-telling strengthens here.'},
+      {d:'22',feel:'Review and release',detail:'Progesterone beginning to peak then plateau. The body starts signalling what it needs to let go.',phys:'PMS symptoms may begin for some. Breast heaviness. Sleep becomes important for mood.',emo:'Critical eye sharpens. Lower tolerance for BS. Can feel unnecessarily harsh — channel it into editing, not attacking.'},
+      {d:'23',feel:'Editing phase',detail:'Body in full review mode. What served you this cycle and what didn\'t becomes clear.',phys:'Bloating possible. Lower energy. Prioritise anti-inflammatory foods — turmeric, ginger, dark leafy greens.',emo:'Emotional honesty peaks. What you feel now about relationships and situations is often accurate — just not the time to act on it.'},
+      {d:'24',feel:'Pre-menstrual sensitivity',detail:'Oestrogen and progesterone both declining. Serotonin drops. This is the biological root of PMS.',phys:'Heightened physical sensitivity. Avoid intense cardio. Gentle movement, swimming, restorative yoga.',emo:'Thin emotional skin. Strong gut feelings about people and situations. Trust them — write them down.'},
+      {d:'25',feel:'Low and tender',detail:'Hormones declining. The body preparing to shed.',phys:'Fatigue. Possible headaches. Lower back may be heavy. Magnesium often helps cramps and mood.',emo:'Need for gentleness — from yourself first. Low tolerance for busyness. A film, a bath, an early night.'},
+      {d:'26',feel:'Quiet before the turn',detail:'Final days of luteal. The inner Amavasya approaching.',phys:'Cycle preparing to restart. Rest maximises next cycle quality.',emo:'Natural withdrawal from social performance. The most honest, unguarded version of yourself lives here.'},
+      {d:'27',feel:'Completing the cycle',detail:'Very close to menstrual. The body is wrapping up this cycle\'s work.',phys:'Flow may begin within 24–48 hours. Rest, heat, ease.',emo:'Nostalgic, reflective. A natural time for gratitude for the cycle\'s gifts and readiness to release.'},
+      {d:'28',feel:'The threshold',detail:'Cycle completing. The body holds its wisdom from the entire month.',phys:'Flow imminent. The Magha Moon ancestral intelligence is at its most accessible right now.',emo:'Quiet readiness. The next cycle\'s energy is already preparing beneath the surface.'},
+    ],
+    signals:{
+      physical:['Bloating and fullness','Breast tenderness (progesterone)','Increased appetite — especially carbs','Slower digestion (Mercury Virgo gut)','Fatigue that sleep partially addresses'],
+      emotional:['Detail and perfectionism peak','Lower tolerance for chaos or noise','Deep emotional honesty — trust what you feel','Old unresolved things surface for review','Cosy, nesting energy — honour it'],
+    }
+  }
+};
+
+// ── HAPPY HORMONE DATA ──
+const HORMONE_GUIDE = {
+  menstrual: {
+    dominant: 'Rest restores — PGE2 down',
+    sub: 'Prostaglandins high · Oestrogen low',
+    hits: [
+      {type:'Serotonin',ico:'☀️',txt:'20 min morning sunlight even through a window',why:'Light directly triggers serotonin production — no supplement needed'},
+      {type:'Serotonin',ico:'🍫',txt:'Dark chocolate (70%+) — one square, slowly',why:'Tryptophan precursor to serotonin. Menstrual days make this genuinely medicinal.'},
+      {type:'Endorphin',ico:'🌊',txt:'Warm bath or hot water bottle on abdomen',why:'Heat triggers endorphin release and reduces prostaglandin cramping'},
+      {type:'Oxytocin',ico:'🕯️',txt:'Light a diya — 5 minutes of quiet with it',why:'Ritual and intention produce oxytocin. Magha Moon makes this especially potent today.'},
+      {type:'Dopamine',ico:'🎵',txt:'One song that always moves you — eyes closed',why:'Music + deliberate attention produces dopamine without requiring energy output'},
+    ]
+  },
+  follicular: {
+    dominant: 'Oestrogen rising — dopamine reactivating',
+    sub: 'FSH active · Testosterone building',
+    hits: [
+      {type:'Dopamine',ico:'⚡',txt:'Start something you\'ve been putting off — even 10 minutes',why:'Oestrogen amplifies dopamine reward. Starting feels unusually satisfying in this phase.'},
+      {type:'Serotonin',ico:'🏃‍♀️',txt:'Any cardio or brisk walk — 20+ minutes',why:'Follicular oestrogen makes exercise feel easier and the serotonin hit is strongest here.'},
+      {type:'Dopamine',ico:'🧠',txt:'Learn one new thing — a topic, a concept, a skill',why:'Dopamine and oestrogen together create the cycle\'s peak learning window. Mars Yoga Karaka activates.'},
+      {type:'Oxytocin',ico:'☕',txt:'Unhurried conversation with someone you trust',why:'Social bonding without agenda produces oxytocin. Follicular ease makes this feel natural.'},
+      {type:'Endorphin',ico:'💪',txt:'Strength training or a physical challenge',why:'Physical oestrogen peak means endorphin response is strongest. This is your power window.'},
+    ]
+  },
+  ovulation: {
+    dominant: 'Triple peak — oestrogen + testosterone + LH',
+    sub: 'Highest hormonal output of the entire cycle',
+    hits: [
+      {type:'Dopamine',ico:'🎯',txt:'Do the thing you\'ve been building toward — present, negotiate, decide',why:'Dopamine is highest of the month. Acts of courage feel rewarding rather than terrifying.'},
+      {type:'Oxytocin',ico:'🤝',txt:'A genuine, vulnerable conversation with someone important',why:'Oxytocin and oestrogen together peak bonding capacity. What you say today lands differently.'},
+      {type:'Endorphin',ico:'🌿',txt:'Be in sunlight and nature — even briefly',why:'The body at ovulation responds to natural light with a full endorphin cascade.'},
+      {type:'Serotonin',ico:'🎨',txt:'Create something — write, cook, arrange, build',why:'Serotonin at peak makes creative acts feel deeply satisfying and complete rather than anxious.'},
+      {type:'Dopamine',ico:'✦',txt:'Acknowledge something you\'ve done well — write it down',why:'Self-recognition fires dopamine. Ovulation amplifies this. Don\'t skip it.'},
+    ]
+  },
+  luteal: {
+    dominant: 'Progesterone dominant — serotonin drops',
+    sub: 'PMS risk if serotonin unsupported',
+    hits: [
+      {type:'Serotonin',ico:'🌾',txt:'Complex carbohydrates — rice, dal, sweet potato',why:'Carb cravings are progesterone\'s way of asking for serotonin precursors. Feed the signal, not the resistance.'},
+      {type:'Endorphin',ico:'🧘‍♀️',txt:'Slow yoga, stretching or a walk in nature',why:'Gentle movement produces endorphins without depleting the progesterone-taxed adrenals.'},
+      {type:'Serotonin',ico:'🌅',txt:'Morning light within 30 minutes of waking',why:'Serotonin dip is the biological root of PMS. Morning light is the most effective natural intervention.'},
+      {type:'Oxytocin',ico:'📔',txt:'Journal — write exactly how you feel without editing',why:'Externalising luteal emotional honesty produces oxytocin and reduces the heaviness of holding it inside.'},
+      {type:'Dopamine',ico:'✅',txt:'Complete one small thing and tick it off',why:'Progesterone mind loves completion. A ticked task fires dopamine even when energy is low.'},
+    ]
+  }
+};
+
+// ── CYCLE RENDER FUNCTIONS ──
+function buildPhaseDetailCards(cd){
+  const el=document.getElementById('phase-detail-cards');
+  if(!el)return;
+  if(!cd){el.innerHTML='';return;}
+
+  const phaseData=CYCLE_DAYS[cd.phase];
+  const allDays=phaseData.days;
+  const currentDayNum=cd.day;
+
+  // Find today's day entry
+  const todayEntry=allDays.find(d=>parseInt(d.d)===currentDayNum)||allDays[allDays.length-1];
+
+  // Today's day card
+  let html=`<div class="slbl">Day ${currentDayNum} — what to expect</div>
+  <div class="phase-card">
+    <div class="phase-card-hdr">
+      <span class="phase-card-ico">${CYCLE_PHASES[cd.phase].emoji}</span>
+      <div class="phase-card-info">
+        <div class="phase-card-name">${todayEntry.feel}</div>
+        <div class="phase-card-days">${CYCLE_PHASES[cd.phase].name} · Day ${currentDayNum}</div>
+      </div>
+    </div>
+    <div class="phase-card-body">
+      <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt2);line-height:1.6;margin-bottom:12px">${todayEntry.detail}</div>
+      <div class="phase-section-lbl">Physical</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.6;padding:8px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--bd)">${todayEntry.phys}</div>
+      <div class="phase-section-lbl">Emotional</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--txt);line-height:1.6;padding:8px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--bd)">${todayEntry.emo}</div>
+    </div>
+  </div>`;
+
+  // Phase signals
+  const sigs=phaseData.signals;
+  html+=`<div class="slbl">This phase — signals</div>
+  <div class="signal-grid">
+    ${sigs.physical.slice(0,3).map(s=>`<div class="sig"><div class="sig-ico">🔴</div><div class="sig-lbl" style="font-size:10px;color:var(--txt2)">${s}</div></div>`).join('')}
+    ${sigs.emotional.slice(0,3).map(s=>`<div class="sig"><div class="sig-ico">🌊</div><div class="sig-lbl" style="font-size:10px;color:var(--txt2)">${s}</div></div>`).join('')}
+  </div>`;
+
+  // Full day-by-day for this phase
+  html+=`<div class="slbl" style="margin-top:14px">Day-by-day · ${CYCLE_PHASES[cd.phase].name}</div>
+  <div class="day-by-day">`;
+  allDays.forEach(day=>{
+    const isActive=parseInt(day.d)===currentDayNum;
+    html+=`<div class="dbd-row${isActive?' active-day':''}">
+      <div class="dbd-day">${day.d}</div>
+      <div class="dbd-info">
+        <div class="dbd-feel">${day.feel}${isActive?' ← today':''}</div>
+        <div class="dbd-detail">${day.detail}</div>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+
+  el.innerHTML=html;
+}
+
+function buildHormoneCard(cd){
+  const el=document.getElementById('hormone-card');
+  if(!el)return;
+  if(!cd){
+    document.getElementById('hormone-title').textContent='Set your cycle date first';
+    document.getElementById('hormone-sub').textContent='';
+    document.getElementById('hormone-body').innerHTML='';
+    return;
+  }
+  const guide=HORMONE_GUIDE[cd.phase];
+  const phase=CYCLE_PHASES[cd.phase];
+
+  document.getElementById('hormone-title').textContent=`${phase.emoji} ${phase.name} · Day ${cd.day}`;
+  document.getElementById('hormone-sub').textContent=guide.dominant;
+
+  // Group by hormone type
+  const grouped={};
+  guide.hits.forEach(h=>{
+    if(!grouped[h.type])grouped[h.type]=[];
+    grouped[h.type].push(h);
+  });
+
+  let html=`<div style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);margin-bottom:12px">${guide.sub}</div>`;
+  Object.entries(grouped).forEach(([type,hits])=>{
+    html+=`<div class="h-type">
+      <div class="h-type-name">${type}</div>
+      ${hits.map(h=>`<div class="h-hit-row">
+        <span class="h-hit-ico">${h.ico}</span>
+        <div class="h-hit-txt">${h.txt}<span>${h.why}</span></div>
+      </div>`).join('')}
+    </div>`;
+  });
+  document.getElementById('hormone-body').innerHTML=html;
+}
+
+// ── SADHANA FUNCTIONS ──
+
+// Daily rituals based on day of week + special days
+function buildRituals(now,moonAge_val){
+  const el=document.getElementById('rituals-list');
+  if(!el)return;
+  const dow=now.getDay();
+  const todayKey_r=now.toISOString().split('T')[0];
+  const saved=JSON.parse(ls('rituals_'+todayKey_r)||'{}');
+  const special=getSpecialDay(moonAge_val,now);
+
+  const base=[
+    {id:'light',ico:'🕯️',name:'Light the diya',when:'Morning · Northeast corner'},
+    {id:'mantra',ico:'🙏',name:DAY_DATA[dow].mantra,when:'Morning · 108 times or 5 min'},
+    {id:'water',ico:'💧',name:'Drink water before phone',when:'On waking · 2 glasses'},
+    {id:'sun',ico:'☀️',name:'Sunlight — 20 minutes',when:'Before 9 AM'},
+  ];
+
+  // Day-specific
+  if(dow===1)base.push({id:'diya-ne',ico:'🏠',name:'Deep home clean',when:'Monday ritual — Moon ruling home'});
+  if(dow===6)base.push({id:'sesame',ico:'🫘',name:'Sesame oil lamp at dusk',when:'Saturn pacification — most important Saturday ritual'});
+  if(dow===4)base.push({id:'yellow',ico:'💛',name:'Wear yellow or gold',when:'Jupiter\'s day — Lagna lord amplification'});
+
+  // Special vedic day additions
+  if(special.length&&special[0].karmic==='high'){
+    if(special[0].name.includes('Ekadashi'))base.push({id:'fast',ico:'🌿',name:'Light food or fast until 6 PM',when:'Ekadashi — most powerful karmic clearing'});
+    if(special[0].name.includes('Pradosh'))base.push({id:'pradosh',ico:'🔥',name:'Shiva prayer at dusk (6–8 PM)',when:'Pradosh vrat — Saturn antardasha support'});
+    if(special[0].name.includes('Amavasya'))base.push({id:'pitru',ico:'🌑',name:'Water offering for ancestors',when:'Pitru tarpan — Magha Moon lineage work'});
+  }
+
+  el.innerHTML=base.map(r=>`
+    <div class="ritual-row">
+      <span class="ritual-ico">${r.ico}</span>
+      <div class="ritual-info">
+        <div class="ritual-name">${r.name}</div>
+        <div class="ritual-when">${r.when}</div>
+      </div>
+      <div class="ritual-check${saved[r.id]?' done':''}" onclick="togRitual('${r.id}','${todayKey_r}',this)">${saved[r.id]?'✓':''}</div>
+    </div>`).join('');
+}
+
+function togRitual(id,key,el){
+  const saved=JSON.parse(ls('rituals_'+key)||'{}');
+  saved[id]=!saved[id];
+  save('rituals_'+key,JSON.stringify(saved));
+  el.classList.toggle('done',saved[id]);
+  el.textContent=saved[id]?'✓':'';
+  if(saved[id]&&navigator.vibrate)navigator.vibrate(8);
+}
+
+// Body tracker 7-day summary
+function buildBodyTrack(){
+  const el=document.getElementById('body-track');
+  if(!el)return;
+  let sleepTotal=0,sleepCount=0,backOk=0,moveCount=0,waterTotal=0;
+  for(let i=6;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const k=d.toISOString().split('T')[0];
+    const log=JSON.parse(ls('log_'+k)||'null');
+    const water=parseInt(ls('water_'+k)||'0');
+    waterTotal+=water;
+    if(log){
+      if(log.slpHrs){const m=log.slpHrs.match(/(\d+)h/);if(m){sleepTotal+=parseInt(m[1]);sleepCount++;}}
+      if(log.back==='fine')backOk++;
+      if(log.move)moveCount++;
+    }
+  }
+  const avgSleep=sleepCount?Math.round(sleepTotal/sleepCount*10)/10:0;
+  const avgWater=Math.round(waterTotal/7*10)/10;
+  el.innerHTML=`
+    <div class="bt-card">
+      <div class="bt-label">Avg Sleep</div>
+      <div class="bt-val">${avgSleep||'—'}<span style="font-size:14px;color:var(--muted)">${avgSleep?'h':''}</span></div>
+      <div class="bt-sub">7-day average</div>
+      <div class="bt-bar"><div class="bt-bar-fill" style="width:${Math.min(100,avgSleep/9*100)}%"></div></div>
+    </div>
+    <div class="bt-card">
+      <div class="bt-label">Avg Water</div>
+      <div class="bt-val">${avgWater||'—'}<span style="font-size:14px;color:var(--muted)">${avgWater?'/8':''}</span></div>
+      <div class="bt-sub">7-day average</div>
+      <div class="bt-bar"><div class="bt-bar-fill" style="width:${Math.min(100,avgWater/8*100)}%"></div></div>
+    </div>
+    <div class="bt-card">
+      <div class="bt-label">Back Fine</div>
+      <div class="bt-val">${backOk}<span style="font-size:14px;color:var(--muted)">/7</span></div>
+      <div class="bt-sub">days pain-free</div>
+      <div class="bt-bar"><div class="bt-bar-fill" style="width:${backOk/7*100}%;background:${backOk>=5?'#7aab8a':backOk>=3?'var(--acc)':'#c97070'}"></div></div>
+    </div>
+    <div class="bt-card">
+      <div class="bt-label">Movement</div>
+      <div class="bt-val">${moveCount}<span style="font-size:14px;color:var(--muted)">/7</span></div>
+      <div class="bt-sub">days logged</div>
+      <div class="bt-bar"><div class="bt-bar-fill" style="width:${moveCount/7*100}%;background:#7aab8a"></div></div>
+    </div>`;
+}
+
+// Moon calendar
+let mcOffset=0;
+function buildMoonCal(){
+  const el=document.getElementById('moon-cal');
+  const titleEl=document.getElementById('mc-month-title');
+  if(!el)return;
+  const now=new Date();
+  const target=new Date(now.getFullYear(),now.getMonth()+mcOffset,1);
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  titleEl.textContent=months[target.getMonth()]+' '+target.getFullYear();
+
+  const firstDay=target.getDay();
+  const daysInMonth=new Date(target.getFullYear(),target.getMonth()+1,0).getDate();
+  const prevDays=new Date(target.getFullYear(),target.getMonth(),0).getDate();
+
+  let html='';
+  // Prev month overflow
+  for(let i=firstDay-1;i>=0;i--){
+    html+=`<div class="mc-day other-month">${prevDays-i}</div>`;
+  }
+  // This month
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(target.getFullYear(),target.getMonth(),d);
+    const mAge=moonAge(date);
+    const special=getSpecialDay(mAge,date);
+    const isToday=date.toDateString()===now.toDateString();
+    const t=getTithi(mAge);
+
+    let cls='mc-day';
+    let dot='';
+    if(mAge<1.5||mAge>28)cls+=' amavasya';
+    else if(mAge>14.5&&mAge<15.5)cls+=' purnima';
+    else if(t===11||t===26)cls+=' ekadashi';
+    else if(special.length&&special[0].karmic==='high')cls+=' special';
+    if(isToday)cls+=' today';
+
+    // Dot for personal days (Punarvasu/Magha nakshatra)
+    const nak=getNakshatra(mAge);
+    if(nak.name==='Punarvasu'||nak.name==='Magha')dot=`<div class="mc-dot gold"></div>`;
+
+    html+=`<div class="${cls}" title="${nak.name}">${d}${dot}</div>`;
+  }
+  el.innerHTML=html;
+}
+
+function mcNav(dir){mcOffset+=dir;buildMoonCal();}
+
+// Year ahead phases
+function buildYearPhases(){
+  const el=document.getElementById('year-phases');
+  if(!el)return;
+  const now=new Date();
+  const phases=[
+    {period:'Jun – Aug 2026',title:'The Initiation Window',body:'Jupiter freshly on your Lagna. Mercury Rx ends June 8 — clean window opens immediately. FD decision, BulletRaja expansion moves, any investments researched. Act before September.',badges:[{t:'Jupiter Active',s:'act'},{t:'Rx ends Jun 8',s:'good'},{t:'High priority',s:'act'}]},
+    {period:'Sep – Oct 2026',title:'Mercury Rx in Virgo',body:'Most impactful Rx of the year — transits your natal Mercury in Virgo. Full system pause. Review and audit everything. No new contracts, no new BulletRaja features. Rest the gut and nervous system.',badges:[{t:'Rx Sep–Oct',s:'warn'},{t:'Pause + review',s:'warn'},{t:'Rest period',s:''}]},
+    {period:'Nov 2026 – Jan 2027',title:'Clean Build Phase',body:'Jupiter mid-Cancer, Moon Mahadasha settling. Strong window for BulletRaja operational depth, financial consolidation, relationship building. Adhik Maas in Nov — intensified spiritual practice.',badges:[{t:'Clean window',s:'good'},{t:'Adhik Maas Nov',s:'act'},{t:'Build deep',s:'good'}]},
+    {period:'Feb – May 2027',title:'Consolidation Before the Shift',body:'Saturn antardasha winding down. Energy lifting. Decisions in this window carry forward into Moon–Mercury antardasha. Prepare Runwal possession paperwork, finalise BulletRaja phase.',badges:[{t:'Saturn easing',s:'good'},{t:'Pre-possession',s:'act'},{t:'Decision window',s:'good'}]},
+    {period:'Jun 2027',title:'Jupiter enters Leo · Runwal Possession',body:'Jupiter moves to your 2nd house (Moon + Venus). Runwal Pinnacle possession. A new 12-month wealth and security cycle begins. Moon–Mercury antardasha starts — systems peak.',badges:[{t:'Jupiter Leo',s:'act'},{t:'Possession',s:'act'},{t:'New cycle',s:'good'}]},
+  ];
+
+  const isCurrentPhase=(p)=>{
+    const starts={'Jun – Aug 2026':new Date('2026-06-01'),'Sep – Oct 2026':new Date('2026-09-01'),'Nov 2026 – Jan 2027':new Date('2026-11-01'),'Feb – May 2027':new Date('2027-02-01'),'Jun 2027':new Date('2027-06-01')};
+    const ends={'Jun – Aug 2026':new Date('2026-09-01'),'Sep – Oct 2026':new Date('2026-11-01'),'Nov 2026 – Jan 2027':new Date('2027-02-01'),'Feb – May 2027':new Date('2027-06-01'),'Jun 2027':new Date('2027-12-01')};
+    return now>=starts[p.period]&&now<ends[p.period];
+  };
+
+  el.innerHTML=phases.map(p=>{
+    const active=isCurrentPhase(p);
+    return`<div class="year-phase" style="${active?'border-color:var(--acc);background:var(--acc-lt)':''}">
+      ${active?'<div style="font-family:\'DM Sans\',sans-serif;font-size:9px;color:var(--acc);font-weight:600;letter-spacing:.1em;margin-bottom:4px">▶ YOU ARE HERE</div>':''}
+      <div class="yp-period">${p.period}</div>
+      <div class="yp-title">${p.title}</div>
+      <div class="yp-body">${p.body}</div>
+      <div class="yp-badges">${p.badges.map(b=>`<span class="yp-badge${b.s?' '+b.s:''}">${b.t}</span>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
 
 // ── INIT ──
 function init(){
@@ -817,6 +1807,13 @@ function init(){
 
   checkRx(now);
   checkLunaBanner(now);
+  checkSafariNotice();
+
+  // Panchang + Energy
+  const mAge=moonAge(now);
+  buildPanchang(mAge,now);
+  buildEnergyScore(now,mAge,dow);
+
   renderOracle(now,dow);
   renderGuidance(dow);
   buildGlasses();
@@ -840,9 +1837,10 @@ function checkRx(now){
   const chip=document.getElementById('rx-chip');
   if(rxBool(now)){chip.textContent='☿ Rx Active';chip.classList.add('show');return;}
   const nx=nextRx(now);
-  if(nx){const d=Math.ceil((new Date(nx[0])-now)/86400000);if(d<=7){chip.textContent=`☿ Rx in ${d}d`;chip.classList.add('show');}}
-  const dj=Math.ceil((JUPITER_CANCER-now)/86400000);
-  if(dj>0&&dj<=7){chip.textContent=`♃ Cancer in ${dj}d`;chip.classList.add('show');}
+  if(nx){const d=Math.ceil((new Date(nx[0])-now)/86400000);if(d<=7){chip.textContent=`☿ Rx in ${d}d`;chip.classList.add('show');return;}}
+  // Jupiter Leo approach
+  const djl=Math.ceil((JUPITER_LEO-now)/86400000);
+  if(djl>0&&djl<=14){chip.textContent=`♃ Leo in ${djl}d`;chip.classList.add('show');}
 }
 
 function checkLunaBanner(now){
@@ -853,13 +1851,48 @@ function checkLunaBanner(now){
 
 // ── ORACLE ──
 function renderOracle(now,dow){
-  const cd=getCycle();const age=moonAge(now);const isRx=rxBool(now);
+  const cd=getCycle();const mAge=moonAge(now);const isRx=rxBool(now);
+  const special=getSpecialDay(mAge,now);
+  const nak=getNakshatra(mAge);
+  const {score}=calcEnergyScore(now,mAge,dow);
+
   let pool;
-  if(isRx)pool=ORACLES.rx;
-  else if(cd)pool=ORACLES[cd.phase];
-  else pool=ORACLES.dasha;
+  // Priority: special vedic day > Rx > nakshatra personal > cycle > dasha
+  if(special.length&&special[0].karmic==='high'){
+    const s=special[0];
+    const specialOracles={
+      'Ekadashi 🙏':['Ekadashi cleanses what accumulated. Fast light, be light.',
+        'Today\'s discipline is Saturn antardasha repaid with interest.',
+        'The 11th tithi is the most powerful reset day — what can you release?'],
+      'Amavasya 🌑':['Your Magha Moon is at home in the dark. Rest is mastery, not retreat.',
+        'Ancestral intelligence speaks loudest in the silence of Amavasya.',
+        'Light a diya for those who came before. Their blessings are real.'],
+      'Purnima 🌕':['Cancer Lagna at full expression — go outward, be seen, create.',
+        'Purnima amplifies everything. Choose what you amplify today.',
+        'Your ruling Moon is full. Clarity is available. Trust it.'],
+    };
+    pool=specialOracles[s.name]||ORACLES.dasha;
+  } else if(nak.name==='Punarvasu'){
+    pool=['Punarvasu — your Lagna Nakshatra. The light returns again, as it always does.',
+      'Punarvasu gives you the gift of re-beginning. What needs a fresh start?',
+      'Your Lagna is lit today. Lean into your natural expansiveness.'];
+  } else if(nak.name==='Magha'){
+    pool=['Magha — your ancestors are close. Listen for what they know.',
+      'Magha Moon on Magha Nakshatra. Your intuition is a direct line today.',
+      'The royal seat is activated. Lead from your deepest nature, not your anxious mind.'];
+  } else if(isRx){
+    pool=ORACLES.rx;
+  } else if(cd){
+    pool=ORACLES[cd.phase];
+  } else {
+    pool=ORACLES.dasha;
+  }
+
+  // Append energy-score oracle context
+  if(score>=9) pool=[...pool,'Everything is aligned. The chart agrees. Act.'];
+  if(score<=3) pool=[...pool,'The cosmos asks for rest, not effort. Protect your energy.'];
+
   const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
-  if(doy%3===0)pool=[...pool,ORACLES.moonphase[moonKey(age)]];
   document.getElementById('oracle-txt').textContent=pool[doy%pool.length];
 }
 
@@ -1014,21 +2047,52 @@ function buildInsights(){
 function buildAstroEvents(){
   const now=new Date();const events=[];
   const isRx=rxBool(now);
+
+  // Mercury Rx
   if(isRx){
     const rx=MERC_RX.find(([s,e])=>{const d=now.toISOString().split('T')[0];return d>=s&&d<=e;});
-    const days=Math.ceil((new Date(rx[1])-now)/86400000);
-    const isVirgo=rx[0].includes('-09-');
+    const days=rx?Math.ceil((new Date(rx[1])-now)/86400000):0;
+    const isVirgo=rx&&rx[0].includes('-09-');
     events.push({dot:'red',title:'☿ Mercury Retrograde — Active now',detail:`Ends in ${days} days. ${isVirgo?'Virgo transit — hits your natal chart hardest. ':''}Triple-check all contracts and written agreements.`,badge:'warn',bt:'Active'});
   } else {
     const nx=nextRx(now);
     if(nx){const d=Math.ceil((new Date(nx[0])-now)/86400000);const isV=nx[0].includes('-09-');
       events.push({dot:d<=14?'red':'blue',title:`☿ Mercury Retrograde — ${new Date(nx[0]).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`,detail:`In ${d} days. ${isV?'Virgo transit — most impactful for your natal chart. ':''}Back up work, verify agreements before it starts.`,badge:d<=14?'warn':'ok',bt:d+'d'});}
   }
-  const dj=Math.ceil((JUPITER_CANCER-now)/86400000);
-  if(dj>0)events.push({dot:'gold',title:'♃ Jupiter enters Cancer — Exalted · June 2026',detail:`In ${dj} days. Directly on your Lagna. Rarest investment window in 12 years. FD matures simultaneously.`,badge:'key',bt:dj>30?Math.ceil(dj/30)+'mo':dj+'d'});
-  else events.push({dot:'gold',title:'♃ Jupiter in Cancer — Active',detail:'Most powerful transit for your Lagna in 12 years. Every investment and decision made now has cosmic backing.',badge:'key',bt:'Active'});
-  events.push({dot:'green',title:'♃ Jupiter enters Leo (2nd house) — June 2027',detail:`Transits your natal Moon + Venus. Direct wealth manifestation period. Runwal Pinnacle possession window.`,badge:'ok',bt:Math.ceil((new Date('2027-06-01')-now)/86400000/30)+'mo'});
-  events.push({dot:'gold',title:'♂ Mars Mahadasha — January 2030',detail:'Your Yoga Karaka activated. Peak power decade — business and investments peak 2030–2037.',badge:'key',bt:Math.ceil((new Date('2030-01-01')-now)/86400000/365)+'yr'});
+
+  // Jupiter in Cancer — check if active or upcoming
+  const jupDiff=Math.ceil((JUPITER_CANCER-now)/86400000);
+  if(jupDiff<=0){
+    // Already active
+    const jupEnd=Math.ceil((JUPITER_LEO-now)/86400000);
+    const moLeft=Math.ceil(jupEnd/30);
+    events.push({dot:'gold',title:'♃ Jupiter in Cancer — Active on your Lagna',detail:`Most powerful transit for Cancer Lagna in 12 years. ${moLeft > 0 ? moLeft+'mo remaining.' : 'Final days.'} Every investment and decision now has cosmic backing.`,badge:'key',bt:'Active'});
+  } else {
+    events.push({dot:'gold',title:`♃ Jupiter enters Cancer — ${Math.ceil(jupDiff/30)}mo`,detail:`In ${jupDiff} days. Directly on your Lagna. Rarest investment window in 12 years. FD matures simultaneously.`,badge:'key',bt:jupDiff+'d'});
+  }
+
+  // Jupiter Leo
+  const jupLeoDiff=Math.ceil((JUPITER_LEO-now)/86400000);
+  if(jupLeoDiff>0){
+    events.push({dot:'green',title:'♃ Jupiter enters Leo (2nd house) — June 2027',detail:`${Math.ceil(jupLeoDiff/30)} months away. Transits your natal Moon + Venus. Direct wealth phase. Runwal Pinnacle possession window.`,badge:'ok',bt:Math.ceil(jupLeoDiff/30)+'mo'});
+  }
+
+  // Adhik Maas
+  const adhik=checkAdhikMaas(now);
+  if(adhik){
+    if(adhik.active){
+      events.push({dot:'gold',title:'🪔 Adhik Maas — Purushottam Maas',detail:'Sacred leap month. Spiritual work yields 10x karmic fruit. Fast on Ekadashi, offer to Vishnu.',badge:'key',bt:'Active'});
+    } else if(adhik.upcoming){
+      events.push({dot:'blue',title:'🪔 Adhik Maas approaching — Nov 2026',detail:`In ${adhik.days} days. Prepare for a month of intensified spiritual practice.`,badge:'ok',bt:adhik.days+'d'});
+    }
+  }
+
+  // Mars Mahadasha
+  events.push({dot:'gold',title:'♂ Mars Mahadasha — January 2030',detail:'Your Yoga Karaka activated. Peak power decade — business and investments peak 2030–2037. Build the foundation now.',badge:'key',bt:Math.ceil((new Date('2030-01-01')-now)/86400000/365)+'yr'});
+
+  // Moon-Mercury antardasha
+  events.push({dot:'blue',title:'☽ Moon–Mercury Antardasha — 2027–2028',detail:'Systems peak period. Gut awareness and analytical clarity combine. Ideal for BulletRaja digital expansion.',badge:'ok',bt:'2027'});
+
   document.getElementById('astro-events').innerHTML=events.map(e=>`
     <div class="ev-row">
       <div class="ev-dot ${e.dot}"></div>
@@ -1044,29 +2108,65 @@ function showPage(name,el){
   document.getElementById('pg-'+name).classList.add('active');
   el.classList.add('on');
   document.getElementById('fab').style.display=(name==='home')?'flex':'none';
-  if(name==='insights'){buildInsights();buildAstroEvents();}
+  if(name==='insights'){buildInsights();buildAstroEvents();buildVedicCalendar();}
   if(name==='week')buildWeek(new Date().getDay());
+  if(name==='cycle'){const cd=getCycle();buildPhaseDetailCards(cd);buildHormoneCard(cd);}
+  if(name==='sadhana'){
+    const now2=new Date();
+    buildRituals(now2,moonAge(now2));
+    buildBodyTrack();
+    buildMoonCal();
+    buildYearPhases();
+  }
+}
+
+function buildVedicCalendar(){
+  const now=new Date();const events=[];
+  for(let i=0;i<=30;i++){
+    const d=new Date(now);d.setDate(d.getDate()+i);
+    const mAge=moonAge(d);
+    const special=getSpecialDay(mAge,d);
+    if(special.length){
+      special.forEach(s=>{
+        if(s.karmic==='high'||s.karmic==='medium'){
+          const label=i===0?'Today':i===1?'Tomorrow':d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+          const dow=d.getDay();
+          const dayName=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dow];
+          events.push({label,dayName,name:s.name,desc:s.desc.slice(0,75)+(s.desc.length>75?'…':''),karmic:s.karmic,i});
+        }
+      });
+    }
+  }
+  const el=document.getElementById('vedic-events');
+  if(!el)return;
+  if(!events.length){el.innerHTML=`<div class="ev-row"><div class="ev-info"><div class="ev-title" style="color:var(--muted);font-weight:400">No major observances in the next 30 days</div></div></div>`;return;}
+  const seen=new Set();
+  el.innerHTML=events.filter(e=>{if(seen.has(e.i))return false;seen.add(e.i);return true;}).slice(0,8).map(e=>`
+    <div class="ev-row">
+      <div class="ev-dot ${e.karmic==='high'?'gold':'blue'}"></div>
+      <div class="ev-info">
+        <div class="ev-title">${e.name}</div>
+        <div class="ev-detail">${e.desc}</div>
+      </div>
+      <span class="ev-badge badge-${e.karmic==='high'?'key':'ok'}" style="white-space:nowrap">${e.label}<br><span style="font-size:9px;opacity:.7">${e.dayName}</span></span>
+    </div>`).join('');
 }
 
 // ── NOTIFICATIONS ──
 async function initSW(){
   if(!('serviceWorker' in navigator))return;
-  try{await navigator.serviceWorker.register('./sw.js');await navigator.serviceWorker.ready;scheduleNotifs();}catch(e){console.warn('SW:',e);}
+  // Only attempt SW if we appear to be in a real PWA context (not preview)
+  if(location.protocol!=='https:'&&location.hostname!=='localhost')return;
+  try{
+    const reg=await navigator.serviceWorker.register('./sw.js');
+    await navigator.serviceWorker.ready;
+    scheduleNotifs();
+  }catch(e){
+    // sw.js not deployed — notifications via SW unavailable, silent fail
+    console.info('SW not available — notifications require sw.js alongside index.html');
+  }
 }
 
-function getMorningNotif(){
-  const now=new Date();const dow=now.getDay();const d=DAY_DATA[dow];
-  const cd=getCycle();const isRx=rxBool(now);const age=moonAge(now);
-  let title=`${d.glyph} ${d.planet}'s Day`;let body='';
-  if(age<1.5)body='Amavasya — rest and honour lineage today. '+d.am;
-  else if(age>14.5&&age<16)body='Purnima — Cancer Lagna activated. '+d.am;
-  else if(isRx)body='☿ Rx active — triple-check every contract today. '+d.am;
-  else if(cd){const pd=CYCLE_PHASES[cd.phase];body=`${pd.name} Phase, Day ${cd.day}. ${d.am}`;}
-  else body=d.am;
-  return{title,body,tag:'morning'};
-}
-function getAfternoonNotif(){const d=DAY_DATA[new Date().getDay()];return{title:'Afternoon check',body:d.pm,tag:'afternoon'};}
-function getEveningNotif(){const d=DAY_DATA[new Date().getDay()];return{title:'Evening reminder',body:d.eve,tag:'evening'};}
 function getSleepNotif(){
   const cd=getCycle();
   const msgs={menstrual:'Menstrual recovery needs full rest tonight. Screen off.',follicular:'Tomorrow\'s rising energy needs tonight\'s sleep. Screen off.',ovulation:'Protect tomorrow\'s peak clarity with proper sleep. Screen off.',luteal:'Luteal recovery is as important as the day\'s work. Screen off.'};
@@ -1082,9 +2182,20 @@ function scheduleNotifs(){
   if(nSettings.afternoon){const t=atKey('afternoon');if(t>now){const n=getAfternoonNotif();list.push({ts:t.getTime(),...n});}}
   if(nSettings.evening){const t=atKey('evening');if(t>now){const n=getEveningNotif();list.push({ts:t.getTime(),...n});}}
   if(nSettings.sleep){const t=atKey('sleep');if(t>now){const n=getSleepNotif();list.push({ts:t.getTime(),...n});}}
-  if(nSettings.jup){const dj=Math.ceil((JUPITER_CANCER-now)/86400000);if(dj===7){const t=at(9,0);if(t>now)list.push({ts:t.getTime(),title:'♃ Jupiter enters Cancer in 7 days',body:'Your FD matures as Jupiter enters your Lagna exalted. The rarest investment window in 12 years begins. Be ready.',tag:'jupiter'});}}
+  // Jupiter Leo approach notification
+  if(nSettings.jup){const djl=Math.ceil((JUPITER_LEO-now)/86400000);if(djl===7){const t=at(9,0);if(t>now)list.push({ts:t.getTime(),title:'♃ Jupiter enters Leo in 7 days',body:'2nd house wealth and Moon activation begins. Runwal Pinnacle possession window opens.',tag:'jupiter-leo'});}}
   if(nSettings.rx){const tom=new Date(now);tom.setDate(tom.getDate()+1);const ts=tom.toISOString().split('T')[0];const rxTom=MERC_RX.find(([s])=>s===ts);if(rxTom){const isV=rxTom[0].includes('-09-');const t=at(8,0);if(t>now)list.push({ts:t.getTime(),title:'☿ Mercury Retrograde starts tomorrow',body:isV?'Virgo Rx tomorrow — most impactful for your natal chart. Sign nothing new today. Back up all systems.':'Mercury Rx tomorrow. Complete contracts and backups today.',tag:'rx-warn'});}}
-  if(nSettings.luna){const age=moonAge(now);if(age<1||age>28.5){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌑 Amavasya today',body:'Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings.',tag:'amavasya'});}if(age>14&&age<15){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌕 Purnima today',body:'Cancer Lagna most activated. Creative work peaks. Not the day for conflict resolution.',tag:'purnima'});}}
+  // Vedic day notifications
+  if(nSettings.luna){
+    const mAge=moonAge(now);
+    const special=getSpecialDay(mAge,now);
+    if(special.length&&special[0].karmic==='high'){
+      const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:special[0].name,body:special[0].desc.slice(0,100),tag:'vedic-special'});
+    } else {
+      if(mAge<1||mAge>28.5){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌑 Amavasya today',body:'Magha Moon\'s ancestral moment. Rest, light a diya, honour lineage. No new beginnings.',tag:'amavasya'});}
+      if(mAge>14&&mAge<15){const t=at(7,0);if(t>now)list.push({ts:t.getTime(),title:'🌕 Purnima today',body:'Cancer Lagna most activated. Creative work peaks. Not the day for conflict resolution.',tag:'purnima'});}
+    }
+  }
   const sw=navigator.serviceWorker.controller||navigator.serviceWorker.ready.then(r=>r.active).catch(()=>null);
   Promise.resolve(sw).then(w=>w&&w.postMessage({type:'SCHEDULE',list}));
 }
